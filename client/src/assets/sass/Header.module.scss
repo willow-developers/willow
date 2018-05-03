@@ -1,0 +1,22 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.App_logo {
+	animation: App_logoSpin infinite 20s linear;
+	height: 80px;
+}
+
+.App_header {
+	background-color: #222;
+	padding: 20px;
+	color: white;
+}
+
+.App_title {
+	font-size: 1.5em;
+}
+
+@keyframes App_logoSpin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}

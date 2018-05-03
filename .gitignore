@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# dev config keys
+dev.js
+
+# stupid mac folder file
+.DS_Store
+

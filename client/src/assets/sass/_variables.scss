@@ -1,0 +1,37 @@
+@mixin vert_align {
+	position: absolute;
+	top: 50%;
+	transform: translate(0,-50%);
+}
+
+@mixin horz_align {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%,0);
+}
+
+@mixin centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+@mixin clear_align {
+	position: relative;
+	top: auto;
+	left: auto;
+	transform: translate(0,0);
+}
+
+@mixin box {
+	box-sizing: border-box;
+}
+
+@mixin cf {
+	&:after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+}
