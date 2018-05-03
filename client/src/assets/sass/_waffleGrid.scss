@@ -1,0 +1,144 @@
+/*!
+Waffle Grid
+*/
+// Waffle Grid Variables
+// https://github.com/lucasgruwez/waffle-grid/wiki/Using-the-grid
+
+// Class names
+// Change them to whatever you're used to
+$grid-classname: "grid" !default;
+$row-classname: "row" !default;
+$column-classname: "col" !default;
+$container-classname: "container" !default;
+
+// Column amounts, results in:
+// .col-n-of-4, or .col-n-of-8, or .col-n-of-12
+$grid-columns: (4, 5, 6, 8, 10, 12) !default;
+
+// Gutter width
+$gutter-width: 20px !default;
+
+// Grid width and max-width.
+// It is automatically centered on the page.
+$grid-width: 1140px !default;
+$grid-max-width: 95% !default;
+
+// Pushes and Pulls
+$pushes: true !default;
+$pulls: true !default;
+$centers: true !default;
+$left-push: true !default;
+$right-push: true !default;
+
+.#{$grid-classname} {
+	display: flex;
+	flex-direction: column;
+	width: $grid-width;
+	max-width: $grid-max-width;
+	margin: 0 auto;
+
+	&.full-width {
+		width: 100%;
+		max-width: 100%;
+	}
+}
+
+.#{$row-classname} {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.#{$column-classname} {
+	box-sizing: border-box;
+	padding: 0 $gutter-width / 2;
+	vertical-align: top;
+}
+
+.w-auto {
+	flex: 1
+}
+
+@each $col-am in $grid-columns {
+	@for $i from 1 through $col-am {
+
+		.#{$column-classname}_#{$i}_of_#{$col-am} {
+			box-sizing: border-box;
+			padding: 0 $gutter-width / 2;
+			vertical-align: top;
+			width: calc(#{percentage($i/$col-am)});
+			padding: 0 #{$gutter-width/2};
+		} // end width
+
+		@if ($pushes) {
+			.push_#{$i}_of_#{$col-am} {
+				box-sizing: border-box;
+				padding: 0 $gutter-width / 2;
+				vertical-align: top;
+				width: calc(#{percentage($i/$col-am)});
+				padding: 0 #{$gutter-width/2};
+				margin-left: calc(#{percentage($i/$col-am)});
+			}
+		} // end pushes
+
+		@if ($pulls) {
+			.pull_#{$i}_of_#{$col-am} {
+				box-sizing: border-box;
+				padding: 0 $gutter-width / 2;
+				vertical-align: top;
+				width: calc(#{percentage($i/$col-am)});
+				padding: 0 #{$gutter-width/2};
+				margin-right: calc(#{percentage($i/$col-am)});
+			}
+		} // end pulls
+
+		@if ($centers) {
+			.center_#{$i}_of_#{$col-am} {
+				box-sizing: border-box;
+				padding: 0 $gutter-width / 2;
+				vertical-align: top;
+				width: calc(#{percentage($i/$col-am)});
+				padding: 0 #{$gutter-width/2};
+				margin-left: auto;
+				margin-right: auto;
+			}
+		} // end centers
+
+		@if ($left-push) {
+			.left_#{$i}_of_#{$col-am} {
+				box-sizing: border-box;
+				padding: 0 $gutter-width / 2;
+				vertical-align: top;
+				width: calc(#{percentage($i/$col-am)});
+				padding: 0 #{$gutter-width/2};
+				margin-right: auto;
+			}
+		} // end left-push
+
+		@if ($right-push) {
+			.right_#{$i}_of_#{$col-am} {
+				box-sizing: border-box;
+				padding: 0 $gutter-width / 2;
+				vertical-align: top;
+				width: calc(#{percentage($i/$col-am)});
+				padding: 0 #{$gutter-width/2};
+				margin-left: auto;
+			}
+		} // end right-push
+
+	} // end for
+} // end each
+
+@function reverse($list, $recursive: false) {
+	$result: ();
+	@for $i from length($list)*-1 through -1 {
+		@if type-of(nth($list, abs($i))) == list and $recursive {
+			$result: append($result, reverse(nth($list, abs($i)), $recursive));
+		}
+		@else {
+			$result: append($result, nth($list, abs($i)));
+		}
+	}
+	@return $result;
+}
