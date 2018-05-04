@@ -8,22 +8,34 @@ class WillowCore extends Component {
     super(props);
  
   }
-
   componentDidMount() {
+    this.d3Simulation();
+  }
+
+  componentDidUpdate() {
+    this.d3Simulation();
+  }
+
+  d3Simulation() {
     const props = this.props;
-    d3.json('/api/data').then((data) => {
+
+    const data = props.data || {nodes:[], links:[]};
+
       const nodes = data.nodes;
       const links = data.links;
 
       const simulation = d3.forceSimulation(nodes)
           .force("link", d3.forceLink(links).id(d => d.id))
-          .force("charge", d3.forceManyBody())
-          .force("center", d3.forceCenter(250, 250))
+        //   .force("charge", d3.forceManyBody())
+        //   .force("center", d3.forceCenter(500, 250))
           .on("tick", ticked);
       
-      const svg = d3.select('#testingGround')
+      const svg = d3.select('#testingGround');
 
-      const link = svg.append("g")
+      const g = svg.append("g")
+        .attr("class", "everything")
+
+      const link = g.append("g")
           .attr("stroke", "#999")
           .attr("stroke-opacity", 0.6)
         .selectAll("line")
@@ -31,7 +43,7 @@ class WillowCore extends Component {
         .enter().append("line")
           .attr("stroke-width", 5);
 
-      const node = svg.append("g")
+      const node = g.append("g")
           .attr("Stroke", "#fff")
           .attr("stroke-width", 1.5)
         .selectAll("circle")
@@ -47,11 +59,28 @@ class WillowCore extends Component {
         .text(d => d.id);
       
 
-      // Event Listeners  
+      // User Interactions
       node.on('click', function(d, i) {
           props.clickFunction(d)
           
       })
+
+      d3.select('body').on("keypress", function() {
+          console.log(d3.event.keyCode);
+      })
+    //   d3.select(window).on("keydown", function(){
+    //     console.log();
+    //   })
+    //   .on("keyup", function(){
+    //     thisGraph.svgKeyUp.call(thisGraph);
+
+      const zoom_handler = d3.zoom().on("zoom", zoom_actions);
+
+      zoom_handler(svg);
+
+      function zoom_actions(){
+        g.attr("transform", d3.event.transform)
+    }
       
       //Time
       function ticked() {
@@ -82,8 +111,8 @@ class WillowCore extends Component {
         
         function dragended(d) {
           if (!d3.event.active) simulation.alphaTarget(0);
-          d.fx = null;
-          d.fy = null;
+        //   d.fx = null;
+        //   d.fy = null;
         }
         
         return d3.drag()
@@ -91,15 +120,12 @@ class WillowCore extends Component {
             .on("drag", dragged)
             .on("end", dragended);
       }
-
-
-    }).catch(error => {console.log(error)})
   }
 
   render() {
     return (
         <div>
-            <svg id="testingGround" width={500} height={500}/>
+            <svg id="testingGround" width={1000} height={500}/>
         </div>
     );
   }
