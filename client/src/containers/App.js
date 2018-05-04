@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import styles from '../assets/sass/App.module.scss';
+import { BrowserRouter } from 'react-router-dom';
 
+import fakeAuth from '../utils/fakeAuth';
 import Header from '../components/Header';
+import Main from './Main';
 
 class App extends Component {
   constructor() {
@@ -11,9 +13,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className={ styles.app }>
-        <Header />
-      </div>
+      <BrowserRouter>
+        <div>
+          <Header fakeAuth={ fakeAuth } />
+          <Main fakeAuth={ fakeAuth } />
+        </div>
+      </BrowserRouter>
     );
   }
 }

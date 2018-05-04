@@ -93,13 +93,24 @@
 }
 
 %btn_big {
-  height: 54px;
-	line-height: 54px;
+  height: 24px;
+	line-height: 24px;
 	font-size: 18px;
 	padding: 0 28px;
 
 	.btn__icon {
 		font-size: 24px;
+	}
+}
+
+%btn_small {
+  height: 28px;
+	line-height: 28px;
+	font-size: 12px;
+	padding: 0 12px;
+
+	.btn__icon {
+		font-size: 20px;
 	}
 }
 
@@ -116,6 +127,10 @@
 
 .btn_big {
 	@extend %btn_big;
+}
+
+.btn_small {
+	@extend %btn_small;
 }
 
 .btn_round {
