@@ -1,19 +1,55 @@
 @import 'variables';
 @import 'waffleGrid';
 
-.App_logo {
-	animation: App_logoSpin infinite 20s linear;
-	height: 80px;
-}
+$logoHeight: 35px;
+
 
 .App_header {
 	background-color: #222;
-	padding: 20px;
-	color: white;
+	padding: 10px 0;
+	@include cf;
 }
 
-.App_title {
-	font-size: 1.5em;
+.logo_block {
+	display: inline-block;
+	text-align: left;
+
+	a {
+		text-decoration: none;
+	}
+
+	.logo {
+		animation: App_logoSpin infinite 20s linear;
+		height: $logoHeight;
+		vertical-align: top;
+	}
+
+	.title {
+		font-size: 1.25em;
+		line-height: $logoHeight;
+		color: #fff;
+	}
+}
+
+.nav_block {
+	text-align: right;
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+
+	li {
+		display: inline-block;
+		margin-right: 10px;
+		vertical-align: middle;
+		line-height: 35px;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+	}
 }
 
 @keyframes App_logoSpin {
