@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const keys = require('./config/keys');
-const routes = require('./routes/index');
+const keys = require('../config/keys');
+const routes = require('../routes/index');
 const app = express();
 app.use(bodyParser.json());
 
