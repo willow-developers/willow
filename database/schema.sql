@@ -105,8 +105,8 @@ INSERT INTO labels (label_type, label_sub_type, label_notes)
   VALUES ('Objective', 'Subtask', 'This type of label is used to denote a subtask that must be completed in order to complete the project');
 
 -- 4
-INSERT INTO labels (label_type, label_sub_type, label_notes)
-  VALUES ('Explorative', 'Subtask', 'This type of label is used to denote a subtask that must be completed in order to complete the project');
+INSERT INTO labels (label_type, label_notes)
+  VALUES ('Explorative', 'This type of label is used to denote a subtask that must be completed in order to complete the project');
 
 -- 5
 INSERT INTO labels (label_type, label_sub_type, label_notes)
@@ -165,4 +165,3 @@ INSERT INTO links (source_id, target_id, label_id)
 -- BACK-END COD TO MVP
 INSERT INTO links (source_id, target_id, label_id)
   VALUES (4, 5, 7);
-
