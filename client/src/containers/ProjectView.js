@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as d3 from 'd3';
 import axios from 'axios';
 
 import styles from '../assets/sass/Dashboard.module.scss';
@@ -11,7 +10,6 @@ class ProjectView extends Component {
 		super(props);
 	
 		this.state = {
-		  bool: false,
 		  data: {nodes:[], links:[]},
 		  selectedData: {},
 		}
@@ -19,25 +17,33 @@ class ProjectView extends Component {
 
 	  componentDidMount() {
 		axios.get('/api/data').then(result => {
-			this.setState({
-				data: result.data
-			})
+			this.setState({data: result.data})
 		})
 	  }
 
 	  clickFunction(data) {
 		this.setState({
-		  bool: true,
 		  selectedData: data
 		})
+	  }
+
+	  createNode() {
+		const newNode = {
+			id: this.state.data.nodes.length + 1,
+			data: "this should work please"
+		}
+
+		const newData = Object.create(this.state.data);
+		newData.nodes.push(newNode);
+		this.setState({data: newData});
 	  }
 	
 	  render() {
 		return (
 		  <div className={ styles.col_12_of_12 }>
 			<h1> Project View </h1>
-			<WillowCore clickFunction={this.clickFunction.bind(this)} data={this.state.data}/>
-			{this.state.bool && <RenderedDoc docInfo={this.state.selectedData}/>}
+			<WillowCore createNode={this.createNode.bind(this)} clickFunction={this.clickFunction.bind(this)} data={this.state.data}/>
+			<RenderedDoc docInfo={this.state.selectedData}/>
 		  </div>
 		);
 	  }	
