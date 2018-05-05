@@ -9,7 +9,8 @@
     },
     {
         "id": "3",
-        "data": "And this"
+        "data": "And this",
+        "willThisBeIgnored": "yes!!"
     },
     {"id": "4"},
     {"id": "5"},

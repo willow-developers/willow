@@ -79,11 +79,13 @@ CREATE TABLE nodes (
 
 CREATE TABLE links (
   id SERIAL,
+  project_id INT,
   source_id varchar(100),
   target_id varchar(100),
   label_id INTEGER,
   link_data jsonb,
   PRIMARY KEY (id),
+  FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE,
   FOREIGN KEY (source_id) REFERENCES nodes (hash_id) ON DELETE CASCADE,
   FOREIGN KEY (target_id) REFERENCES nodes (hash_id) ON DELETE CASCADE,
   FOREIGN KEY (label_id) REFERENCES labels (id) ON DELETE CASCADE
@@ -156,21 +158,21 @@ INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
 
 -- LINKS:
 -- START TO SETTLE ON PROJECT IDEA
-INSERT INTO links (source_id, target_id, label_id)
-  VALUES ('twagner55-2-1525548651799', 'twagner55-2-1525548648849', 8);
+INSERT INTO links (source_id, target_id, label_id, project_id)
+  VALUES ('twagner55-2-1525548651799', 'twagner55-2-1525548648849', 8, 1);
 
 -- PROJECT IDEA TO FRONT-END CODE
-INSERT INTO links (source_id, target_id, label_id)
-  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548645408', 7);
+INSERT INTO links (source_id, target_id, label_id, project_id)
+  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548645408', 7, 1);
 
 -- PROJECT IDEA TO BACK-END CODE
-INSERT INTO links (source_id, target_id, label_id)
-  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548581795', 7);
+INSERT INTO links (source_id, target_id, label_id, project_id)
+  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548581795', 7, 1);
 
 -- FRONT-END CODE TO MVP
-INSERT INTO links (source_id, target_id, label_id)
-  VALUES ('twagner55-2-1525548645408', 'twagner55-2-1525548748852', 7);
+INSERT INTO links (source_id, target_id, label_id, project_id)
+  VALUES ('twagner55-2-1525548645408', 'twagner55-2-1525548748852', 7, 1);
 
 -- BACK-END COD TO MVP
-INSERT INTO links (source_id, target_id, label_id)
-  VALUES ('twagner55-2-1525548581795', 'twagner55-2-1525548748852', 7);
+INSERT INTO links (source_id, target_id, label_id, project_id)
+  VALUES ('twagner55-2-1525548581795', 'twagner55-2-1525548748852', 7, 1);
