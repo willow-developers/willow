@@ -3,8 +3,14 @@
         "id": "1",
         "data": "Please render this"
     },
-    {"id": "2"},
-    {"id": "3"},
+    {
+        "id": "2",
+        "data": "Also render this"
+    },
+    {
+        "id": "3",
+        "data": "And this"
+    },
     {"id": "4"},
     {"id": "5"},
     {"id": "6"},
