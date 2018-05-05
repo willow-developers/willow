@@ -8,6 +8,7 @@ exports.test = (req, res) => {
     const dataPath = path.join(path.dirname(__dirname),'/dummy_data/graph_data.json');
     
     fs.readFile(dataPath, (err, data) => {
+        console.log(data);
         if (err) console.error(err);
         res.send(JSON.parse(data));
     })
@@ -35,6 +36,8 @@ exports.postUser = (req, res) => {
 
 exports.getProjectData = (req, res) => {
     let projectID = req.query.id;
+
+    console.log(req);
 
     // knex('labels').then(results => { res.status(200).send(results) }).catch(err => { res.status(500).send(err) });
 

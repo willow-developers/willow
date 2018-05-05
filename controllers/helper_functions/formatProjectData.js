@@ -12,6 +12,7 @@ module.exports = formatProjectData = data => {
   for (var node of data.nodes) {
     node.id = node.hash_id;
     node.label = data.labels[node.label_id - 1];
+    node.data = node.node_description;
     // use node.label_id - 1 here because labels array is zero-indexed
   }
 
