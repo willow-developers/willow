@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const formatProjectData = require('./helper_functions/formatProjectData');
 
 const knex = require('../database/index');
 
@@ -49,10 +50,11 @@ exports.getProjectData = (req, res) => {
             links: results[2],
             labels: results[3],
         }
-
-        res.status(200).send(projectData);
+        let formattedData = formatProjectData(projectData);
+        res.status(200).send(formattedData);
     }).catch(err => {
         console.log(err);
         res.status(500).send(err);
     });
-}
+};
+
