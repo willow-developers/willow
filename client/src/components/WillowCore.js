@@ -1,21 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import axios from 'axios';
-
 
 class WillowCore extends Component {
-  constructor(props) {
-    super(props);
- 
-  }
-  componentDidMount() {
-    this.d3Simulation();
-  }
-
-  componentDidUpdate() {
-    this.d3Simulation();
-  }
-
   d3Simulation() {
     const props = this.props;
 
@@ -25,10 +11,10 @@ class WillowCore extends Component {
       const links = data.links;
 
       const simulation = d3.forceSimulation(nodes)
-          .force("link", d3.forceLink(links).id(d => d.id))
-        //   .force("charge", d3.forceManyBody())
-        //   .force("center", d3.forceCenter(500, 250))
-          .on("tick", ticked);
+        .force("link", d3.forceLink(links).id(d => d.id))
+      //   .force("charge", d3.forceManyBody())
+      //   .force("center", d3.forceCenter(500, 250))
+        .on("tick", ticked);
       
       const svg = d3.select('#testingGround');
 
@@ -61,12 +47,12 @@ class WillowCore extends Component {
 
       // User Interactions
       node.on('click', function(d, i) {
-          props.clickFunction(d)
+        props.clickFunction(d)
           
       })
 
       d3.select('body').on("keypress", function() {
-          console.log(d3.event.keyCode);
+        console.log(d3.event.keyCode);
       })
     //   d3.select(window).on("keydown", function(){
     //     console.log();
@@ -93,40 +79,43 @@ class WillowCore extends Component {
           .attr("y1", d => d.source.y)
           .attr("x2", d => d.target.x)
           .attr("y2", d => d.target.y);
-
       }
 
       function drag() {
-  
         function dragstarted(d) {
           if (!d3.event.active) simulation.alphaTarget(0.3).restart();
           d.fx = d.x;
           d.fy = d.y;
-        }
-        
+        }        
         function dragged(d) {
           d.fx = d3.event.x;
           d.fy = d3.event.y;
         }
-        
         function dragended(d) {
           if (!d3.event.active) simulation.alphaTarget(0);
         //   d.fx = null;
         //   d.fy = null;
         }
-        
         return d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended);
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended);
       }
+  }
+
+  componentDidMount() {
+    this.d3Simulation();
+  }
+
+  componentDidUpdate() {
+    this.d3Simulation();
   }
 
   render() {
     return (
-        <div>
-            <svg id="testingGround" width={1000} height={500}/>
-        </div>
+      <div>
+        <svg id="testingGround" width={1000} height={500}/>
+      </div>
     );
   }
 }
