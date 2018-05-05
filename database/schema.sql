@@ -1,8 +1,12 @@
--- RUN THIS FILE IN THE TERMINAL (within ROOT folder):
--- psql < schema.sql
+-- STEPS TO SET UP / START DATABASE LOCALLY:
 
--- TO CONNECT TO THE DATABASE IN THE TERMINAL:
--- \c willow;
+-- 1) brew install postgresql
+-- 2) brew servives start postgresql
+-- 3) psql < database/schema.sql (in root folder)
+
+-- TO ACCESS THE DATABASE IN THE TERMINAL:
+-- 1) psql --> 'psql' opens the postgreSQL command line
+-- 2) \c willow;
 
 -- SAMPLE QUERY IN TERMINAL ONCE CONNECTED:
 -- SELECT * FROM users;
@@ -17,8 +21,12 @@ DROP TABLE IF EXISTS labels CASCADE;
 DROP TABLE IF EXISTS nodes CASCADE;
 DROP TABLE IF EXISTS links CASCADE;
 
+-- DROP DEFAULT USER
+DROP USER IF EXISTS willow_admin;
+
 DROP DATABASE IF EXISTS willow;
 CREATE DATABASE willow;
+CREATE USER willow_admin WITH SUPERUSER PASSWORD 'qwerty';
 
 -- command to connect to 'willow' database --> ensures tables are created within correct DB
 \c willow;
