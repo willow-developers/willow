@@ -35,18 +35,24 @@ exports.postUser = (req, res) => {
 exports.getProjectData = (req, res) => {
     let projectID = req.query.id;
 
-    knex('projects').where('id', projectID).then(results => { res.status(200).send(results) }).catch(err => { res.status(500).send(err) });
+    // knex('labels').then(results => { res.status(200).send(results) }).catch(err => { res.status(500).send(err) });
 
-    // Promise.all(
-    //     knex('projects').where('id', projectID),
-    //     knex('nodes').where('project_id', projectID),
-    //     // knex('links').where('project_id', 
-    //     knex('labels')
-    // ).then(results => {
-    //     console.log(results);
-    //     res.status(200).send(results);
-    // }).catch(err => {
-    //     console.log(err);
-    //     res.status(500).send(err);
-    // });
+    Promise.all([
+        knex('projects').where('id', projectID),
+        knex('nodes').where('project_id', projectID),
+        knex('links').where('project_id', projectID),
+        knex('labels')
+    ]).then(results => {
+        let projectData = {
+            project: results[0][0],
+            nodes: results[1],
+            links: results[2],
+            labels: results[3],
+        }
+
+        res.status(200).send(projectData);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
 }
