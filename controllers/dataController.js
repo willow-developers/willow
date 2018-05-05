@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const formatProjectData = require('./helper_functions/formatProjectData');
 
 const knex = require('../database/index');
 
@@ -7,6 +8,7 @@ exports.test = (req, res) => {
     const dataPath = path.join(path.dirname(__dirname),'/dummy_data/graph_data.json');
     
     fs.readFile(dataPath, (err, data) => {
+        console.log(data);
         if (err) console.error(err);
         res.send(JSON.parse(data));
     })
@@ -35,18 +37,27 @@ exports.postUser = (req, res) => {
 exports.getProjectData = (req, res) => {
     let projectID = req.query.id;
 
-    knex('projects').where('id', projectID).then(results => { res.status(200).send(results) }).catch(err => { res.status(500).send(err) });
+    console.log(req);
 
-    // Promise.all(
-    //     knex('projects').where('id', projectID),
-    //     knex('nodes').where('project_id', projectID),
-    //     // knex('links').where('project_id', 
-    //     knex('labels')
-    // ).then(results => {
-    //     console.log(results);
-    //     res.status(200).send(results);
-    // }).catch(err => {
-    //     console.log(err);
-    //     res.status(500).send(err);
-    // });
-}
+    // knex('labels').then(results => { res.status(200).send(results) }).catch(err => { res.status(500).send(err) });
+
+    Promise.all([
+        knex('projects').where('id', projectID),
+        knex('nodes').where('project_id', projectID),
+        knex('links').where('project_id', projectID),
+        knex('labels')
+    ]).then(results => {
+        let projectData = {
+            project: results[0][0],
+            nodes: results[1],
+            links: results[2],
+            labels: results[3],
+        }
+        let formattedData = formatProjectData(projectData);
+        res.status(200).send(formattedData);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send(err);
+    });
+};
+
