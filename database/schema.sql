@@ -64,13 +64,14 @@ CREATE TABLE labels (
 
 CREATE TABLE nodes (
   id SERIAL,
+  hash_id varchar(100),
   owner_id INTEGER,
   project_id INTEGER,
   label_id INTEGER,
   node_description varchar(100),
   node_status varchar(100), -- Completed, In Progress, Closed/Cancelled, etc.
   node_data jsonb,
-  PRIMARY KEY (id),
+  PRIMARY KEY (hash_id),
   FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE,
   FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE,
   FOREIGN KEY (label_id) REFERENCES labels (id) ON DELETE CASCADE
@@ -78,13 +79,13 @@ CREATE TABLE nodes (
 
 CREATE TABLE links (
   id SERIAL,
-  source_id INTEGER,
-  target_id INTEGER,
+  source_id varchar(100),
+  target_id varchar(100),
   label_id INTEGER,
   link_data jsonb,
   PRIMARY KEY (id),
-  FOREIGN KEY (source_id) REFERENCES nodes (id) ON DELETE CASCADE,
-  FOREIGN KEY (target_id) REFERENCES nodes (id) ON DELETE CASCADE,
+  FOREIGN KEY (source_id) REFERENCES nodes (hash_id) ON DELETE CASCADE,
+  FOREIGN KEY (target_id) REFERENCES nodes (hash_id) ON DELETE CASCADE,
   FOREIGN KEY (label_id) REFERENCES labels (id) ON DELETE CASCADE
 );
 
@@ -134,42 +135,42 @@ INSERT INTO labels (label_type, label_sub_type, label_notes)
 
 -- NODES:
 -- START NODE: (1)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description)
-  VALUES (1, 1, 1, 'Solo Week Project');
+INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
+  VALUES (1, 1, 1, 'Solo Week Project', 'twagner55-2-1525548651799');
 
 -- FIRST SUBTASK: (2)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description)
-  VALUES (1, 1, 3, 'Settle on a project idea');
+INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
+  VALUES (1, 1, 3, 'Settle on a project idea', 'twagner55-2-1525548648849');
 
 -- SUBTASK 2a: (3)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description)
-  VALUES (1, 1, 3, 'Develop/write front-end code');
+INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
+  VALUES (1, 1, 3, 'Develop/write front-end code', 'twagner55-2-1525548645408');
 
 -- SUBTASK 2b: (4)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description)
-  VALUES (1, 1, 3, 'Write back-end code (server and datbase)');
+INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
+  VALUES (1, 1, 3, 'Write back-end code (server and datbase)', 'twagner55-2-1525548581795');
 
 -- END GOAL: (5)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description)
-  VALUES (1, 1, 2, 'Deploy MVP-version of Solo Week Project');
+INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
+  VALUES (1, 1, 2, 'Deploy MVP-version of Solo Week Project', 'twagner55-2-1525548748852');
 
 -- LINKS:
 -- START TO SETTLE ON PROJECT IDEA
 INSERT INTO links (source_id, target_id, label_id)
-  VALUES (1, 2, 8);
+  VALUES ('twagner55-2-1525548651799', 'twagner55-2-1525548648849', 8);
 
 -- PROJECT IDEA TO FRONT-END CODE
 INSERT INTO links (source_id, target_id, label_id)
-  VALUES (2, 3, 7);
+  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548645408', 7);
 
 -- PROJECT IDEA TO BACK-END CODE
 INSERT INTO links (source_id, target_id, label_id)
-  VALUES (2, 4, 7);
+  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548581795', 7);
 
 -- FRONT-END CODE TO MVP
 INSERT INTO links (source_id, target_id, label_id)
-  VALUES (3, 5, 7);
+  VALUES ('twagner55-2-1525548645408', 'twagner55-2-1525548748852', 7);
 
 -- BACK-END COD TO MVP
 INSERT INTO links (source_id, target_id, label_id)
-  VALUES (4, 5, 7);
+  VALUES ('twagner55-2-1525548581795', 'twagner55-2-1525548748852', 7);
