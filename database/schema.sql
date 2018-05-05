@@ -1,8 +1,12 @@
--- RUN THIS FILE IN THE TERMINAL (within ROOT folder):
--- psql < schema.sql
+-- STEPS TO SET UP / START DATABASE LOCALLY:
 
--- TO CONNECT TO THE DATABASE IN THE TERMINAL:
--- \c willow;
+-- 1) brew install postgresql
+-- 2) brew servives start postgresql
+-- 3) psql < database/schema.sql (in root folder)
+
+-- TO ACCESS THE DATABASE IN THE TERMINAL:
+-- 1) psql --> 'psql' opens the postgreSQL command line
+-- 2) \c willow;
 
 -- SAMPLE QUERY IN TERMINAL ONCE CONNECTED:
 -- SELECT * FROM users;
