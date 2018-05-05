@@ -17,8 +17,12 @@ DROP TABLE IF EXISTS labels CASCADE;
 DROP TABLE IF EXISTS nodes CASCADE;
 DROP TABLE IF EXISTS links CASCADE;
 
+-- DROP DEFAULT USER
+DROP USER IF EXISTS willow_admin;
+
 DROP DATABASE IF EXISTS willow;
 CREATE DATABASE willow;
+CREATE USER willow_admin WITH SUPERUSER PASSWORD 'qwerty';
 
 -- command to connect to 'willow' database --> ensures tables are created within correct DB
 \c willow;
