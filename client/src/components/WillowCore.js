@@ -107,10 +107,6 @@ class WillowCore extends Component {
     this.d3Simulation();
   }
 
-  componentDidUpdate() {
-    this.d3Simulation();
-  }
-
   render() {
     return (
       <div>

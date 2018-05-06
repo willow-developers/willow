@@ -11,6 +11,7 @@ class ProjectView extends Component {
 	
 		this.state = {
 		  bool: false,
+		  render: false,
 		  data: {nodes:[], links:[]},
 		  selectedData: {},
 		}
@@ -19,6 +20,7 @@ class ProjectView extends Component {
 	  componentDidMount() {
 		axios.get('/api/data').then(result => {
 			this.setState({
+				render: true,
 				data: result.data
 			})
 		})
@@ -35,7 +37,7 @@ class ProjectView extends Component {
 		return (
 		  <div className={ styles.col_12_of_12 }>
 			<h1> Project View </h1>
-			<WillowCore clickFunction={this.clickFunction.bind(this)} data={this.state.data}/>
+			{this.state.render && <WillowCore clickFunction={this.clickFunction.bind(this)} data={this.state.data}/>}
 			{this.state.bool && <RenderedDoc docInfo={this.state.selectedData}/>}
 		  </div>
 		);

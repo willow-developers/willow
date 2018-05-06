@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 import fakeAuth from '../utils/fakeAuth';
 import Header from '../components/Header';
@@ -11,11 +13,15 @@ class App extends Component {
     this.state = {}
   }
 
+  componentDidMount() {
+    this.props.fetchUser();
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Header fakeAuth={ fakeAuth } />
+          <Header />
           <Main fakeAuth={ fakeAuth } />
         </div>
       </BrowserRouter>
@@ -23,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, actions)(App);
