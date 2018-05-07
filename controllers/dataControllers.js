@@ -2,8 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const ls = require('local-storage');
 
-const fakeAuth = require('../dummy_data/fakeAuth.js');
-
 exports.test = (req, res) => {
   const dataPath = path.join(path.dirname(__dirname),'/dummy_data/graph_data.json');
   fs.readFile(dataPath, (err, data) => {
@@ -23,7 +21,7 @@ exports.currentUser = (req, res) => {
 
 exports.login = (req, res) => {
 	ls('user', 1)
-	res.send('');
+	res.send({ user: 1 });
 };
 
 exports.logout = (req, res) => {

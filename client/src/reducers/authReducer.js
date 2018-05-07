@@ -1,14 +1,27 @@
-import { FETCH_USER } from '../actions/types';
+import { USER_HAS_ERRORED, USER_IS_LOADING, USER_CHECK_STATUS_SUCCESS } from '../actions/types';
 
-// for the user login we are going to have 3 conditions
-// 1. as we wait for the async to come back we send back `null` and that will show no buttons
-// 2. if the user is not logged in it will return `false` which will render the login button.
-// if the user is logged in it will return the user id and render all the buttons and the logout button.
-export default function(state = null, action) {
-	// console.log(action);
+export function userHasErrored(state = false, action) {
 	switch (action.type) {
-		case FETCH_USER:
-			return action.payload || false;
+		case USER_HAS_ERRORED:
+			return action.hasErrored;
+		default:
+			return state;
+	}
+}
+
+export function userIsLoading(state = false, action) {
+	switch (action.type) {
+		case USER_IS_LOADING:
+			return action.isLoading;
+		default:
+			return state;
+	}
+}
+
+export function userStatus(state = null, action) {
+	switch (action.type) {
+		case USER_CHECK_STATUS_SUCCESS:
+			return action.userStatus || false;
 		default:
 			return state;
 	}

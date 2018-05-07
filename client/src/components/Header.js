@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { userCheckStatus } from '../actions/auth';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 
-import Button from './Button';
+import Button from './UI/Button';
 
 import logo from '../assets/images/logo.svg';
 import styles from '../assets/sass/Header.module.scss';
 import '../assets/sass/Header.scss';
-
-import * as actions from '../actions';
 
 class Header extends Component {
 	renderHeader() {
@@ -20,17 +18,17 @@ class Header extends Component {
 					icon={ 'directions_run' }
 					iconSide={ 'left' }
 					type={ 'small' }
-					handleClick={ () => axios.get('/api/logout')
-						.then(() => this.props.fetchUser())
-						.then(() => history.push("/"))
-					}
+					handleClick={ () => {
+						this.props.userCheckStatus('/api/logout');
+						history.push("/");
+					}}
 				/>
 			);
 		});
 
-		if (this.props.auth === null) {
+		if (this.props.userStatus === null) {
 			return;
-		} else if (this.props.auth === false) {
+		} else if (this.props.userStatus === false) {
 			return (
 				<ul>
 					<li>
@@ -74,7 +72,7 @@ class Header extends Component {
 			);
 		}
 	}
-
+	
 	render() {
 		return (
 			<nav className={ styles.App_header }>
@@ -96,8 +94,12 @@ class Header extends Component {
 	}
 };
 
-function mapStateToProps({ auth, fetchUser }) {
-	return { auth, fetchUser };
-}
+const mapStateToProps = (state) => {
+  return { userStatus: state.userStatus };
+};
 
-export default connect(mapStateToProps, actions)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { userCheckStatus } from '../actions/auth';
 import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			redirectToReferrer: false
-		}
-	}
+import Button from '../components/UI/Button';
 
-	login = () => {
-		this.props.fakeAuth.authenticate(() => {
-			this.setState({ redirectToReferrer: true });
-		});
-	};
+class Login extends Component {
 
 	loginMessage = (path) => (
 		path === '/login'
@@ -29,18 +21,33 @@ class Login extends Component {
 
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: '/login' } };
-		const { redirectToReferrer } = this.state;
+		const redirectToReferrer = this.props.userStatus;
+
 		return (
 			redirectToReferrer
 				? (this.loginRedirect(from))
 				: (
 					<div>
 						{ this.loginMessage(from.pathname) }
-						<button onClick={ this.login }>Log in</button>
+						<Button
+							value={ 'Login' }
+							icon={ 'account_circle' }
+							type={ 'small' }
+							iconSide={ 'left' }
+							handleClick={ () => this.props.userCheckStatus('/api/login') }
+						/>
 					</div>
 				)
 		);
 	}
-}
+};
 
-export default Login;
+const mapStateToProps = (state) => {
+  return { userStatus: state.userStatus };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

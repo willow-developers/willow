@@ -1,32 +1,50 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { userCheckStatus } from '../actions/auth';
 
-import fakeAuth from '../utils/fakeAuth';
 import Header from '../components/Header';
 import Main from './Main';
+import Loading from '../components/UI/Loading';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {}
+  componentDidMount() {
+    this.props.userCheckStatus('/api/current_user');
   }
 
-  componentDidMount() {
-    this.props.fetchUser();
+  renderApp = () => {
+    if (this.props.hasErrored) {
+      return <p>Sorry! There was an error loading the items</p>;
+    }
+    if (this.props.isLoading) {
+      return <Loading />;
+    }
+    return (
+      <div>
+        <Header />
+        <Main />
+      </div>
+    );
   }
 
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Header />
-          <Main fakeAuth={ fakeAuth } />
-        </div>
+        { this.renderApp() }
       </BrowserRouter>
     );
   }
 }
 
-export default connect(null, actions)(App);
+const mapStateToProps = (state) => {
+  return {
+    hasErrored: state.userHasErrored,
+    isLoading: state.userIsLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

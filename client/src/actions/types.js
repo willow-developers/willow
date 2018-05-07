@@ -1,1 +1,3 @@
-export const FETCH_USER = 'fetch_user';
+export const USER_HAS_ERRORED = 'USER_HAS_ERRORED';
+export const USER_IS_LOADING = 'USER_IS_LOADING';
+export const USER_CHECK_STATUS_SUCCESS = 'USER_CHECK_STATUS_SUCCESS';
