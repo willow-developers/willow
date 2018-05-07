@@ -24,6 +24,11 @@ exports.login = (req, res) => {
 	res.send({ user: 1 });
 };
 
+exports.signup = (req, res) => {
+	ls('user', 1)
+	res.send({ user: 1 });
+};
+
 exports.logout = (req, res) => {
 	ls.remove('user');
   res.send('');

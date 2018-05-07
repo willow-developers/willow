@@ -11,31 +11,38 @@ import '../assets/sass/Header.scss';
 
 class Header extends Component {
 	renderHeader() {
-		const AuthButton = withRouter(({ history }) => {
-			return (
-				<Button
-					value={ 'Sign out' }
-					icon={ 'directions_run' }
-					iconSide={ 'left' }
-					type={ 'small' }
-					handleClick={ () => {
-						this.props.userCheckStatus('/api/logout');
-						history.push("/");
-					}}
-				/>
-			);
-		});
-
+		const AuthButton = withRouter(({ history }) =>
+			!!this.props.userStatus
+				? (<Button
+						value={ 'Sign out' }
+						icon={ 'directions_run' }
+						iconSide={ 'left' }
+						type={ 'small' }
+						handleClick={ () => {
+							this.props.userCheckStatus('/api/logout');
+							history.push("/");
+						}}
+					/>)
+				: (<NavLink exact to='/login'><Button
+						value={ 'Login' }
+						icon={ 'account_circle' }
+						type={ 'small' }
+						iconSide={ 'left' }
+					/></NavLink>)
+		);
 		if (this.props.userStatus === null) {
 			return;
 		} else if (this.props.userStatus === false) {
 			return (
 				<ul>
 					<li>
-						<NavLink exact to='/login'>
+						<AuthButton />
+					</li>
+					<li>
+						<NavLink exact to='/signup'>
 							<Button
-								value={ 'Login' }
-								icon={ 'account_circle' }
+								value={ 'Sign Up' }
+								icon={ 'create' }
 								type={ 'small' }
 								iconSide={ 'left' }
 							/>
@@ -79,7 +86,7 @@ class Header extends Component {
 				<div className={ styles.grid }>
 					<div className={ styles.row }>
 						<div className={`${ styles.logo_block } ${ styles.col_2_of_8 }`}>
-							<Link to='/'>
+							<Link to={ !!this.props.userStatus ? '/dashboard' : '/' }>
 								<img src={ logo } className={ styles.logo } alt="logo" />
 					    	<span className={ styles.title }>Willow</span>
 				    	</Link>
@@ -102,4 +109,4 @@ const mapDispatchToProps = (dispatch) => {
   return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
