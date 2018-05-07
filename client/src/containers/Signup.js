@@ -5,22 +5,16 @@ import { Redirect } from 'react-router-dom';
 
 import Button from '../components/UI/Button';
 
-class Login extends Component {
-
-	loginMessage = (path) => (
-		path === '/login'
-		? (<p>Welcome back, please login.</p>)
-		: (<p>Sorry, you must log in to view the { path.substr(1) } page.</p>)
-	);
+class Signup extends Component {
 
 	loginRedirect = (start) => (
-		start.pathname === '/login'
+		start.pathname === '/signup'
 		? (<Redirect to={'/'} />)
 		: (<Redirect to={ start } />)
 	);
 
 	render() {
-		const { from } = this.props.location.state || { from: { pathname: '/login' } };
+		const { from } = this.props.location.state || { from: { pathname: '/signup' } };
 		const redirectToReferrer = this.props.userStatus;
 
 		return (
@@ -28,13 +22,13 @@ class Login extends Component {
 				? (this.loginRedirect(from))
 				: (
 					<div>
-						{ this.loginMessage(from.pathname) }
+						<p>Welcome back, please sign up!</p>
 						<Button
-							value={ 'Login' }
-							icon={ 'account_circle' }
+							value={ 'Sign Up' }
+							icon={ 'create' }
 							type={ 'small' }
 							iconSide={ 'left' }
-							handleClick={ () => this.props.userCheckStatus('/api/login') }
+							handleClick={ () => this.props.userCheckStatus('/api/signup') }
 						/>
 					</div>
 				)
@@ -50,4 +44,4 @@ const mapDispatchToProps = (dispatch) => {
   return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

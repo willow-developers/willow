@@ -1,50 +1,54 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Home from '../components/Home';
 import Dashboard from '../components/Dashboard';
 import Project from './Project';
 import Login from './Login';
+import Signup from './Signup';
 
 import styles from '../assets/sass/Main.module.scss';
 
-const Main = ({ fakeAuth }) => {
-	const PrivateRoute = ({ component: Component, ...rest }) => (
-		<Route { ...rest } render={(info) =>
-			fakeAuth.isAuthenticated
-			? (<Component
-					{ ...info }
-					fakeAuth={ fakeAuth }
-				/>)
-			: (<Redirect to={{
-					pathname: '/login',
-					state: { from: info.location }
-				}}/>)
-			}
-		/>
-	);
+class Main extends Component {
+	render() {
+		const PrivateRoute = ({ component: Component, ...rest }) => {
+			return (
+				<Route { ...rest } render={(info) =>
+					!!this.props.userStatus
+					? (<Component { ...info } />)
+					: (<Redirect to={{
+							pathname: '/login',
+							state: { from: info.location }
+						}}/>)
+					}
+				/>
+			);
+		};
+		const MainRoute = ({ component: Component, ...rest }) => (
+			<Route { ...rest } render={(info) =>
+				<Component { ...info } />}
+			/>
+		);
 
-	const MainRoute = ({ component: Component, ...rest }) => (
-		<Route { ...rest } render={(info) =>
-			<Component
-				{ ...info }
-				fakeAuth={ fakeAuth }
-			/>}
-		/>
-	);
+		return (
+			<main className={ styles.grid }>
+				<div className={ styles.row }>
+					<Switch>
+						<PrivateRoute path='/dashboard' component={ Dashboard } />
+						<PrivateRoute path='/project' component={ Project } />
+						<MainRoute exact path='/' component={ Home } />
+						<MainRoute path='/login' component={ Login } />
+						<MainRoute path='/signup' component={ Signup } />
+					</Switch>
+				</div>
+			</main>
+		);
+	}
+}
 
-	return (
-		<main className={ styles.grid }>
-			<div className={ styles.row }>
-				<Switch>
-					<PrivateRoute path='/dashboard' component={ Dashboard } />
-					<PrivateRoute path='/project' component={ Project } />
-					<MainRoute exact path='/' component={ Home } />
-					<MainRoute path='/login' component={ Login } />
-				</Switch>
-			</div>
-		</main>
-	);
+const mapStateToProps = (state) => {
+  return { userStatus: state.userStatus };
 };
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
