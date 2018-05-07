@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import styles from '../assets/sass/Button.module.scss';
+import styles from '../../assets/sass/Button.module.scss';
 
 // Available props for Button
 // <Button

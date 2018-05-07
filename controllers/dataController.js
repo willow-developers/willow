@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const formatProjectData = require('./helper_functions/formatProjectData');
+const ls = require('local-storage');
 
 const knex = require('../database/index');
 
@@ -59,5 +60,29 @@ exports.getProjectData = (req, res) => {
         console.log(err);
         res.status(500).send(err);
     });
+};
+
+exports.currentUser = (req, res) => {
+    const checkUser = ls('user');
+    if (checkUser === null) {
+        res.send('');
+    } else {
+        res.send({ user: 1 });
+    }
+};
+
+exports.login = (req, res) => {
+    ls('user', 1)
+    res.send({ user: 1 });
+};
+
+exports.signup = (req, res) => {
+    ls('user', 1)
+    res.send({ user: 1 });
+};
+
+exports.logout = (req, res) => {
+    ls.remove('user');
+  res.send('');
 };
 

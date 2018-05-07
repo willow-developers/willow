@@ -19,7 +19,7 @@ $logoHeight: 35px;
 	}
 
 	.logo {
-		animation: App_logoSpin infinite 20s linear;
+		// animation: App_logoSpin infinite 20s linear;
 		height: $logoHeight;
 		vertical-align: top;
 	}
@@ -52,7 +52,7 @@ $logoHeight: 35px;
 	}
 }
 
-@keyframes App_logoSpin {
-	from { transform: rotate(0deg); }
-	to { transform: rotate(360deg); }
-}
+// @keyframes App_logoSpin {
+// 	from { transform: rotate(0deg); }
+// 	to { transform: rotate(360deg); }
+// }
