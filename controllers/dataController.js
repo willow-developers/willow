@@ -36,7 +36,7 @@ exports.postUser = (req, res) => {
     });
 };
 
-exports.getProjects = (req, res) => {
+exports.fetchProjects = (req, res) => {
     // update as needed!!
     let owner_id = req.query.user;
 

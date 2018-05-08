@@ -7,7 +7,7 @@ router.get('/api/data', dataController.test);
 
 router.get('/api/projectData', dataController.getProjectData);
 
-router.get('/api/projects', dataController.getProjects);
+router.get('/api/projects', dataController.fetchProjects);
 
 router.post('/api/user', dataController.postUser);
 
