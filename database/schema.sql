@@ -79,6 +79,7 @@ CREATE TABLE nodes (
 
 CREATE TABLE links (
   id SERIAL,
+  hash_id varchar(100),
   project_id INT,
   source_id varchar(100),
   target_id varchar(100),
@@ -138,41 +139,41 @@ INSERT INTO labels (label_type, label_sub_type, label_notes)
 -- NODES:
 -- START NODE: (1)
 INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
-  VALUES (1, 1, 1, 'Solo Week Project', 'twagner55-2-1525548651799');
+  VALUES (1, 1, 1, 'Solo Week Project', 'twagner55-1-1525548651799');
 
 -- FIRST SUBTASK: (2)
 INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
-  VALUES (1, 1, 3, 'Settle on a project idea', 'twagner55-2-1525548648849');
+  VALUES (1, 1, 3, 'Settle on a project idea', 'twagner55-1-1525548648849');
 
 -- SUBTASK 2a: (3)
 INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
-  VALUES (1, 1, 3, 'Develop/write front-end code', 'twagner55-2-1525548645408');
+  VALUES (1, 1, 3, 'Develop/write front-end code', 'twagner55-1-1525548645408');
 
 -- SUBTASK 2b: (4)
 INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
-  VALUES (1, 1, 3, 'Write back-end code (server and datbase)', 'twagner55-2-1525548581795');
+  VALUES (1, 1, 3, 'Write back-end code (server and datbase)', 'twagner55-1-1525548581795');
 
 -- END GOAL: (5)
 INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id)
-  VALUES (1, 1, 2, 'Deploy MVP-version of Solo Week Project', 'twagner55-2-1525548748852');
+  VALUES (1, 1, 2, 'Deploy MVP-version of Solo Week Project', 'twagner55-1-1525548748852');
 
 -- LINKS:
 -- START TO SETTLE ON PROJECT IDEA
-INSERT INTO links (source_id, target_id, label_id, project_id)
-  VALUES ('twagner55-2-1525548651799', 'twagner55-2-1525548648849', 8, 1);
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('twagner55-1-1525548651799', 'twagner55-1-LINK-1525548651732', 'twagner55-1-1525548648849', 8, 1);
 
 -- PROJECT IDEA TO FRONT-END CODE
-INSERT INTO links (source_id, target_id, label_id, project_id)
-  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548645408', 7, 1);
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('twagner55-1-1525548648849', 'twagner55-1-LINK-1525548651794', 'twagner55-1-1525548645408', 7, 1);
 
 -- PROJECT IDEA TO BACK-END CODE
-INSERT INTO links (source_id, target_id, label_id, project_id)
-  VALUES ('twagner55-2-1525548648849', 'twagner55-2-1525548581795', 7, 1);
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('twagner55-1-1525548648849', 'twagner55-1-LINK-1525548651797', 'twagner55-1-1525548581795', 7, 1);
 
 -- FRONT-END CODE TO MVP
-INSERT INTO links (source_id, target_id, label_id, project_id)
-  VALUES ('twagner55-2-1525548645408', 'twagner55-2-1525548748852', 7, 1);
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('twagner55-1-1525548645408', 'twagner55-1-LINK-1525548651839', 'twagner55-1-1525548748852', 7, 1);
 
--- BACK-END COD TO MVP
-INSERT INTO links (source_id, target_id, label_id, project_id)
-  VALUES ('twagner55-2-1525548581795', 'twagner55-2-1525548748852', 7, 1);
+-- BACK-END CODE TO MVP
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('twagner55-1-1525548581795', 'twagner55-1-LINK-1525548651899', 'twagner55-1-1525548748852', 7, 1);

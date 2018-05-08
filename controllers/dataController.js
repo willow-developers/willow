@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const formatProjectData = require('./helper_functions/formatProjectData');
+const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatBeforeSaving');
 const ls = require('local-storage');
 
 const knex = require('../database/index');
@@ -38,10 +39,6 @@ exports.postUser = (req, res) => {
 exports.getProjectData = (req, res) => {
     let projectID = req.query.id;
 
-    console.log(req);
-
-    // knex('labels').then(results => { res.status(200).send(results) }).catch(err => { res.status(500).send(err) });
-
     Promise.all([
         knex('projects').where('id', projectID),
         knex('nodes').where('project_id', projectID),
@@ -59,6 +56,53 @@ exports.getProjectData = (req, res) => {
     }).catch(err => {
         console.log(err);
         res.status(500).send(err);
+    });
+};
+
+exports.saveProject = (req, res) => {
+    // delete later if client sends an object, testing with string in Postman for now
+    if (typeof req.query.project === 'string') {
+        var { nodes, links } = JSON.parse(req.query.project);
+    } else {
+        var { nodes, links } = req.query.project;
+    }
+
+    /* The function below returns an object as follows:
+    data = { nodes: [nodes that need updating], links: [links that need updating] }; */
+    let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
+    let allUpdates = [...nodesToUpdate, ...linksToUpdate];
+
+    Promise.all(allUpdates.map(entry => {
+        // if the entry is a node --> update 'Nodes' table
+        if (entry.hasOwnProperty('node_data')) {
+            if (entry.status === 'new') {
+                delete entry.status;
+                return knex('nodes').insert(entry);
+            } else if (entry.status === 'updated') {
+                delete entry.status;
+                return knex('nodes').where('hash_id', '=', entry.hash_id).update(entry);
+            } else if (entry.status === 'delete') {
+                return knex('nodes').where('hash_id', '=', entry.hash_id).del();
+            }
+
+            // else: update 'Links' table
+        } else {
+            if (entry.status === 'new') {
+                delete entry.status;
+                return knex('links').insert(entry);
+            } else if (entry.status === 'updated') {
+                delete entry.status;
+                return knex('links').where('hash_id', '=', entry.hash_id).update(entry);
+            } else if (entry.status === 'delete') {
+                return knex('links').where('hash_id', '=', entry.hash_id).del();
+            }
+        }
+    })).then(response => {
+        console.log('res: ', response);
+        res.status(200).send('success!');
+    }).catch(err => {
+        console.log('err: ', err);
+        res.status(400).send('error!!');
     });
 };
 
@@ -83,6 +127,6 @@ exports.signup = (req, res) => {
 
 exports.logout = (req, res) => {
     ls.remove('user');
-  res.send('');
+    res.send('');
 };
 
