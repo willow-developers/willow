@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const formatProjectData = require('./helper_functions/formatProjectData');
 const ls = require('local-storage');
+const metascraper = require('metascraper');
+const got = require('got');
 
 const knex = require('../database/index');
 
@@ -83,6 +85,15 @@ exports.signup = (req, res) => {
 
 exports.logout = (req, res) => {
     ls.remove('user');
-  res.send('');
+    res.send('');
 };
 
+exports.getBookmarkMetadata = async (req, res) => {
+    const { targetUrl } = req.query;
+    
+    // targetUrl = 'http://www.bloomberg.com/news/articles/2016-05-24/as-zenefits-stumbles-gusto-goes-head-on-by-selling-insurance';
+    const { body: html, url } = await got(targetUrl);
+    const metadata = await metascraper({html, url});
+    console.log(metadata)
+    res.send(metadata);
+};

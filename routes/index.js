@@ -13,5 +13,6 @@ router.get('/api/current_user', dataController.currentUser);
 router.get('/api/login', dataController.login);
 router.get('/api/logout', dataController.logout);
 router.get('/api/signup', dataController.signup);
+router.get('/api/bookmarks', dataController.getBookmarkMetadata);
 
 module.exports = router;
