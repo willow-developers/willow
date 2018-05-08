@@ -36,6 +36,19 @@ exports.postUser = (req, res) => {
     });
 };
 
+exports.createNewProject = (req, res) => {
+    let { project_name, owner_id } = req.query;
+    let projectData = { project_name, owner_id };
+
+    knex('projects').insert(projectData).then(result => {
+        console.log('result: ', result);
+        res.status(200).send(result);
+    }).catch(err => {
+        console.log('err: ', err);
+        res.status(500).send(err);
+    });
+};
+
 exports.fetchProjects = (req, res) => {
     // update as needed!!
     let owner_id = req.query.user;
