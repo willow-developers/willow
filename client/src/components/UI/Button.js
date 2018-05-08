@@ -6,7 +6,7 @@ import styles from '../../assets/sass/Button.module.scss';
 // <Button
 	// value={ 'Add Task' }
 	// icon={ 'add' }
-	// type={ 'big' 'round' 'bigRound' }
+	// type={ 'big' 'small' 'round' 'bigRound' 'smallRound' }
 	// iconSide={ 'right' 'left' 'center' }
 	// disabled={ true false }
 	// btnFloat={ 'right' 'left' 'none' }
@@ -26,6 +26,7 @@ const Button = ({ type, disabled, value, icon, handleClick, iconSide, btnFloat, 
 			[styles.btn_small]: type === 'small',
 			[styles.btn_round]: type === 'round',
 			[styles.btn_bigRound]: type === 'bigRound',
+			[styles.btn_smallRound]: type === 'smallRound',
 			[styles.btn_disabled]: disabled === true,
 			[styles.iLeft]: iconSide === 'left',
 			[styles.iRight]: iconSide === 'right',
