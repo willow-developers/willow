@@ -36,6 +36,22 @@ exports.postUser = (req, res) => {
     });
 };
 
+exports.getProjects = (req, res) => {
+    // update as needed!!
+    let owner_id = req.query.user;
+
+    knex('projects')
+        .where('owner_id', owner_id)
+        .then(result => {
+            console.log('result: ', result);
+            res.status(200).send(result);
+        })
+        .catch(err => {
+            console.log('err: ', err);
+            res.status(500).send(err);
+        });
+};
+
 exports.getProjectData = (req, res) => {
     let projectID = req.query.id;
 
@@ -102,7 +118,7 @@ exports.saveProject = (req, res) => {
         res.status(200).send('success!');
     }).catch(err => {
         console.log('err: ', err);
-        res.status(400).send('error!!');
+        res.status(500).send('error!!');
     });
 };
 
