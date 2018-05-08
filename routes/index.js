@@ -20,4 +20,7 @@ router.get('/api/login', authController.login);
 router.get('/api/logout', authController.logout);
 router.get('/api/signup', authController.signup);
 
+// GET BOOKMARK INFO
+router.get('/api/bookmarks', dataController.getBookmarkMetadata);
+
 module.exports = router;
