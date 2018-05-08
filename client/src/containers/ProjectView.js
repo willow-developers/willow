@@ -17,17 +17,17 @@ class ProjectView extends Component {
 
 	componentDidMount() {
 		// TO GO TO DUMMY DATA:
-		// axios.get('/api/data').then(result => {
-		// 	this.setState({
-		// 		data: result.data
-		// 	});
-		// });
+		axios.get('/api/data').then(result => {
+			this.setState({
+				data: result.data
+			});
+		});
 
 		// TO GO TO DATABASE:
-		axios.get('/api/projectData', { params: { id: 1 } }).then(result => {
-			console.log(result);
-			this.setState({data: result.data})
-		});
+		// axios.get('/api/projectData', { params: { id: 1 } }).then(result => {
+		// 	console.log(result);
+		// 	this.setState({data: result.data})
+		// });
 	}
 
 	clickFunction(data) {
