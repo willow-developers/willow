@@ -9,4 +9,9 @@ router.get('/api/projectData', dataController.getProjectData);
 
 router.post('/api/user', dataController.postUser);
 
+router.get('/api/current_user', dataController.currentUser);
+router.get('/api/login', dataController.login);
+router.get('/api/logout', dataController.logout);
+router.get('/api/signup', dataController.signup);
+
 module.exports = router;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-
 class WillowCore extends Component {
   constructor(props) {
       super(props);
@@ -8,7 +7,6 @@ class WillowCore extends Component {
       this.d3State = {
           spaceDown: false,
       }
-
       this.d3Simulation = this.d3Simulation.bind(this);
       this.zoom_actions = this.zoom_actions.bind(this);
       this.ticked = this.ticked.bind(this);
@@ -18,51 +16,53 @@ class WillowCore extends Component {
       this.keyPress = this.keyPress.bind(this);
       this.keyUp = this.keyUp.bind(this);
   }
-
 //--------------------------------------------------- LIFECYCLE METHODS
   componentDidMount() {
     this.d3Simulation(this.props);
   }
-  
-  shouldComponentUpdate(nextProps, nextState) {
-    return (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) ? 
-            true: 
-            false;
-  }
-
   componentDidUpdate() {
-    this.d3Simulation(this.props);
+    console.log("updating stuff");
+    this.d3UpdateSimulation(this.props);
   }
-
 //--------------------------------------------------- D3 FORCE SIMULATION SETUP
-
+  d3UpdateSimulation(props) {
+    const nodes = props.data.nodes;
+    const links = props.data.links;
+    console.log(nodes);
+    console.log(d3.select('.node')
+        .data(nodes).enter().append("circle"));
+        // .append("circle")
+        //     .attr("r", 10)
+        //     .attr("fill", "#000");
+    this.simulation.nodes(nodes);
+    // this.simulation.force("link").links(links);
+    // this.simulation.alpha(1).restart();
+    // console.log(this.simulation);
+    // console.log(node.selectAll("circle"));
+  }
   d3Simulation(props) {
     const data = props.data || {nodes:[], links:[]};
-
     const nodes = data.nodes;
     const links = data.links;
-
-    const simulation = d3.forceSimulation(nodes)
+    this.simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id));
     
     const svg = d3.select('#testingGround');
-
     const body = d3.select('body');
-
     const g = svg.append("g")
         .attr("class", "everything");
-
     const link = g.append("g")
             .attr("stroke", "#999")
             .attr("stroke-opacity", 0.6)
+            .attr("class", "link")
         .selectAll("line")
         .data(links)
         .enter().append("line")
             .attr("stroke-width", 5);
-
     const node = g.append("g")
             .attr("Stroke", "#fff")
             .attr("stroke-width", 1.5)
+            .attr("class", "node")
         .selectAll("circle")
         .data(nodes)
         .enter().append("circle")
@@ -71,33 +71,25 @@ class WillowCore extends Component {
     
     node.append("title")
         .text(d => d.id);
-
     // Event Listeners
-    simulation
+    this.simulation
         .on("tick", () => this.ticked(node, link));
-
     body
-        .on("shiftkey", ()=> {console.log(d3.event.shiftkey)})
         .on("keypress", () => this.keyPress())
         .on("keyup", () => this.keyUp());
-
     node
         .on('click', (d) => this.clickNode(d))
-        .call(this.drag(simulation));
-
+        .call(this.drag(this.simulation));
     svg
         .on('click', () => this.clickCreate(nodes));
-
     const zoom_handler = d3.zoom().on("zoom", () => this.zoom_actions(g));
     zoom_handler(svg);
   }
-
 //--------------------------------------------------- SIMULATION TIMESTEP
     ticked(node, link) {
         node
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
-
         link
             .attr("x1", d => d.source.x)
             .attr("y1", d => d.source.y)
@@ -144,7 +136,6 @@ class WillowCore extends Component {
           .on("drag", dragged)
           .on("end", dragended);
     }
-
 //-------------------------------------- KEYPRESS
     keyPress() {
         if (d3.event.keyCode === 32 && this.d3State.spaceDown !== true) {
@@ -152,14 +143,12 @@ class WillowCore extends Component {
             console.log(this.d3State);
         }
     }
-
     keyUp() {
         if (d3.event.keyCode === 32) {
             this.d3State.spaceDown = false;
             console.log(this.d3State);
         }
     }
-
     render() {
         return (
             <div>
@@ -168,5 +157,4 @@ class WillowCore extends Component {
         );
     }
 }
-
 export default WillowCore;

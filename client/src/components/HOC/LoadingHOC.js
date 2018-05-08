@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from '../../assets/sass/LoadingHOC.module.scss';
+import styles from '../../assets/sass/Loading.module.scss';
 
 const isEmpty = (prop) => (
 	prop === null ||
