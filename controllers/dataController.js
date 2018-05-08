@@ -101,3 +101,11 @@ exports.saveProject = (req, res) => {
             res.status(500).send('error!!');
         });
 };
+
+exports.getBookmarkMetadata = async (req, res) => {
+    const { targetUrl } = req.query;
+    const { body: html, url } = await got(targetUrl);
+    const metadata = await metascraper({html, url});
+    console.log(metadata)
+    res.send(metadata);
+};
