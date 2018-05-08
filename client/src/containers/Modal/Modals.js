@@ -2,26 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
 
-import MyPortal from './MyPortal';
-import Modal from './Modal';
+import ModalRender from '../../modalRoot';
+import ModalActions from './ModalActions';
 
 class Modals extends Component {
   render() {
     const modals = this.props.modals.map((item,i) => (
-      <MyPortal key={ i } >
-        <Modal item={ item } onClose={ (item) => this.props.dispatch(closeModal(item)) }/>
-      </MyPortal>
+      <ModalRender key={ i } >
+        <ModalActions
+          item={ item }
+          onClose={ (item) => this.props.dispatch(closeModal(item)) }
+        />
+      </ModalRender>
     ))
     return (
       <div className="modals">
-        {modals}
+        { modals }
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('from Modals: ', state.isModalOpen)
   return {
     modals: state.isModalOpen.modals
   };

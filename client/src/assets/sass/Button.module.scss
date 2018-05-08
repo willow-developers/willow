@@ -66,6 +66,26 @@
 		float: none;
 		margin: 0 auto;
 	}
+
+	&.closeModal {
+		background-color: #ef5350;
+
+		&:hover {
+			background-color: #e57373;
+		}
+	}
+
+	&.closeNotification {
+		background-color: transparent;
+		box-shadow: none;
+		transition: all .2s ease-out;
+
+		&:hover {
+			background-color: transparent;
+			box-shadow: none;
+			opacity: .75;
+		}
+	}
 }
 
 .btn__icon {
@@ -90,16 +110,18 @@
 	line-height: inherit;
 	float: left;
 	margin-right: 10px;
+	max-width: 21px;
 }
 
 %btn_big {
-  height: 24px;
-	line-height: 24px;
-	font-size: 18px;
+  height: 54px;
+	line-height: 54px;
+	font-size: 16px;
 	padding: 0 28px;
 
 	.btn__icon {
-		font-size: 24px;
+		font-size: 28px;
+		max-width: 28px;
 	}
 }
 
@@ -141,6 +163,13 @@
 	@extend %btn_big;
 	@extend %btn_round;
 	width: 54px;
+	padding: 0;
+}
+
+.btn_smallRound {
+	@extend %btn_small;
+	@extend %btn_round;
+	width: 28px;
 	padding: 0;
 }
 

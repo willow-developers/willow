@@ -1,67 +1,60 @@
-.test-button{
-  font-size: 20px;
-  color: gray;
-  padding: 5px;
-  margin: 20px;
-}
-.modals {
-  position: fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height: 300px;
-}
-.modal-wrapper{
+@import 'variables';
+@import 'waffleGrid';
+
+
+.modal_overlay {
   position: absolute;
   bottom:0;
   left:0;
   right:0;
   top: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(#000, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+
+  &.notification {
+    background: transparent;
+  }
 }
+
 .modal {
-  width: 200px;
+  width: 90%;
   background: #fff;
   border-radius: 5px;
-  min-width: 500px;
+  max-width: 600px;
   position: relative;
+  overflow: hidden;
+
+  &.confirmation {
+    max-width: 375px;
+  }
 }
-.text {
-  font-weight: bold;
-  font-size: 20px;
-  margin: 20px 0;
-	text-align: center;
+
+.modal_content {
+  text-align: center;
+  padding: 20px;
+
+  .title {
+    font-weight: 400;
+  }
+
+  .message {
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+
+  &.custom {
+    background: rgba(193, 29, 29,0.5);
+    color: #fff;
+    height: 150px;
+    padding: 0;
+  }
 }
-.buttons {
-  margin: 10px 0;
+
+.btn_bar {
+  padding: 20px;
   display: flex;
   justify-content: space-around;
-}
-.modal-button {
-  font-size: 15px;
-  color: gray;
-  padding: 5px;
-  border-radius: 5px;
-}
-.close {
-  position: absolute;
-  top: 10px;
-  right: 0px;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  color: #fff;
-  font-size: 2em;
-  cursor: pointer;
-}
-.modal-content {
-  background:  rgba(193, 29, 29,0.5);
-  color: #fff;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

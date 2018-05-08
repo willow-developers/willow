@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class CustomModalContent extends Component {
   render() {
     return (
-      <div className="modal-content">Custom Modal Content</div>
+      <div className="poop">Custom Modal Content</div>
     )
   }
 }
