@@ -12,16 +12,16 @@ class ProjectView extends Component {
 		this.state = {
 		  data: {nodes:[], links:[]},
 		  selectedData: {},
-		};
-	}
+		  username: 'JunYoo'
+		}
+
+		this.createNode = this.createNode.bind(this);
+	  }
 
 	componentDidMount() {
-		// TO GO TO DUMMY DATA:
 		axios.get('/api/data').then(result => {
-			this.setState({
-				data: result.data
-			});
-		});
+			this.setState({data: result.data})
+		})
 
 		// TO GO TO DATABASE:
 		// axios.get('/api/projectData', { params: { id: 1 } }).then(result => {
@@ -33,16 +33,16 @@ class ProjectView extends Component {
 	clickFunction(data) {
 		this.setState({
 			selectedData: data
-		});
+		})
 	}
 
 	createNode() {
 		const newNode = {
-			id: this.state.data.nodes.length + 1,
-			data: "this should work please"
-		};
+			id: `${this.state.username}-${this.state.data.nodes.length}-${Date.now()}`,
+			data: `${this.state.username}-${this.state.data.nodes.length}-${Date.now()}`
+		}
 
-		const newData = Object.create(this.state.data);
+		const newData = Object.assign({}, this.state.data);
 		newData.nodes.push(newNode);
 		this.setState({data: newData});
 	}
