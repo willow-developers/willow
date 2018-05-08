@@ -20,6 +20,10 @@ router.get('/api/login', authController.login);
 router.get('/api/logout', authController.logout);
 router.get('/api/signup', authController.signup);
 
+// GOOGLE OAuth:
+router.get('/auth/google', );
+router.get('/auth/google/callback', );
+
 // GET BOOKMARK INFO
 router.get('/api/bookmarks', dataController.getBookmarkMetadata);
 

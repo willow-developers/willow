@@ -2,14 +2,27 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+// google OAuth
+const session = require('express-session');
+const passport = require('passport');
+
 const db = require('../database/index');
 
-const keys = require('../config/keys');
+const { EXPRESS_SESSION_SECRET } = require('../config/keys');
 const routes = require('../routes/index');
 const app = express();
 app.use(bodyParser.json());
 
 app.use('/', routes);
+
+// google OAuth
+app.use(session({
+	secret: EXPRESS_SESSION_SECRET,
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 if (process.env.NODE_ENV === 'production') {
 	// making sure that express will serve up production
