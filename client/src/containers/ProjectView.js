@@ -20,27 +20,27 @@ class ProjectView extends Component {
 
 	componentDidMount() {
 		axios.get('/api/data').then(result => {
-			this.setState({data: result.data})
-		})
+			this.setState({data: result.data});
+		});
 
 		// TO GO TO DATABASE:
 		// axios.get('/api/projectData', { params: { id: 1 } }).then(result => {
 		// 	console.log(result);
-		// 	this.setState({data: result.data})
+		// 	this.setState({data: result.data});
 		// });
 	}
 
 	clickFunction(data) {
 		this.setState({
 			selectedData: data
-		})
+		});
 	}
 
 	createNode() {
 		const newNode = {
 			id: `${this.state.username}-${this.state.data.nodes.length}-${Date.now()}`,
 			data: `${this.state.username}-${this.state.data.nodes.length}-${Date.now()}`
-		}
+		};
 
 		const newData = Object.assign({}, this.state.data);
 		newData.nodes.push(newNode);
