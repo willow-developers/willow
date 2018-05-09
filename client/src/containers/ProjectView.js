@@ -4,7 +4,7 @@ import { openModal } from '../actions/modal';
 import axios from 'axios';
 
 import styles from '../assets/sass/Dashboard.module.scss';
-import RenderedDoc from '../components/RenderedDoc';
+// import RenderedDoc from '../components/RenderedDoc';
 import WillowCore from '../components/WillowCore';
 
 import Modals from './Modal/Modals';
@@ -67,8 +67,6 @@ class ProjectView extends Component {
 		);
 	}
 }
-
-// <RenderedDoc docInfo={this.state.selectedData}/>
 
 const mapStateToProps = (state) => {
   return { isModalOpen: state.isModalOpen };
