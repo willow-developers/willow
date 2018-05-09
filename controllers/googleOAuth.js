@@ -9,17 +9,26 @@ passport.use(new GoogleStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: GOOGLE_CALLBACK_URL,
     scope: "https://www.googleapis.com/auth/plus.login",
-  }, (accessToken, refreshToken, profile, cb) => {
+  }, async (accessToken, refreshToken, profile, done) => {
     console.log('Profile in Google OAuth: ', profile);
 
-    // knex('users')
-    //   .where('username', profile.id)
-    //   .then(user => {
-    //     return done(null, user);
-    //   })
-    //   .catch(err => {
-    //     return done(err, null);
-    //   }); 
+    let existingUser = await knex('users').where('google_id', profile.id);
+    existingUser = existingUser[0];
+
+    if (existingUser) {
+      console.log('existingUser: ', existingUser);
+      done(null, existingUser);
+    } else {
+      let newUser = {
+        google_id: profile.id,
+        first_name: profile.name.givenName || null,
+        last_name: profile.name.familyName || null,
+      };
+
+      let knexResult = await knex('users').insert(newUser);
+
+      done(null, newUser);
+    }
   }
 ));
 

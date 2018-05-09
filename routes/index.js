@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { GOOGLE_CALLBACK_URL } = require('../config/keys.js');
 
 const dataController = require('../controllers/dataController.js');
 const authController = require('../controllers/authController.js');
@@ -28,15 +29,13 @@ router.get('/auth/google', passportGoogle.authenticate('google'));
 // router.get('/auth/google', authController.test);
 
 router.get(
-  '/auth/google/callback',
+  GOOGLE_CALLBACK_URL,
   passportGoogle.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
-    console.log('google authentication successful!!');
+    console.log('google authentication successful!!!!');
     res.status(200).send('success');
   }
 );
-
-
 
 // GET BOOKMARK INFO
 router.get('/api/bookmarks', dataController.getBookmarkMetadata);

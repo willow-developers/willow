@@ -13,11 +13,6 @@ const routes = require('../routes/index');
 const app = express();
 app.use(bodyParser.json());
 
-app.use('/', routes);
-
-// Potential fix for cross-origin issues --> see: https://github.com/auth0/passport-linkedin-oauth2/issues/43
-// app.use(express.static(path.join(__dirname, 'build')));
-
 // google OAuth
 app.use(session({
 	secret: EXPRESS_SESSION_SECRET,
@@ -26,6 +21,8 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/', routes);
 
 if (process.env.NODE_ENV === 'production') {
 	// making sure that express will serve up production
@@ -39,4 +36,4 @@ if (process.env.NODE_ENV === 'production') {
 };
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+app.listen(PORT, () => { console.log(`listening on ${PORT}!!`)});
