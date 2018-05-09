@@ -48,7 +48,9 @@ class WillowCore extends Component {
     const links = props.data.links;
 
     this.simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id));
+        .force("link", d3.forceLink(links).id(d => d.id))
+        .force('charge', d3.forceManyBody().strength(-100))
+        .force('center', d3.forceCenter(1000 / 2, 500 / 2));
         
     const node = d3.select('.node').selectAll('g')
         .data(nodes, (d) => d.id)
