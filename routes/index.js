@@ -3,6 +3,7 @@ const router = express.Router();
 
 const dataController = require('../controllers/dataController.js');
 const authController = require('../controllers/authController.js');
+const passportGoogle = require('../controllers/googleOAuth.js');
 
 // DUMMY DATA:
 router.get('/api/data', dataController.test);
@@ -21,8 +22,21 @@ router.get('/api/logout', authController.logout);
 router.get('/api/signup', authController.signup);
 
 // GOOGLE OAuth:
-router.get('/auth/google', /*TBD */);
-router.get('/auth/google/callback', /*TBD */);
+router.get('/auth/google', passportGoogle.authenticate('google'));
+
+// working test route:
+// router.get('/auth/google', authController.test);
+
+router.get(
+  '/auth/google/callback',
+  passportGoogle.authenticate('google', { failureRedirect: '/' }),
+  function (req, res) {
+    console.log('google authentication successful!!');
+    res.status(200).send('success');
+  }
+);
+
+
 
 // GET BOOKMARK INFO
 router.get('/api/bookmarks', dataController.getBookmarkMetadata);

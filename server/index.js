@@ -15,6 +15,9 @@ app.use(bodyParser.json());
 
 app.use('/', routes);
 
+// Potential fix for cross-origin issues --> see: https://github.com/auth0/passport-linkedin-oauth2/issues/43
+// app.use(express.static(path.join(__dirname, 'build')));
+
 // google OAuth
 app.use(session({
 	secret: EXPRESS_SESSION_SECRET,

@@ -44,3 +44,10 @@ exports.logout = (req, res) => {
   ls.remove('user');
   res.send('');
 };
+
+
+// DELETE LATER, USED TO TEST OAuth:
+// exports.test = (req, res) => {
+//   console.log('req: ', req);
+//   res.status(200).send('success!!');
+// }

@@ -9,8 +9,15 @@ class Login extends Component {
 
 	loginMessage = (path) => (
 		path === '/login'
-		? (<p>Welcome back, please login.</p>)
-		: (<p>Sorry, you must log in to view the { path.substr(1) } page.</p>)
+		? ( <div>
+					<p>Welcome back, please login.</p> 
+					<a href="http://localhost:5000/auth/google">Log in With Google</a>
+				</div> )
+		: ( <div>
+					<p>Sorry, you must log in to view the { path.substr(1) } page.</p> 
+					<a href="http://localhost:5000/auth/google">Log in With Google</a>
+				</div>
+		)
 	);
 
 	loginRedirect = (start) => (
