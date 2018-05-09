@@ -4,6 +4,8 @@ const knex = require('../database/index.js');
 module.exports = function() {
   passport.serializeUser((user, done) => {
     console.log('serializing!!');
+    console.log('google_id: ', user.google_id);
+    console.log('done:' , done);
     done(null, user.google_id);
   });
 

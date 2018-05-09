@@ -9,20 +9,22 @@ passport.use(new GoogleStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: GOOGLE_CALLBACK_URL,
     scope: "https://www.googleapis.com/auth/plus.login",
+    proxy: true,
   }, async (accessToken, refreshToken, profile, done) => {
-    console.log('Profile in Google OAuth: ', profile);
+
+    console.log('Google profile: ', profile);
 
     let existingUser = await knex('users').where('google_id', profile.id);
     existingUser = existingUser[0];
 
     if (existingUser) {
-      console.log('existingUser: ', existingUser);
       done(null, existingUser);
     } else {
       let newUser = {
         google_id: profile.id,
         first_name: profile.name.givenName || null,
         last_name: profile.name.familyName || null,
+        email: profile.emails[0].value || null,
       };
 
       let knexResult = await knex('users').insert(newUser);

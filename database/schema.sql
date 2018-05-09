@@ -97,7 +97,7 @@ CREATE TABLE links (
 
 -- USER
 INSERT INTO users (google_id, first_name, last_name, email, hashed_password)
-  VALUES ('twagner', 'Tom', 'Wagner', 'twagner55@gmail.com', 'password');
+  VALUES ('107740050254369789353', 'Tom', 'Wagner', 'twagner55@gmail.com', 'password');
 
 -- PROJECT
 INSERT INTO projects (owner_id, project_name)

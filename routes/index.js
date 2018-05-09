@@ -23,7 +23,7 @@ router.get('/api/logout', authController.logout);
 router.get('/api/signup', authController.signup);
 
 // GOOGLE OAuth:
-router.get('/auth/google', passportGoogle.authenticate('google'));
+router.get('/auth/google', passportGoogle.authenticate('google', { scope: ['profile', 'email']}));
 
 // working test route:
 // router.get('/auth/google', authController.test);
@@ -32,8 +32,8 @@ router.get(
   GOOGLE_CALLBACK_URL,
   passportGoogle.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
-    console.log('google authentication successful!!!!');
-    res.status(200).send('success');
+    console.log(`google authentication successful!!`);
+    res.redirect('/dashboard');
   }
 );
 
