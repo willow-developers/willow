@@ -21,8 +21,8 @@ router.get('/api/logout', authController.logout);
 router.get('/api/signup', authController.signup);
 
 // GOOGLE OAuth:
-router.get('/auth/google', );
-router.get('/auth/google/callback', );
+router.get('/auth/google', /*TBD */);
+router.get('/auth/google/callback', /*TBD */);
 
 // GET BOOKMARK INFO
 router.get('/api/bookmarks', dataController.getBookmarkMetadata);
