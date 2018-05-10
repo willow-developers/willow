@@ -25,6 +25,13 @@ router.get('/api/signup', authController.signup);
 // GOOGLE OAuth:
 router.get('/auth/google', passportGoogle.authenticate('google', { scope: ['profile', 'email']}));
 
+// GOOGLE OAuth TESTING ROUTE:
+router.get('/api/testing', (req, res) => {
+  // session data automatically being stored in req.session.passport.user
+
+  res.status(200).send({req_session: req.session, res_sessionStore: res.req.sessionStore});
+});
+
 // working test route:
 // router.get('/auth/google', authController.test);
 
@@ -33,7 +40,7 @@ router.get(
   passportGoogle.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
     console.log(`google authentication successful!!`);
-    res.redirect('/dashboard');
+    res.redirect('/signup');
   }
 );
 

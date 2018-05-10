@@ -4,18 +4,16 @@ const knex = require('../database/index.js');
 module.exports = function() {
   passport.serializeUser((user, done) => {
     console.log('serializing!!');
-    console.log('google_id: ', user.google_id);
-    console.log('done:' , done);
-    done(null, user.google_id);
+    console.log('user: ', user);
+    done(null, user);
   });
 
-  passport.deserializeUser((google_id, done) => {
+  passport.deserializeUser((user, done) => {
     console.log('deserializing!!');
-    console.log('id: ', google_id);
-    console.log('done: ', done);
+    console.log('id: ', user);
 
     knex('users')
-      .where('google_id', google_id)
+      .where('google_id', user.google_id)
       .then(user => {
         done(null, user);
       })

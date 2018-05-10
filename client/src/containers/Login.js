@@ -10,12 +10,10 @@ class Login extends Component {
 	loginMessage = (path) => (
 		path === '/login'
 		? ( <div>
-					<p>Welcome back, please login.</p> 
-					<a href="http://localhost:3000/auth/google">Log in With Google</a>
+					<p>Welcome back, please login.</p>
 				</div> )
 		: ( <div>
 					<p>Sorry, you must log in to view the { path.substr(1) } page.</p> 
-					<a href="http://localhost:3000/auth/google">Log in With Google</a>
 				</div>
 		)
 	);
@@ -36,13 +34,15 @@ class Login extends Component {
 				: (
 					<div>
 						{ this.loginMessage(from.pathname) }
-						<Button
-							value={ 'Login' }
-							icon={ 'account_circle' }
-							type={ 'small' }
-							iconSide={ 'left' }
-							handleClick={ () => this.props.userCheckStatus('/api/login') }
-						/>
+						<a href="http://localhost:3000/auth/google">
+							<Button
+								value={ 'Login With Google' }
+								icon={ 'account_circle' }
+								type={ 'small' }
+								iconSide={ 'left' }
+								/* handleClick={ () => this.props.userCheckStatus('http://localhost:3000/auth/google') } */
+							/>
+						</a>
 					</div>
 				)
 		);
@@ -54,7 +54,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
+  return { 
+		userCheckStatus: (url) => {
+			dispatch(userCheckStatus(url));
+		}
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -11,6 +11,7 @@ const db = require('../database/index');
 const { EXPRESS_SESSION_SECRET } = require('../config/keys');
 const routes = require('../routes/index');
 const app = express();
+
 app.use(bodyParser.json());
 
 // google OAuth

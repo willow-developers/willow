@@ -28,10 +28,9 @@ export function userCheckStatus(url) {
 		dispatch(userIsLoading(true));
 		axios.get(url)
 			.then((response) => {
-				dispatch(userIsLoading(false));
-				return response.data;
-			})
-			.then((status) => dispatch(userCheckStatusSuccess(status)))
+			dispatch(userIsLoading(false));
+			return response.data;
+		}).then((status) => dispatch(userCheckStatusSuccess(status)))
 			.catch(() => dispatch(userHasErrored(true))
 		);
 	};

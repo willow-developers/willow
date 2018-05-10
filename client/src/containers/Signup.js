@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { userCheckStatus } from '../actions/auth';
 import { Redirect } from 'react-router-dom';
 
+
+// for testing purposes -- DELETE LATER:
+import axios from 'axios';
+
 import Button from '../components/UI/Button';
 
 class Signup extends Component {
@@ -12,6 +16,11 @@ class Signup extends Component {
 		? (<Redirect to={'/'} />)
 		: (<Redirect to={ start } />)
 	);
+
+	componentDidMount() {
+		console.log('signUp mounted!!');
+		axios.get('/api/testing').then(resp => { console.log(resp); });
+	}
 
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: '/signup' } };
