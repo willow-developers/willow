@@ -26,7 +26,7 @@ exports.currentUser = (req, res) => {
   if (checkUser === null) {
       res.send('');
   } else {
-      res.send({ user: 1 });
+      res.send({ user: req.passport });
   }
 };
 

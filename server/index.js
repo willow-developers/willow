@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-// google OAuth
+// google OAuth and express session:
 const session = require('express-session');
 const passport = require('passport');
 
