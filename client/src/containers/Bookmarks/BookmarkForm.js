@@ -2,27 +2,23 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 
+import validateUrl from '../../utils/validateUrl';
 import BookmarkInput from './BookmarkInput';
-
-const formFields = [
-	{ label: 'Save Bookmark', name: 'bookmark', type: 'text', value: '' }
-];
 
 class BookmarkForm extends Component {
 	renderInputs() {
-		return _.map(formFields, (field, i) => (
-			<Field key={ i } { ...field } component={ BookmarkInput } />
+		let { addBookmarkField } = this.props;
+		return _.map(addBookmarkField, (field, i) => (
+			<Field key={ field.name } { ...field } component={ BookmarkInput } inlineBtn={ 'preview' } />
 		));
-		// return _.map(formFields, ({ label, name, type }) => (
-		// 	<Field type={ type } name={ name } label={ label } component={ BookmarkInput } />
-		// ));
 	}
+
 	render() {
 		return (
 			<div>
-				<form onSubmit={ this.props.handleSubmit((value) => console.log(value)) }>
+				<h2>Add A Bookmark</h2>
+				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleBookmarkSubmit(values)) }>
 					{ this.renderInputs() }
-					<button type="submit">Submit</button>
 				</form>
 			</div>
 		);
@@ -32,12 +28,16 @@ class BookmarkForm extends Component {
 const validate = (values) => {
 	const errors = {};
 	if (!values.bookmark) {
-		errors.bookmark = 'You must provide a Bookmark URL!';
+		errors.bookmark = 'You forgot to add a url!';
+	}
+	if (values.bookmark) {
+		errors.bookmark = validateUrl(values.bookmark);
 	}
   return errors;
 };
 
 export default reduxForm({
 	validate,
-	form: 'bookmarkForm'
+	form: 'bookmarkForm',
+	addBookmarkField: [{ label: 'Save Bookmark', name: 'bookmark', type: 'text', value: '', placeholder: '' }]
 })(BookmarkForm);
