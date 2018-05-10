@@ -21,26 +21,49 @@ exports.postUser = (req, res) => {
   });
 };
 
-exports.currentUser = (req, res) => {
-  const checkUser = ls('user');
-  if (checkUser === null) {
-      res.send('');
-  } else {
-      res.send({ user: 1 });
-  }
+exports.logoutUser = (req, res) => {
+  console.log('req.session before delete: ', req.session);
+
+  req.session.destroy(err => {
+    if (err) {
+      res.status(500).send('failure!!');
+    } else {
+      console.log('req.session after delete: ', req.session);
+      res.status(200).send();
+    }
+  })
 };
 
-exports.login = (req, res) => {
-  ls('user', 1)
-  res.send({ user: 1 });
+exports.getUserData = (req, res) => {
+  res.status(200).send(req.user);
 };
 
-exports.signup = (req, res) => {
-  ls('user', 1)
-  res.send({ user: 1 });
+exports.googleRedirect = (req, res) => {
+  console.log(`google authentication successful!!`);
+  res.redirect('/dashboard');
 };
 
-exports.logout = (req, res) => {
-  ls.remove('user');
-  res.send('');
-};
+// OLD AUTH CODE:
+  // exports.currentUser = (req, res) => {
+  //   const checkUser = ls('user');
+  //   if (checkUser === null) {
+  //       res.send('');
+  //   } else {
+  //       res.send({ user: req.passport });
+  //   }
+  // };
+
+  // exports.login = (req, res) => {
+  //   ls('user', 1)
+  //   res.send({ user: 1 });
+  // };
+
+  // exports.signup = (req, res) => {
+  //   ls('user', 1)
+  //   res.send({ user: 1 });
+  // };
+
+  // exports.logout = (req, res) => {
+  //   ls.remove('user');
+  //   res.send('');
+  // };

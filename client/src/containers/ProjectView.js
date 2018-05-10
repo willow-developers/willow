@@ -1,9 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { openModal } from '../actions/modal';
 import axios from 'axios';
 
 import styles from '../assets/sass/Dashboard.module.scss';
-import RenderedDoc from '../components/RenderedDoc';
+// import RenderedDoc from '../components/RenderedDoc';
 import WillowCore from '../components/WillowCore';
+
+import Modals from './Modal/Modals';
 
 class ProjectView extends Component {
 	constructor(props) {
@@ -31,9 +35,15 @@ class ProjectView extends Component {
 	}
 
 	clickFunction(data) {
-		this.setState({
-			selectedData: data
-		});
+		const dummyRender = data.data || 'no data yet!';
+		this.props.dispatch(openModal({
+      id: 1,
+      type: 'confirmation',
+      header: 'Fuck Ya!',
+      text: dummyRender,
+      onClose: () => console.log("fire at closing event"),
+      onConfirm: () => console.log("fire at confirming event"),
+    }))
 	}
 
 	createNode() {
@@ -52,10 +62,18 @@ class ProjectView extends Component {
 			<div className={ styles.col_12_of_12 }>
 				<h1> Project View </h1>
 				<WillowCore createNode={this.createNode.bind(this)} clickFunction={this.clickFunction.bind(this)} data={this.state.data}/>
-				<RenderedDoc docInfo={this.state.selectedData}/>
+				<Modals />
 			</div>
 		);
 	}
 }
 
-export default ProjectView;
+const mapStateToProps = (state) => {
+  return { isModalOpen: state.isModalOpen };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return { dispatch }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectView);

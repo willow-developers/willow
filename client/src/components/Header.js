@@ -19,7 +19,7 @@ class Header extends Component {
 						iconSide={ 'left' }
 						type={ 'small' }
 						handleClick={ () => {
-							this.props.userCheckStatus('/api/logout');
+							this.props.userCheckStatus('/api/logoutUser');
 							history.push("/");
 						}}
 					/>)
@@ -38,7 +38,8 @@ class Header extends Component {
 					<li>
 						<AuthButton />
 					</li>
-					<li>
+					{/* NO LONGER USING AFTER GOOGLE OAUTH REFACTOR */}
+					{/* <li>
 						<NavLink exact to='/signup'>
 							<Button
 								value={ 'Sign Up' }
@@ -47,7 +48,7 @@ class Header extends Component {
 								iconSide={ 'left' }
 							/>
 						</NavLink>
-					</li>
+					</li> */}
 				</ul>
 			);
 		} else {

@@ -106,6 +106,6 @@ exports.getBookmarkMetadata = async (req, res) => {
     const { targetUrl } = req.query;
     const { body: html, url } = await got(targetUrl);
     const metadata = await metascraper({html, url});
-    console.log(metadata)
+    // console.log(metadata)
     res.send(metadata);
 };

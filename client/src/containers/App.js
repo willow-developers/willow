@@ -9,12 +9,12 @@ import Loading from '../components/UI/Loading';
 
 class App extends Component {
   componentDidMount() {
-    this.props.userCheckStatus('/api/current_user');
+    this.props.userCheckStatus('/api/userData');
   }
 
   renderApp = () => {
     if (this.props.hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
+      return <p>Sorry! There was an error with your request :(</p>;
     }
     if (this.props.isLoading) {
       return <Loading />;
@@ -40,12 +40,16 @@ const mapStateToProps = (state) => {
   return {
     hasErrored: state.userHasErrored,
     isLoading: state.userIsLoading,
+    userInfo: state.userStatus,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userCheckStatus: (url) => dispatch(userCheckStatus(url))
+    userCheckStatus: (url) => {
+      console.log('firing user check status in App.js to: ', url);
+      dispatch(userCheckStatus(url))
+    }
   };
 };
 

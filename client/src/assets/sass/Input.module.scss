@@ -7,22 +7,23 @@
 	position: relative;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	text-align: left;
 
 	button {
 		position: absolute;
 		right: 0;
 		@include vert_align;
 		top: calc(50% - .25rem);
-		background-color: transparent;
-		box-shadow: none;
-		transition: color .2s ease-out;
-		color: #9e9e9e;
+		// background-color: transparent;
+		// box-shadow: none;
+		// transition: color .2s ease-out;
+		// color: #9e9e9e;
 
-		&:hover {
-			background-color: transparent;
-			box-shadow: none;
-			color: #fff;
-		}
+		// &:hover {
+		// 	background-color: transparent;
+		// 	box-shadow: none;
+		// 	color: #fff;
+		// }
 	}
 
 	input {
@@ -36,7 +37,7 @@
 		height: 3rem;
 		width: 100%;
 		font-size: 16px;
-		margin: 0 0 8px 0;
+		margin: 0 0 22px 0;
 		padding: 0;
 		box-shadow: none;
 		box-sizing: content-box;
@@ -103,4 +104,39 @@
 	input:focus ~ label {
 		color: #26a69a;
 	}
+
+	.errorMessage {
+		font-size: 14px;
+		text-align: left;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		color: #ef5350;
+		font-style: italic;
+	}
+
+	&.error {
+		input {
+			border-bottom-color: #ef5350;
+
+			&:focus {
+				border-bottom-color: #ef5350;
+				box-shadow: 0 1px 0 0 #ef5350;
+			}
+		}
+
+		label {
+			color: #ef5350;
+		}
+
+		input:focus ~ label {
+			color: #ef5350;
+		}
+	}
+
+	&.inlinePreviewBtn {
+		input {
+			width: calc(100% - 140px);
+		}
+	} 
 }

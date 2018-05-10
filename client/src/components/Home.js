@@ -2,7 +2,8 @@ import React from 'react';
 import styles from '../assets/sass/Home.module.scss';
 
 import DisplayModal from '../containers/Modal/DisplayModal';
-import CustomModalContent from '../components/CustomModalContent';
+// import CustomModalContent from '../components/CustomModalContent';
+import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
 
 const dummyInfo = { level: 'success', header: 'Shit!', text: 'I\'m an error', id: 3 };
 
@@ -15,7 +16,7 @@ const Home = () => (
 		/>
 		<DisplayModal
 			type={ 'custom' }
-			body={ <CustomModalContent /> }
+			body={ <BookmarkBody /> }
 			id={ 2 }
 		/>
 		<DisplayModal
