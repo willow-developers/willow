@@ -45,9 +45,19 @@ exports.logout = (req, res) => {
   res.send('');
 };
 
+exports.logoutUser = (req, res) => {
+  console.log('req.session before delete: ', req.session);
 
-// DELETE LATER, USED TO TEST OAuth:
-// exports.test = (req, res) => {
-//   console.log('req: ', req);
-//   res.status(200).send('success!!');
-// }
+  req.session.destroy(err => {
+    if (err) {
+      res.status(500).send('failure!!');
+    } else {
+      console.log('req.session after delete: ', req.session);
+      res.status(200).send();
+    }
+  })
+};
+
+exports.getUserData = (req, res) => {
+  res.status(200).send(req.user);
+};

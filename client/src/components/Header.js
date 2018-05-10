@@ -19,7 +19,7 @@ class Header extends Component {
 						iconSide={ 'left' }
 						type={ 'small' }
 						handleClick={ () => {
-							this.props.userCheckStatus('/api/logout');
+							this.props.userCheckStatus('/api/logoutUser');
 							history.push("/");
 						}}
 					/>)

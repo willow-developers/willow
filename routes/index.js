@@ -24,23 +24,10 @@ router.get('/api/signup', authController.signup);
 
 // GOOGLE OAuth:
 router.get('/auth/google', passportGoogle.authenticate('google', { scope: ['profile', 'email']}));
+router.get('/api/userData', authController.getUserData);
+router.get('/api/logoutUser',authController.logoutUser);
 
-router.get('/api/userData', (req, res) => {
-  console.log('req1!!!', req);
-  console.log('req.user!!!', req.user);
-  console.log('req.session._passport!!!', req.session._passport);
-  res.status(200).send(req.user);
-});
-
-// GOOGLE OAuth TESTING ROUTE:
-router.get('/api/testing', (req, res) => {
-  // session data automatically being stored in req.session.passport.user
-  res.status(200).send({req_session: req.session, res_sessionStore: res.req.sessionStore});
-});
-
-router.get(
-  GOOGLE_CALLBACK_URL,
-  passportGoogle.authenticate('google', { failureRedirect: '/' }),
+router.get(GOOGLE_CALLBACK_URL, passportGoogle.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
     console.log(`google authentication successful!!`);
     res.redirect('/dashboard');
