@@ -8,13 +8,13 @@ import styles from '../../assets/sass/Button.module.scss';
 	// icon={ 'add' }
 	// type={ 'big' 'small' 'round' 'bigRound' 'smallRound' }
 	// iconSide={ 'right' 'left' 'center' }
-	// disabled={ true false }
+	// disabledStyle={ true false }
 	// btnFloat={ 'right' 'left' 'none' }
 	// styleClass={ 'close' }
 	// handleClick={ this.eventName }
 // />
 
-const Button = ({ type, disabled, value, icon, handleClick, iconSide, btnFloat, styleClass }) => {
+const Button = ({ type, disabledStyle, value, icon, handleClick, iconSide, btnFloat, styleClass }) => {
 
 	const extraClass = () => {
 		return styleClass ? styles[styleClass] : '';
@@ -27,7 +27,7 @@ const Button = ({ type, disabled, value, icon, handleClick, iconSide, btnFloat, 
 			[styles.btn_round]: type === 'round',
 			[styles.btn_bigRound]: type === 'bigRound',
 			[styles.btn_smallRound]: type === 'smallRound',
-			[styles.btn_disabled]: disabled === true,
+			[styles.btn_disabled]: disabledStyle === true,
 			[styles.iLeft]: iconSide === 'left',
 			[styles.iRight]: iconSide === 'right',
 			[styles.bLeft]: btnFloat === 'left',

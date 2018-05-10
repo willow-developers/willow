@@ -14,7 +14,7 @@ class App extends Component {
 
   renderApp = () => {
     if (this.props.hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
+      return <p>Sorry! There was an error with your request :(</p>;
     }
     if (this.props.isLoading) {
       return <Loading />;
@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
   return {
     hasErrored: state.userHasErrored,
     isLoading: state.userIsLoading,
+    userInfo: state.userStatus,
   };
 };
 
