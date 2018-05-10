@@ -18,7 +18,8 @@ app.use(bodyParser.json());
 app.use(session({
 	secret: EXPRESS_SESSION_SECRET,
 	resave: true,
-	saveUninitialized: true
+	saveUninitialized: true,
+	cookie: { secure: false }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
