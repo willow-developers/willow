@@ -9,7 +9,7 @@ import Loading from '../components/UI/Loading';
 
 class App extends Component {
   componentDidMount() {
-    this.props.userCheckStatus('/api/current_user');
+    this.props.userCheckStatus('/api/userData');
   }
 
   renderApp = () => {
@@ -46,7 +46,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userCheckStatus: (url) => dispatch(userCheckStatus(url))
+    userCheckStatus: (url) => {
+      console.log('firing user check status in App.js to: ', url);
+      dispatch(userCheckStatus(url))
+    }
   };
 };
 

@@ -33,14 +33,14 @@ CREATE USER willow_admin WITH SUPERUSER PASSWORD 'qwerty';
 
 CREATE TABLE users (
   id SERIAL,
-  username varchar(20),
+  google_id varchar(100),
   first_name varchar(100),
   last_name varchar(100),
   email varchar(100),
   hashed_password varchar(500),
   timestamp timestamp default current_timestamp,
   PRIMARY KEY (id),
-  UNIQUE (username, email)
+  UNIQUE (google_id, email)
 );
 
 CREATE TABLE projects (
@@ -96,8 +96,8 @@ CREATE TABLE links (
 -- //---------------------------------- DUMMY DATA ----------------------------------//
 
 -- USER
-INSERT INTO users (username, first_name, last_name, email, hashed_password)
-  VALUES ('twagner', 'Tom', 'Wagner', 'twagner55@gmail.com', 'password');
+INSERT INTO users (google_id, first_name, last_name, email, hashed_password)
+  VALUES ('107740050254369789353', 'Tom', 'Wagner', 'twagner55@gmail.com', 'password');
 
 -- PROJECT
 INSERT INTO projects (owner_id, project_name)
