@@ -61,3 +61,8 @@ exports.logoutUser = (req, res) => {
 exports.getUserData = (req, res) => {
   res.status(200).send(req.user);
 };
+
+exports.googleRedirect = (req, res) => {
+  console.log(`google authentication successful!!`);
+  res.redirect('/dashboard');
+};

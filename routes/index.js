@@ -23,15 +23,13 @@ router.get('/api/logout', authController.logout);
 router.get('/api/signup', authController.signup);
 
 // GOOGLE OAuth:
-router.get('/auth/google', passportGoogle.authenticate('google', { scope: ['profile', 'email']}));
 router.get('/api/userData', authController.getUserData);
 router.get('/api/logoutUser',authController.logoutUser);
-
-router.get(GOOGLE_CALLBACK_URL, passportGoogle.authenticate('google', { failureRedirect: '/' }),
-  function (req, res) {
-    console.log(`google authentication successful!!`);
-    res.redirect('/dashboard');
-  }
+router.get('/auth/google', passportGoogle.authenticate('google', { scope: ['profile', 'email']}));
+router.get(
+  GOOGLE_CALLBACK_URL,
+  passportGoogle.authenticate('google', { failureRedirect: '/' }),
+  authController.googleRedirect
 );
 
 // GET BOOKMARK INFO
