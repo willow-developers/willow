@@ -2,13 +2,13 @@
   "name": "willow",
   "version": "1.0.0",
   "description": "hrnyc14 thesis project",
-  "main": "index.js",
+  "main": "server/index.js",
   "engines": {
     "node": "8.1.1"
   },
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" --names \"💻,📦\" --prefix name",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
@@ -26,7 +26,15 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "concurrently": "^3.5.1",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
-    "nodemon": "^1.17.3"
+    "express-session": "^1.15.6",
+    "knex": "^0.14.6",
+    "local-storage": "^1.4.2",
+    "metascraper": "^3.10.7",
+    "nodemon": "^1.17.3",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "pg": "^7.4.2"
   }
 }

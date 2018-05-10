@@ -1,0 +1,37 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.previewMode {
+	text-align: left;
+	margin-bottom: 20px;
+
+	.btnBar {
+		margin-top: 30px;
+		@include cf;
+	}
+
+	h3 {
+		margin: 0;
+		margin-bottom: 5px;
+	}
+
+	.url {
+		font-size: 14px;
+		margin: 0;
+		font-style: italic;
+	}
+
+	.bookmark_icon {
+		background-color: #ccc;
+		border-radius: 5px;
+		position: relative;
+		height: 100%;
+
+		img {
+			@include centered;
+			max-height: 50%;
+		}
+	}
+}
+
+

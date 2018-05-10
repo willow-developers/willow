@@ -1,0 +1,142 @@
+@import 'waffleGrid';
+@import 'variables';
+
+*, *:before, *:after { -webkit-box-sizing: inherit; -moz-box-sizing: inherit; box-sizing: inherit; }
+
+.input_field {
+	position: relative;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	text-align: left;
+
+	button {
+		position: absolute;
+		right: 0;
+		@include vert_align;
+		top: calc(50% - .25rem);
+		// background-color: transparent;
+		// box-shadow: none;
+		// transition: color .2s ease-out;
+		// color: #9e9e9e;
+
+		// &:hover {
+		// 	background-color: transparent;
+		// 	box-shadow: none;
+		// 	color: #fff;
+		// }
+	}
+
+	input {
+		line-height: 1.15;
+		overflow: visible;
+		background-color: transparent;
+		border: none;
+		border-bottom: 1px solid #9e9e9e;
+		border-radius: 0;
+		outline: none;
+		height: 3rem;
+		width: 100%;
+		font-size: 16px;
+		margin: 0 0 22px 0;
+		padding: 0;
+		box-shadow: none;
+		box-sizing: content-box;
+		transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+
+		&:focus {
+			border-bottom: 1px solid #26a69a;
+			box-shadow: 0 1px 0 0 #26a69a;
+		}
+
+		&::-webkit-input-placeholder {
+			opacity: .7;
+		}
+		
+		&::-moz-placeholder {
+			opacity: .7;
+		}
+		
+		&:-ms-input-placeholder {
+			opacity: .7;
+		}
+		
+		&:-moz-placeholder {
+			opacity: .7;
+		}
+	}
+
+	&.removeBtns {
+		input {
+			padding-right: 36px;
+			width: calc(100% - 36px);
+		}
+	}
+
+	label {
+		color: #9e9e9e;
+		position: absolute;
+		top: 0;
+		left: 0;
+		font-size: 1rem;
+		cursor: text;
+		transition: transform .2s ease-out, color .2s ease-out, -webkit-transform .2s ease-out;
+		transform-origin: 0% 100%;
+		text-align: initial;
+		transform: translateY(12px);
+
+		&:after {
+			display: block;
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 0;
+			opacity: 0;
+			transition: .2s opacity ease-out, .2s color ease-out;
+		}
+
+		&.active {
+			transform: translateY(-14px) scale(0.8);
+			transform-origin: 0 0;
+		}
+
+	}
+
+	input:focus ~ label {
+		color: #26a69a;
+	}
+
+	.errorMessage {
+		font-size: 14px;
+		text-align: left;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		color: #ef5350;
+		font-style: italic;
+	}
+
+	&.error {
+		input {
+			border-bottom-color: #ef5350;
+
+			&:focus {
+				border-bottom-color: #ef5350;
+				box-shadow: 0 1px 0 0 #ef5350;
+			}
+		}
+
+		label {
+			color: #ef5350;
+		}
+
+		input:focus ~ label {
+			color: #ef5350;
+		}
+	}
+
+	&.inlinePreviewBtn {
+		input {
+			width: calc(100% - 140px);
+		}
+	} 
+}

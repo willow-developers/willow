@@ -1,0 +1,110 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.modal_overlay {
+  position: absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  top: 0;
+  background: rgba(#000, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_overlay_notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  @include centered;
+  width: 90%;
+  box-shadow: 0 2px 2px 0 rgba(#000, 0.07), 0 3px 1px -2px rgba(#000, 0.06), 0 1px 5px 0 rgba(#000, 0.1);
+  border-radius: 5px;
+
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    color: #fff;
+
+    &.error {
+      background: #ef5350;
+    }
+
+    &.success {
+      background: #26a69a;
+    }
+
+    &.warning {
+      background: #ffa726;
+    }
+  }
+}
+
+
+.modal {
+  width: 90%;
+  background: #fff;
+  border-radius: 5px;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+
+  &.confirmation {
+    max-width: 375px;
+
+    .modal_content {
+      padding-bottom: 30px;
+    }
+
+    .btn_bar {
+      border-top: 1px dotted #ccc;
+    }
+  }
+}
+
+.modal_content {
+  text-align: center;
+  padding: 20px;
+
+  .title {
+    font-weight: 400;
+  }
+
+  .message {
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+
+  &.custom {
+    padding: 0;
+  }
+
+  &.notification {
+    .title {
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .message {
+      font-weight: 300;
+      margin: 0;
+      margin-top: 5px;
+    }
+  }
+}
+
+.btn_bar {
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+
+  &.notification {
+    padding: 0;
+    justify-content: flex-end;
+    position: absolute;
+    width: auto;
+    right: 0;
+  }
+}

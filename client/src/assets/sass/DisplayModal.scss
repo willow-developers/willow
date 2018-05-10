@@ -1,0 +1,60 @@
+@import 'variables';
+@import 'waffleGrid';
+
+
+.modal_overlay {
+  position: absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  top: 0;
+  background: rgba(#000, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  &.notification {
+    background: transparent;
+  }
+}
+
+.modal {
+  width: 90%;
+  background: #fff;
+  border-radius: 5px;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+
+  &.confirmation {
+    max-width: 375px;
+  }
+}
+
+.modal_content {
+  text-align: center;
+  padding: 20px;
+
+  .title {
+    font-weight: 400;
+  }
+
+  .message {
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+
+  &.custom {
+    background: rgba(193, 29, 29,0.5);
+    color: #fff;
+    height: 150px;
+    padding: 0;
+  }
+}
+
+.btn_bar {
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}

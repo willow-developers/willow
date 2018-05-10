@@ -1,19 +1,56 @@
 import React, { Component } from 'react';
-import styles from '../assets/sass/App.module.scss';
+import { BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { userCheckStatus } from '../actions/auth';
 
-import Header from '../components/Header'
+import Header from '../components/Header';
+import Main from './Main';
+import Loading from '../components/UI/Loading';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.userCheckStatus('/api/userData');
+  }
+
+  renderApp = () => {
+    if (this.props.hasErrored) {
+      return <p>Sorry! There was an error with your request :(</p>;
+    }
+    if (this.props.isLoading) {
+      return <Loading />;
+    }
+    return (
+      <div>
+        <Header />
+        <Main />
+      </div>
+    );
+  }
+
   render() {
     return (
-      <div className={ styles.app }>
-        <Header />
-        <p className={ styles.App_intro }>
-          Start building something already!
-        </p>
-      </div>
+      <BrowserRouter>
+        { this.renderApp() }
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    hasErrored: state.userHasErrored,
+    isLoading: state.userIsLoading,
+    userInfo: state.userStatus,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userCheckStatus: (url) => {
+      console.log('firing user check status in App.js to: ', url);
+      dispatch(userCheckStatus(url))
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
