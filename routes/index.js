@@ -15,12 +15,14 @@ router.get('/api/projectData', dataController.getProjectData);
 router.post('/api/newProject', dataController.createNewProject);
 router.post('/api/updateProject', dataController.saveProject);
 
-// AUTHENTICATION AND USER CREATION:
+// USER CREATION:
 router.post('/api/user', authController.postUser);
-router.get('/api/current_user', authController.currentUser);
-router.get('/api/login', authController.login);
-router.get('/api/logout', authController.logout);
-router.get('/api/signup', authController.signup);
+
+// OLD AUTHENTICATION ROUTES:
+// router.get('/api/current_user', authController.currentUser);
+// router.get('/api/login', authController.login);
+// router.get('/api/logout', authController.logout);
+// router.get('/api/signup', authController.signup);
 
 // GOOGLE OAuth:
 router.get('/api/userData', authController.getUserData);

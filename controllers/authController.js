@@ -21,30 +21,6 @@ exports.postUser = (req, res) => {
   });
 };
 
-exports.currentUser = (req, res) => {
-  const checkUser = ls('user');
-  if (checkUser === null) {
-      res.send('');
-  } else {
-      res.send({ user: req.passport });
-  }
-};
-
-exports.login = (req, res) => {
-  ls('user', 1)
-  res.send({ user: 1 });
-};
-
-exports.signup = (req, res) => {
-  ls('user', 1)
-  res.send({ user: 1 });
-};
-
-exports.logout = (req, res) => {
-  ls.remove('user');
-  res.send('');
-};
-
 exports.logoutUser = (req, res) => {
   console.log('req.session before delete: ', req.session);
 
@@ -66,3 +42,28 @@ exports.googleRedirect = (req, res) => {
   console.log(`google authentication successful!!`);
   res.redirect('/dashboard');
 };
+
+// OLD AUTH CODE:
+  // exports.currentUser = (req, res) => {
+  //   const checkUser = ls('user');
+  //   if (checkUser === null) {
+  //       res.send('');
+  //   } else {
+  //       res.send({ user: req.passport });
+  //   }
+  // };
+
+  // exports.login = (req, res) => {
+  //   ls('user', 1)
+  //   res.send({ user: 1 });
+  // };
+
+  // exports.signup = (req, res) => {
+  //   ls('user', 1)
+  //   res.send({ user: 1 });
+  // };
+
+  // exports.logout = (req, res) => {
+  //   ls.remove('user');
+  //   res.send('');
+  // };
