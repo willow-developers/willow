@@ -4,7 +4,6 @@ import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 import { BOOKMARK_HAS_ERRORED, BOOKMARK_IS_LOADING } from './types';
 import { BOOKMARK_SHOW_ADD, BOOKMARK_SHOW_PREVIEW, BOOKMARK_SHOW_EDIT } from './types';
 import { BOOKMARK_STATUS_SUCCESS, BOOKMARK_FIELDS_SUCCESS, LOAD_BOOKMARK_SCRAPE } from './types';
-import { BOOKMARK_SAVE } from './types';
 
 export const bookmarkHasErrored = (bool) => ({ type: BOOKMARK_HAS_ERRORED, hasErrored: bool });
 export const bookmarkIsLoading = (bool) => ({ type: BOOKMARK_IS_LOADING, isLoading: bool });
@@ -16,9 +15,6 @@ export const bookmarkShowEdit = (bool) => ({ type: BOOKMARK_SHOW_EDIT, showEdit:
 export const bookmarkStatusSuccess = (status) => ({ type: BOOKMARK_STATUS_SUCCESS, bookmarkStatus: status });
 export const bookmarkFieldsSuccess = (status) => ({ type: BOOKMARK_FIELDS_SUCCESS, bookmarkFields: status });
 export const loadFormData = (data) => ({ type: LOAD_BOOKMARK_SCRAPE, data });
-
-export const bookmarkSave = (data) => ({ type: BOOKMARK_SAVE, savedBookmarks: data });
-
 
 export const bookmarkGetInfo = (targetUrl) => ((dispatch) => {
 		dispatch(bookmarkIsLoading(true));
@@ -65,10 +61,5 @@ export const previewBookmarkView = () => ((dispatch) => {
 
 export const updateBookmarkInfo = (info) => ((dispatch) => {
 		dispatch(bookmarkStatusSuccess(info));
-	}
-);
-
-export const saveBookmarkInfo = (data) => ((dispatch) => {
-		dispatch(bookmarkSave(data));
 	}
 );
