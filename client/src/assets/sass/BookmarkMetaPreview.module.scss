@@ -2,8 +2,10 @@
 @import 'waffleGrid';
 
 .previewMode {
+	transition: all .2s ease;
 	text-align: left;
 	margin-bottom: 20px;
+	top: 100%;
 
 	.btnBar {
 		margin-top: 30px;
@@ -33,5 +35,3 @@
 		}
 	}
 }
-
-

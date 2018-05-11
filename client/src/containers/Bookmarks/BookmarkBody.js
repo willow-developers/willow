@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bookmarkGetInfo } from '../../actions/bookmarks';
+import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmarkInfo } from '../../actions/bookmarks';
 
 import BookmarkForm from './BookmarkForm';
 import BookmarkMetaPreview from './BookmarkMetaPreview';
@@ -14,6 +14,19 @@ class BookmarkBody extends Component {
 		this.props.bookmarkGetInfo(url.bookmark);
 	}
 
+  handleBackToPreview = () => {
+    this.props.previewBookmarkView();
+  }
+
+  handleBookmarkInfoUpdate = (info) => {
+    this.props.previewBookmarkView();
+    this.props.updateBookmarkInfo(info);
+  }
+
+  handleBookmarkSave = (save) => {
+    this.props.saveBookmarkInfo(save);
+  }
+
 	renderBookmarkView = () => {
     if (this.props.bookmarkHasErrored) {
       return <p>Sorry! There was an error with your request :(</p>;
@@ -23,9 +36,25 @@ class BookmarkBody extends Component {
     }
     return (
       <div>
-      	{ this.props.bookmarkShowAdd ? <BookmarkForm handleBookmarkSubmit={ this.handleBookmarkSubmit } /> : '' }
-				{ this.props.bookmarkShowPreview ? <BookmarkMetaPreview /> : '' }
-				{ this.props.bookmarkShowEdit ? <BookmarkMetaEdit /> : '' }
+      	{ this.props.bookmarkShowAdd
+          ? (<BookmarkForm
+              handleBookmarkSubmit={ this.handleBookmarkSubmit }
+            />)
+          : ('')
+        }
+				{ this.props.bookmarkShowPreview
+          ? (<BookmarkMetaPreview
+              handleBookmarkSave={ this.handleBookmarkSave }
+            />)
+          : ('')
+        }
+				{ this.props.bookmarkShowEdit
+          ? (<BookmarkMetaEdit
+              handleBackToPreview={ this.handleBackToPreview }
+              handleBookmarkInfoUpdate={ this.handleBookmarkInfoUpdate }
+            />)
+          : ('')
+        }
       </div>
     );
   }
@@ -52,7 +81,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL))
+    bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL)),
+    previewBookmarkView: () => dispatch(previewBookmarkView()),
+    updateBookmarkInfo: (info) => dispatch(updateBookmarkInfo(info)),
+    saveBookmarkInfo: (info) => dispatch(saveBookmarkInfo(info))
   };
 };
 
