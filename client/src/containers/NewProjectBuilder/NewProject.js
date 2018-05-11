@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// REPLACE WITH MY OWN ACTION
-import { bookmarkGetInfo } from '../../actions/bookmarks';
+// ACTIONS:
 import { handleCreateProject, handleProjectNaming } from '../../actions/createProject';
 
-
-// REPLACE WITH MY OWN SUB-COMPONENTS
-import BookmarkForm from './BookmarkForm';
-import BookmarkMetaPreview from './BookmarkMetaPreview';
+// COMPONENTS:
 import Loading from '../../components/UI/Loading';
-import BookmarkMetaEdit from './BookmarkMetaEdit';
+import NewProjectForm from './NewProjectForm';
+import AddDetailsAndSaveProject from './AddDetailsAndSaveProject';
 
+// STYLING:
 import styles from '../../assets/sass/BookmarkBody.module.scss';
 
 class BookmarkBody extends Component {
-  handleProjectNaming = (projectName) => {
-    this.props.createProject(projectName);
-  }
+  // MAYBE:
+  // handleProjectNaming = (projectName) => {
+  //   this.props.handleProjectNaming(projectName);
+  // }
+
+  // MAYBE:
+  // handleCreateProject = (projectName) => {
+  //   this.props.handleCreateProject(projectName);
+  // }
 
   renderCreateProjectView = () => {
     if (this.props.createProjectHasErrored) {
@@ -30,10 +34,10 @@ class BookmarkBody extends Component {
     let modalToShow;
 
     switch (this.props.createProjectModalToShow) {
-      case 'nameProjectForm':
+      case 'NewProjectForm':
         modalToShow = <NewProjectForm handleProjectNaming={ this.handleProjectNaming } />;
-      case 'addProjectDetails':
-        modalToShow = <AddProjectDetails handleCreateProject= { this.handleCreateProject } />;
+      case 'AddProjectDetails':
+        modalToShow = <AddDetailsAndSaveProject handleCreateProject= { this.handleCreateProject } />;
     }
 
     return (
@@ -42,8 +46,6 @@ class BookmarkBody extends Component {
       </div>
     );
   };
-
-
   
   // ME:
   render() {
@@ -56,15 +58,6 @@ class BookmarkBody extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // return {
-  //   bookmarkHasErrored: state.bookmarkHasErrored,
-  //   bookmarkIsLoading: state.bookmarkIsLoading,
-  //   bookmarkStatus: state.bookmarkStatus,
-  //   bookmarkShowAdd: state.bookmarkShowAdd,
-  //   bookmarkShowPreview: state.bookmarkShowPreview,
-  //   bookmarkShowEdit: state.bookmarkShowEdit,
-  // };
-
   return {
     createProjectModalToShow: state.createProjectModalToShow,
     createProjectHasErrored: state.createProjectHasErrored,
@@ -73,13 +66,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  // return {
-  //   bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL))
-  // };
-
   return {
-    handleCreateProject: (projectInfo) => dispatch(handleCreateProject(projectInfo)),
-    handleProjectNaming: (projectName) => dispatch(handleProjectNaming(projectName))
+    handleProjectNaming: (projectName) => dispatch(handleProjectNaming(projectName)),
+    handleCreateProject: (projectInfo) => dispatch(handleCreateProject(projectInfo))
   }
 };
 

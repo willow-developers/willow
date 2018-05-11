@@ -1,9 +1,19 @@
 import axios from 'axios';
-import { /* TBD */ } from './types';
+import { 
+  CREATE_PROJECT_SHOW_ADD_DETAILS,
+  CREATE_PROJECT_SHOW_NEW_PROJECT_FORM,
+  CREATE_PROJECT_HAS_ERRORED,
+  DATA_WITHIN_CREATE_PROJECT_IS_LOADING
+} from '../actions/types';
+
+export const handleProjectNaming = projectName => ({
+  type: 'TYPE_GOES_HERE',
+  payload: projectName
+});
 
 export const handleCreateProject = projectData => (dispatch => {
   // MAYBE:
-  dispatch(createProjectIsLoading(true));
+  // dispatch(createProjectIsLoading(true));
   
   // UPDATE AS NEEDED:
   axios.post(TBD_URL, {
@@ -14,11 +24,6 @@ export const handleCreateProject = projectData => (dispatch => {
     
   });
 
-});
-
-export const handleProjectNaming = projectName => ({
-  type: 'TYPE_GOES_HERE',
-  payload: projectName
 });
 
 // MAYBE:
