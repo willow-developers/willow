@@ -7,7 +7,7 @@ import {
 } from '../actions/types';
 
 export const handleProjectNaming = projectName => ({
-  type: 'TYPE_GOES_HERE',
+  type: CREATE_PROJECT_SHOW_ADD_DETAILS,
   payload: projectName
 });
 

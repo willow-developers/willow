@@ -5,12 +5,12 @@ import {
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING
 } from '../actions/types';
 
-export function createProjectModalToShow(state = 'NewProjectForm', action) {
+export function createProjectModalToShow(state = 'NewProjectTitle', action) {
 	switch (action.type) {
 		case CREATE_PROJECT_SHOW_ADD_DETAILS:
-      return action.payload;
+      return 'AddProjectDetails';
     case CREATE_PROJECT_SHOW_NEW_PROJECT_FORM:
-      return action.payload;
+      return 'NewProjectTitle';
 		default:
 			return state;
 	}

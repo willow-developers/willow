@@ -6,7 +6,7 @@ import { handleCreateProject, handleProjectNaming } from '../../actions/createPr
 
 // COMPONENTS:
 import Loading from '../../components/UI/Loading';
-import NewProjectForm from './NewProjectForm';
+import NewProjectTitle from './NewProjectTitle';
 import AddDetailsAndSaveProject from './AddDetailsAndSaveProject';
 
 // STYLING:
@@ -33,8 +33,8 @@ class NewProjectBody extends Component {
 
     let modalToShow;
 
-    if (this.props.createProjectModalToShow === 'NewProjectForm') {
-      modalToShow = <NewProjectForm handleProjectNaming={ this.handleProjectNaming } />;
+    if (this.props.createProjectModalToShow === 'NewProjectTitle') {
+      modalToShow = <NewProjectTitle handleProjectNaming={ this.handleProjectNaming } />;
     } else {
       modalToShow = <AddDetailsAndSaveProject handleCreateProject= { this.handleCreateProject } />;
     }
@@ -68,7 +68,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleProjectNaming: (projectName) => dispatch(handleProjectNaming(projectName)),
+    handleProjectNaming: (projectName) => {
+      console.log('firing projectNaming: ', projectName)
+      dispatch(handleProjectNaming(projectName));
+    },
     handleCreateProject: (projectInfo) => dispatch(handleCreateProject(projectInfo))
   }
 };

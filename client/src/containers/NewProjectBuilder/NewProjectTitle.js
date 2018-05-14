@@ -6,10 +6,9 @@ import _ from 'lodash';
 
 import NewProjectInput from './NewProjectInput';
 
-class NewProjectForm extends Component {
+class NewProjectTitle extends Component {
 	renderInputs() {
 		let { newProjectField } = this.props;
-		console.log('NPF: ', newProjectField);
 		return _.map(newProjectField, (field, i) => (
 			<Field key={ field.name } { ...field } component={ NewProjectInput } />
 		));
@@ -47,6 +46,6 @@ const validateProjectTitle = title => {
 
 export default reduxForm({
 	validate,
-	form: 'newProjectForm',
+	form: 'NewProjectTitle',
 	newProjectField: [{ label: 'Enter project title here (50 characters or less)', name: 'projectName', type: 'text', value: '', placeholder: '' }]
-})(NewProjectForm);
+})(NewProjectTitle);
