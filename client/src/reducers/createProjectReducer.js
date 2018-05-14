@@ -5,12 +5,6 @@ import {
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING
 } from '../actions/types';
 
-import {
-  createProjectModalToShow,
-  createProjectHasErrored,
-  createProjectDataIsLoading
-} from './createProjectReducer';
-
 export function createProjectModalToShow(state = 'NewProjectForm', action) {
 	switch (action.type) {
 		case CREATE_PROJECT_SHOW_ADD_DETAILS:

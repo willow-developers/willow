@@ -13,15 +13,13 @@ import AddDetailsAndSaveProject from './AddDetailsAndSaveProject';
 import styles from '../../assets/sass/BookmarkBody.module.scss';
 
 class BookmarkBody extends Component {
-  // MAYBE:
-  // handleProjectNaming = (projectName) => {
-  //   this.props.handleProjectNaming(projectName);
-  // }
+  handleProjectNaming = (projectName) => {
+    this.props.handleProjectNaming(projectName);
+  }
 
-  // MAYBE:
-  // handleCreateProject = (projectName) => {
-  //   this.props.handleCreateProject(projectName);
-  // }
+  handleCreateProject = (projectName) => {
+    this.props.handleCreateProject(projectName);
+  }
 
   renderCreateProjectView = () => {
     if (this.props.createProjectHasErrored) {
@@ -47,7 +45,6 @@ class BookmarkBody extends Component {
     );
   };
   
-  // ME:
   render() {
 		return (
       <div className={ styles.forLoader }>
