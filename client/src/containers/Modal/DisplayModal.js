@@ -17,7 +17,7 @@ class DisplayModal extends Component {
         </div>
       );
     }
-    if (type === 'custom') {
+    if (type === 'custom' || type === 'newProject') {
       return (
         <div>
           <Custom body={ body } id={ id } value={ value } icon={ icon }/>

@@ -7,20 +7,38 @@ import _ from 'lodash';
 import NewProjectInput from './NewProjectInput';
 
 class NewProjectDetails extends Component {
-	renderInputs() {
-		let { newProjectField } = this.props;
-		console.log('NPF: ', newProjectField);
-		return _.map(newProjectField, (field, i) => (
-			<Field key={ field.name } { ...field } component={ NewProjectInput } />
-		));
-	}
+	// OLD WAY:
+	// renderInputs() {
+	// 	let { newProjectField } = this.props;
+	// 	return _.map(newProjectField, (field, i) => (
+	// 		<Field key={ field.name } { ...field } component={ NewProjectInput } />
+	// 	));
+	// }
+
+	// SIMPLE FORM, TWO INPUTS:
+	// renderInputs() {
+	// 	return (
+	// 		<div>
+	// 			<Field key={ field.name } { ...field } component={ NewProjectInput } />
+	// 			<Field key={ field.name } { ...field } component={ NewProjectInput } />
+	// 			<Field key={ field.name } { ...field } component={ NewProjectInput } />
+	// 		</div>
+	// 	);
+	// }
 
 	render() {
+		console.log('this.props within newProjectDetails: ', this.props)
+
+		let field = this.props.newProjectField[0];
+
 		return (
 			<div>
 				<h2>Milestones required to complete this project: </h2>
 				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleProjectNaming(values)) }>
-					{ this.renderInputs() }
+					{/* { this.renderInputs() } */}
+					<Field key={ 1 } { ...field } component={ NewProjectInput } />
+					<Field key={ 2 } { ...field } component={ NewProjectInput } />
+					<Field key={ 3 } { ...field } component={ NewProjectInput } />
 				</form>
 			</div>
 		);

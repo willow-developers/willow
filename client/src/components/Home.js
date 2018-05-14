@@ -25,12 +25,13 @@ const Home = () => (
 		<DisplayModal
 			type={ 'notification' }
 			level={ 'success' }
+			id={ 3 }
 			action={ dummyInfo }
 		/>
 		<DisplayModal
-			type={ 'custom' }
+			type={ 'newProject' }
 			body={ <NewProject /> }
-			id={ 3 }
+			id={ 4 }
 			icon={ 'create' }
 			value={ 'Create New Project' }
 		/>
