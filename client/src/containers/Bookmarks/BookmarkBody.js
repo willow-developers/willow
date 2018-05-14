@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmarkInfo } from '../../actions/bookmarks';
+import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo } from '../../actions/bookmarks';
 
 import BookmarkForm from './BookmarkForm';
 import BookmarkMetaPreview from './BookmarkMetaPreview';
@@ -21,10 +21,6 @@ class BookmarkBody extends Component {
   handleBookmarkInfoUpdate = (info) => {
     this.props.previewBookmarkView();
     this.props.updateBookmarkInfo(info);
-  }
-
-  handleBookmarkSave = (save) => {
-    this.props.saveBookmarkInfo(save);
   }
 
 	renderBookmarkView = () => {
@@ -84,7 +80,6 @@ const mapDispatchToProps = (dispatch) => {
     bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL)),
     previewBookmarkView: () => dispatch(previewBookmarkView()),
     updateBookmarkInfo: (info) => dispatch(updateBookmarkInfo(info)),
-    saveBookmarkInfo: (info) => dispatch(saveBookmarkInfo(info))
   };
 };
 

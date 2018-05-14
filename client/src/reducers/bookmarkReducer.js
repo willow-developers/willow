@@ -1,7 +1,6 @@
 import { BOOKMARK_HAS_ERRORED, BOOKMARK_IS_LOADING } from '../actions/types';
 import { BOOKMARK_SHOW_ADD, BOOKMARK_SHOW_PREVIEW, BOOKMARK_SHOW_EDIT } from '../actions/types';
 import { BOOKMARK_STATUS_SUCCESS, BOOKMARK_FIELDS_SUCCESS, LOAD_BOOKMARK_SCRAPE } from '../actions/types';
-import { BOOKMARK_SAVE } from '../actions/types';
 
 export function bookmarkHasErrored(state = false, action) {
 	switch (action.type) {
@@ -70,22 +69,6 @@ export function loadBookmarkScrape(state = {}, action) {
 	switch (action.type) {
 		case LOAD_BOOKMARK_SCRAPE:
 			return { data: action.data };
-		default:
-			return state;
-	}
-}
-
-const initialState = {
-	bookmarks: [],
-}
-
-export function bookmarkList(state = initialState, action) {
-	switch (action.type) {
-		case BOOKMARK_SAVE:
-			return {
-				...state,
-				bookmarks: state.bookmarks.push(action.savedBookmarks)
-			};
 		default:
 			return state;
 	}
