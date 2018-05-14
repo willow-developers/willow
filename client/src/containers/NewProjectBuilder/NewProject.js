@@ -23,6 +23,7 @@ class NewProjectBody extends Component {
   }
 
   handleSaveProject = (projectDetails) => {
+    console.log(projectDetails);
     this.props.handleSaveProject(projectDetails);
   }
 
@@ -45,8 +46,6 @@ class NewProjectBody extends Component {
     } else if (this.props.createProjectModalToShow === 'ProjectSummary') {
       modalToShow = <ProjectSummary handleSaveProject={ this.handleSaveProject } />
     }
-    
-    console.log('MTS', modalToShow);
 
     return (
       <div>
@@ -81,11 +80,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(handleProjectNaming(projectName));
     },
     handleAddMilestones: (milestones) => {
-      console.log('Adding milestones within NewProject.js!!', milestones);
+      console.log('firing addMilestones!!', milestones)
       dispatch(handleAddMilestones(milestones));
     },
     handleSaveProject: (projectDetails) => {
       console.log('Saving project, here are the details within NewProject.js!!', projectDetails);
+      debugger;
       dispatch(handleSaveProject(projectDetails));
     }
   }

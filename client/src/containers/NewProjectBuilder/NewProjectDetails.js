@@ -24,7 +24,7 @@ class NewProjectDetails extends Component {
 				<h2>Milestones required to complete this project: </h2>
 				<p>Sequentially enter project milestones that must be completed prior to the completion of the project</p>
 				<br/>
-				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleProjectNaming(values)) }>
+				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleAddMilestones(values)) }>
 					{ this.renderInputs() }
 					<Button
 						icon={ 'navigate_next' }
@@ -39,37 +39,13 @@ class NewProjectDetails extends Component {
 }
 
 const validate = (values) => {
-	console.log('values: ', values);
 	const errors = {};
-	if (!values.milestone1) {
-		errors.milestone1 = 'You forgot to add a milestone!';
+	for (var prop in values) {
+		if (values[prop].length > 75) {
+			errors[prop] = 'Please limit milestone titles to 75 characters or less.';
+		}
 	}
-	if (values.milestone1) {
-		errors.milestone1 = maxLength15(values.milestone1);
-	}
-
-	if (!values.milestone2) {
-		errors.milestone2 = 'You forgot to add a milestone!';
-	}
-	if (values.milestone2) {
-		errors.milestone2 = maxLength15(values.milestone2);
-	}
-
-	if (!values.milestone3) {
-		errors.milestone3 = 'You forgot to add a milestone!';
-	}
-	if (values.milestone3) {
-		errors.milestone3 = maxLength15(values.milestone3);
-	}
-
-  return errors;
-};
-
-const maxLength15 = value => {
-	if (value.length > 15) {
-		return 'Please limit milestone titles to 15 characters or less.';
-	}
-	return;
+	return errors;
 };
 
 export default reduxForm({

@@ -6,7 +6,6 @@ import Button from '../../../components/UI/Button';
 
 class Custom extends Component {
   render() {
-    console.log('this.props in custom modal: ', this.props);
     return (
       <Button
         value={ this.props.value }

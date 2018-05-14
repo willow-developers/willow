@@ -7,7 +7,6 @@ import ModalActions from './ModalActions';
 
 class Modals extends Component {
   render() {
-    console.log('this.props.modals within modals.js!!', this.props.modals);
     const modals = this.props.modals.map((item,i) => {
       
       // work around to change the modal type for createNewProject modal
