@@ -1,17 +1,23 @@
 import axios from 'axios';
 import { 
-  CREATE_PROJECT_SHOW_ADD_DETAILS,
-  CREATE_PROJECT_SHOW_NEW_PROJECT_FORM,
+  CREATE_PROJECT_ADD_PROJECT_TITLE,
+  CREATE_PROJECT_ADD_MILESTONES,
+  CREATE_PROJECT_SAVE_PROJECT,
   CREATE_PROJECT_HAS_ERRORED,
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING
 } from '../actions/types';
 
 export const handleProjectNaming = projectName => ({
-  type: CREATE_PROJECT_SHOW_ADD_DETAILS,
+  type: CREATE_PROJECT_ADD_PROJECT_TITLE,
   payload: projectName
 });
 
-export const handleCreateProject = projectData => (dispatch => {
+export const handleAddMilestones = milestones => ({
+  type: CREATE_PROJECT_ADD_MILESTONES,
+  payload: milestones
+});
+
+export const handleSaveProject = projectDetails => dispatch => {
   // MAYBE:
   // dispatch(createProjectIsLoading(true));
   
@@ -24,7 +30,7 @@ export const handleCreateProject = projectData => (dispatch => {
     
   // });
 
-});
+};
 
 // MAYBE:
 // export const createProjectIsLoading = boolean => ({

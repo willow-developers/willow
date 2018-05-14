@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // ACTIONS:
-import { handleCreateProject, handleProjectNaming } from '../../actions/createProject';
+import { handleProjectNaming, handleAddMilestones, handleSaveProject } from '../../actions/createProject';
 
 // COMPONENTS:
 import Loading from '../../components/UI/Loading';
 import NewProjectTitle from './NewProjectTitle';
-import AddDetailsAndSaveProject from './AddDetailsAndSaveProject';
+import NewProjectDetails from './NewProjectDetails';
+import ProjectSummary from './ProjectSummary';
 
 // STYLING:
 import styles from '../../assets/sass/BookmarkBody.module.scss';
@@ -17,8 +18,12 @@ class NewProjectBody extends Component {
     this.props.handleProjectNaming(projectName);
   }
 
-  handleCreateProject = (projectName) => {
-    this.props.handleCreateProject(projectName);
+  handleAddMilestones = (milestones) => {
+    this.props.handleAddMilestones(milestones);
+  }
+
+  handleSaveProject = (projectDetails) => {
+    this.props.handleSaveProject(projectDetails);
   }
 
   renderCreateProjectView = () => {
@@ -35,8 +40,10 @@ class NewProjectBody extends Component {
 
     if (this.props.createProjectModalToShow === 'NewProjectTitle') {
       modalToShow = <NewProjectTitle handleProjectNaming={ this.handleProjectNaming } />;
-    } else {
-      modalToShow = <AddDetailsAndSaveProject handleCreateProject= { this.handleCreateProject } />;
+    } else if (this.props.createProjectModalToShow === 'AddProjectDetails') {
+      modalToShow = <NewProjectDetails handleAddMilestones={ this.handleAddMilestones } />;
+    } else if (this.props.createProjectModalToShow === 'ProjectSummary') {
+      modalToShow = <ProjectSummary handleSaveProject={ this.handleSaveProject } />
     }
     
     console.log('MTS', modalToShow);
@@ -63,16 +70,24 @@ const mapStateToProps = (state) => {
     createProjectModalToShow: state.createProjectModalToShow,
     createProjectHasErrored: state.createProjectHasErrored,
     createProjectDataIsLoading: state.createProjectDataIsLoading,
+    createProjectMilestones: state.createProjectMilestones,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleProjectNaming: (projectName) => {
-      console.log('firing projectNaming: ', projectName)
+      console.log('firing projectNaming: ', projectName);
       dispatch(handleProjectNaming(projectName));
     },
-    handleCreateProject: (projectInfo) => dispatch(handleCreateProject(projectInfo))
+    handleAddMilestones: (milestones) => {
+      console.log('Adding milestones within NewProject.js!!', milestones);
+      dispatch(handleAddMilestones(milestones));
+    },
+    handleSaveProject: (projectDetails) => {
+      console.log('Saving project, here are the details within NewProject.js!!', projectDetails);
+      dispatch(handleSaveProject(projectDetails));
+    }
   }
 };
 
