@@ -20,6 +20,17 @@ class NewProjectInput extends Component {
 			classNames({ [styles.active]: isActive === true || input.value.length > 0 || !!placeholder })
 		);
 
+		const showInlineBtn = () => {
+			return (
+				<Button
+					icon={ 'navigate_next' }
+					value={ 'Next' }
+					iconSide={ 'right' }
+					type="submit"
+				/>
+			);
+		}
+
 		return (
 			<div className={ _setDisplayClass() }>
 				<input
@@ -33,6 +44,7 @@ class NewProjectInput extends Component {
 				/>
 				<label htmlFor={ input.name } className={ _setActiveClass() }>{ label }</label>
 				<div className={ styles.errorMessage }>{ touched && error }</div>
+				{ showInlineBtn() }
 			</div>
 		);
 	}

@@ -16,13 +16,13 @@ export const handleCreateProject = projectData => (dispatch => {
   // dispatch(createProjectIsLoading(true));
   
   // UPDATE AS NEEDED:
-  axios.post(TBD_URL, {
-    data: projectData,
-  }).then(resp => {
+  // axios.post(TBD_URL, {
+  //   data: projectData,
+  // }).then(resp => {
 
-  }).catch(err => {
+  // }).catch(err => {
     
-  });
+  // });
 
 });
 

@@ -7,7 +7,7 @@ import Notification from './types/Notification';
 
 class DisplayModal extends Component {
   render() {
-    const { type, id, body, action } = this.props;
+    const { type, id, body, action, value, icon } = this.props;
 
     if (type === 'confirmation') {
       return (
@@ -20,7 +20,7 @@ class DisplayModal extends Component {
     if (type === 'custom') {
       return (
         <div>
-          <Custom body={ body } id={ id } />
+          <Custom body={ body } id={ id } value={ value } icon={ icon }/>
           <Modals />
         </div>
       );

@@ -12,7 +12,7 @@ import AddDetailsAndSaveProject from './AddDetailsAndSaveProject';
 // STYLING:
 import styles from '../../assets/sass/BookmarkBody.module.scss';
 
-class BookmarkBody extends Component {
+class NewProjectBody extends Component {
   handleProjectNaming = (projectName) => {
     this.props.handleProjectNaming(projectName);
   }
@@ -22,6 +22,8 @@ class BookmarkBody extends Component {
   }
 
   renderCreateProjectView = () => {
+    console.log('this.props within NewProject.js : ', this.props);
+
     if (this.props.createProjectHasErrored) {
       return <p>Sorry! There was an error with your request. Please try again later.</p>;
     }
@@ -31,12 +33,13 @@ class BookmarkBody extends Component {
 
     let modalToShow;
 
-    switch (this.props.createProjectModalToShow) {
-      case 'NewProjectForm':
-        modalToShow = <NewProjectForm handleProjectNaming={ this.handleProjectNaming } />;
-      case 'AddProjectDetails':
-        modalToShow = <AddDetailsAndSaveProject handleCreateProject= { this.handleCreateProject } />;
+    if (this.props.createProjectModalToShow === 'NewProjectForm') {
+      modalToShow = <NewProjectForm handleProjectNaming={ this.handleProjectNaming } />;
+    } else {
+      modalToShow = <AddDetailsAndSaveProject handleCreateProject= { this.handleCreateProject } />;
     }
+    
+    console.log('MTS', modalToShow);
 
     return (
       <div>
@@ -46,6 +49,7 @@ class BookmarkBody extends Component {
   };
   
   render() {
+    console.log('firing in newProject.js!!');
 		return (
       <div className={ styles.forLoader }>
         { this.renderCreateProjectView() }
@@ -69,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookmarkBody);
+export default connect(mapStateToProps, mapDispatchToProps)(NewProjectBody);
