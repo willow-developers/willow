@@ -1,30 +1,11 @@
 import axios from 'axios';
 import { USER_HAS_ERRORED, USER_IS_LOADING, USER_CHECK_STATUS_SUCCESS } from './types';
 
+export const userHasErrored = (bool) => ({ type: USER_HAS_ERRORED, hasErrored: bool });
+export const userIsLoading = (bool) => ({ type: USER_IS_LOADING, isLoading: bool });
+export const userCheckStatusSuccess = (status) => ({ type: USER_CHECK_STATUS_SUCCESS, userStatus: status });
 
-export function userHasErrored(bool) {
-	return {
-		type: USER_HAS_ERRORED,
-		hasErrored: bool
-	};
-}
-
-export function userIsLoading(bool) {
-	return {
-		type: USER_IS_LOADING,
-		isLoading: bool
-	};
-}
-
-export function userCheckStatusSuccess(status) {
-	return {
-		type: USER_CHECK_STATUS_SUCCESS,
-		userStatus: status
-	};
-}
-
-export function userCheckStatus(url) {
-	return (dispatch) => {
+export const userCheckStatus = (url) => ((dispatch) => {
 		dispatch(userIsLoading(true));
 		axios.get(url)
 			.then((response) => {
@@ -34,5 +15,5 @@ export function userCheckStatus(url) {
 		}).then((status) => dispatch(userCheckStatusSuccess(status)))
 			.catch(() => dispatch(userHasErrored(true))
 		);
-	};
-}
+	}
+);
