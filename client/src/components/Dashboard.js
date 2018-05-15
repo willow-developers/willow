@@ -1,23 +1,64 @@
-import React from 'react';
+import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { projectsGetList} from '../actions/projects';
+import { projectGetData} from '../actions/project';
 import { Link } from 'react-router-dom';
 import DisplayModal from '../containers/Modal_NEW/DisplayModal';
 import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
 import styles from '../assets/sass/Dashboard.module.scss';
 
-const Dashboard = () => (
-	<div className={ styles.col_12_of_12 }>
-		<h1>Dashboard</h1>
-		<Link to='/project/1'>Project 1</Link>
-		<br/>
-		<br/>
-		<br/>
-		<DisplayModal
-			value={ 'I\'m an Exploratory Node'}
-			content={ <BookmarkBody /> }
-			name={ 'BookmarkBody' }
-			id={ 2 }
-		/>
-	</div>
-);
+class Dashboard extends Component {
+	componentDidMount() {
+		this.props.projectsGetList(this.props.userStatus.google_id)
+	}
 
-export default Dashboard;
+	clickHandler(projectID) {
+		this.props.projectGetData(projectID);
+
+	}
+
+	renderProjectList() {
+		return (
+			<div className={ styles.col_12_of_12 }>
+				<h1>Dashboard</h1>
+				{this.props.projectsList.map((project, i ) => {
+					return (<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>)
+				})}
+				<DisplayModal
+					value={ 'I\'m an Exploratory Node'}
+					content={ <BookmarkBody /> }
+					name={ 'BookmarkBody' }
+					id={ 2 }
+				/>
+			</div>
+		)
+	}
+
+	render() {
+		return (
+			<div>
+				{this.renderProjectList()}
+			</div>
+		)
+	}
+}
+
+const mapStateToProps = (state) => {
+	return { 
+		userStatus: state.userStatus,
+		projectsList: state.projectsList
+	};
+  };
+  
+  const mapDispatchToProps = (dispatch) => {
+	return { 
+		  projectsGetList: (userID) => {
+			  dispatch(projectsGetList(userID));
+		  },
+		  projectGetData: (projectID) => {
+			  dispatch(projectGetData(projectID));
+		  }
+	  };
+  };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
