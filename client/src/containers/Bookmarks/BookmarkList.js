@@ -9,8 +9,8 @@ class BookmarkList extends Component {
 	renderList() {
 		let { bookmarkListAdd } = this.props;
 		return _.map(bookmarkListAdd, ({ title, url}, i) => (
-			<a href={ url } target="_blank" className={ styles.displayLink }>
-				<div key={ i } className={`${ styles.row } ${ styles.previewMode }`}>
+			<a key={ i } href={ url } target="_blank" className={ styles.displayLink }>
+				<div className={`${ styles.row } ${ styles.previewMode }`}>
 					<div className={ styles.col_3_of_12 }>
 						<div className={ styles.bookmark_icon }>
 							<img src={ bookmark_icon } alt="Bookmark"/>

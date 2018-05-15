@@ -75,7 +75,6 @@ export function loadBookmarkScrape(state = {}, action) {
 }
 
 export const bookmarkListAdd = (state = [], action) => {
-	console.log(action)
   switch (action.type) {
     case SAVE_BOOKMARK:
       return [...state, action.data];
