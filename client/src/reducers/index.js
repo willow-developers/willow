@@ -5,6 +5,9 @@ import { isModalOpen } from './modalReducer';
 import { bookmarkStatus, bookmarkHasErrored, bookmarkIsLoading, bookmarkShowAdd, bookmarkShowPreview, bookmarkShowEdit, bookmarkFields, loadBookmarkScrape, bookmarkListAdd } from './bookmarkReducer';
 import { createProjectModalToShow, createProjectHasErrored, createProjectDataIsLoading } from './createProjectReducer';
 
+import { projectsList, projectsListHasErrored, projectsListIsLoading } from './projectsReducer';
+import { projectData, projectHasErrored, projectIsLoading, clearProjectData } from './projectReducer';
+import { newExplorativeNodeCreated } from './explorativeNodeReducer';
 // import { loadBookmarkScrape } from './exampleReducer';
 
 export default combineReducers({
@@ -25,4 +28,12 @@ export default combineReducers({
 	createProjectModalToShow,
 	createProjectHasErrored, // consider deleting later
 	createProjectDataIsLoading, // consider deleting later
+	projectsList,
+	projectsListHasErrored,
+	projectsListIsLoading,
+	projectData,
+	projectHasErrored,
+	projectIsLoading,
+	clearProjectData,
+	newExplorativeNodeCreated
 });

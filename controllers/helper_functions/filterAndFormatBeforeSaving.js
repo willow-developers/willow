@@ -6,8 +6,8 @@ module.exports = filterAndFormatBeforeSaving = (nodes, links) => {
   for (var j = 0; j < nodes.length; j++) {
     if (nodes[j].status === 'new' || nodes[j].status === 'updated' || nodes[j].status === 'delete') {
       // destructure node properties to match database keys:
-      let { hash_id, owner_id, project_id, label_id, node_description, node_status, node_data, status } = nodes[j];
-      nodesToUpdate.push({ hash_id, owner_id, project_id, label_id, node_description, node_status, node_data, status });
+      let { hash_id, owner_id, project_id, label_id, node_description, node_status, node_data, x, y, status } = nodes[j];
+      nodesToUpdate.push({ hash_id, owner_id, project_id, label_id, node_description, node_status, x, y, node_data, status });
     }
   }
 

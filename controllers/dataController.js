@@ -7,7 +7,7 @@ const got = require('got');
 // HELPER FUNCTIONS:
 const formatProjectData = require('./helper_functions/formatProjectData');
 const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatBeforeSaving');
-const saveNodesAndLinks = require('./helper_functions/saveNodesAndLinks');
+const {saveNodes, saveLinks} = require('./helper_functions/saveNodesAndLinks');
 
 const knex = require('../database/index');
 
@@ -43,7 +43,7 @@ exports.createNewProject = (req, res) => {
 
 exports.fetchProjects = (req, res) => {
     // update as needed!!
-    let owner_id = req.query.user;
+    let owner_id = req.query.userID;
 
     knex('projects')
         .where('owner_id', owner_id)
@@ -58,7 +58,7 @@ exports.fetchProjects = (req, res) => {
 };
 
 exports.getProjectData = (req, res) => {
-    let projectID = req.query.id;
+    let projectID = req.query.projectID;
 
     Promise.all([
         knex('projects').where('id', projectID),
@@ -81,26 +81,20 @@ exports.getProjectData = (req, res) => {
 };
 
 exports.saveProject = (req, res) => {
-    // delete/update later if client sends an object, testing with string in Postman for now
-    if (typeof req.query.project === 'string') {
-        var { nodes, links } = JSON.parse(req.query.project);
-    } else if (req.query) {
-        var { nodes, links } = req.query.project;
-    }
+    var { nodes, links } = req.body.project;
 
     // /* The function below returns an object as follows:
     // data = { nodes: [nodes that need updating], links: [links that need updating] }; */
     let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
 
-    saveNodesAndLinks(nodesToUpdate, linksToUpdate)
-        .then(response => {
-            console.log('res: ', response);
-            res.status(200).send('success!');
-        }).catch(err => {
-            console.log('err: ', err);
-            res.status(500).send('error!!');
-        });
+    console.log('NODES TO UPDATE: ', nodesToUpdate);
+    console.log('LINKS TO UPDATE: ', linksToUpdate);
+    saveNodes(nodesToUpdate)
+        .then(() => saveLinks(linksToUpdate))
+        .then(() => res.status(200).send('success!'))
+        .catch((err) => console.error(err));
 };
+
 
 exports.getBookmarkMetadata = async (req, res) => {
     const { targetUrl } = req.query;
