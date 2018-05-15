@@ -8,6 +8,7 @@ import bookmark_icon from '../../assets/images/bookmarkIcon.svg';
 
 class BookmarkMetaPreview extends Component {
 	render() {
+		console.log(this.props)
 		const { formData: { url, title } } = this.props;
 		return (
 			<div className={ styles.row }>
@@ -47,7 +48,8 @@ class BookmarkMetaPreview extends Component {
 };
 
 const mapStateToProps = (state) => ({
-	formData: state.bookmarkStatus
+	formData: state.bookmarkStatus,
+	saveBookmark: state.saveBookmark,
 });
 
 const mapDispatchToProps = (dispatch) => ({

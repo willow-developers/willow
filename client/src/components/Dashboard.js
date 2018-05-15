@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DisplayModal from '../containers/Modal/DisplayModal';
+import DisplayModal from '../containers/Modal_NEW/DisplayModal';
 import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
 import styles from '../assets/sass/Dashboard.module.scss';
 
@@ -12,9 +12,9 @@ const Dashboard = () => (
 		<br/>
 		<br/>
 		<DisplayModal
-			type={ 'custom' }
 			value={ 'I\'m an Exploratory Node'}
-			body={ <BookmarkBody /> }
+			content={ <BookmarkBody /> }
+			name={ 'BookmarkBody' }
 			id={ 2 }
 		/>
 	</div>
