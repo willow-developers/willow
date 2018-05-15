@@ -96,9 +96,10 @@
 }
 
 .btn_bar {
-  padding: 20px;
+  padding: 0px;
+  // padding-top: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
 
   &.notification {
     padding: 0;
