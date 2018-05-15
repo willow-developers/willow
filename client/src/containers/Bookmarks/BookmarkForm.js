@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import validateUrl from '../../utils/validateUrl';
 import BookmarkInput from './BookmarkInput';
+import BookmarkList from './BookmarkList';
 
 class BookmarkForm extends Component {
 	renderInputs() {
@@ -16,10 +17,10 @@ class BookmarkForm extends Component {
 	render() {
 		return (
 			<div>
-				<h2>Add A Bookmark</h2>
 				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleBookmarkSubmit(values)) }>
 					{ this.renderInputs() }
 				</form>
+				<BookmarkList />
 			</div>
 		);
 	}
@@ -39,5 +40,5 @@ const validate = (values) => {
 export default reduxForm({
 	validate,
 	form: 'bookmarkForm',
-	addBookmarkField: [{ label: 'Save Bookmark', name: 'bookmark', type: 'text', value: '', placeholder: '' }]
+	addBookmarkField: [{ label: 'Add A Bookmark', name: 'bookmark', type: 'text', value: '', placeholder: '' }]
 })(BookmarkForm);
