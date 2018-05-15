@@ -18,22 +18,22 @@ export const handleAddMilestones = milestones => ({
 });
 
 export const handleSaveProject = projectDetails => dispatch => {
-  // MAYBE:
-  // dispatch(createProjectIsLoading(true));
+  dispatch(createProjectIsLoading(true));
   
   // UPDATE AS NEEDED:
-  // axios.post(TBD_URL, {
-  //   data: projectData,
-  // }).then(resp => {
-
-  // }).catch(err => {
-    
-  // });
+  axios.post('/api/newProject', {
+    data: projectDetails,
+  }).then(resp => {
+    console.log('resp: ', resp);
+    dispatch(createProjectIsLoading(false));
+  }).catch(err => {
+    console.log('err: ', err);
+    dispatch(createProjectIsLoading(false));
+  });
 
 };
 
-// MAYBE:
-// export const createProjectIsLoading = boolean => ({
-//   type: 'TYPE_GOES_HERE',
-//   payload: boolean
-// });
+export const createProjectIsLoading = boolean => ({
+  type: 'TYPE_GOES_HERE',
+  payload: boolean
+});

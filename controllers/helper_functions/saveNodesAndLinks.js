@@ -3,6 +3,8 @@ const knex = require('../../database/index');
 module.exports = saveNodesAndLinks = (nodes, links) => {
   let allUpdates = [...nodes, ...links];
 
+  console.log('all!!', allUpdates);
+
   return Promise.all(allUpdates.map(entry => {
     // if the entry is a node --> update 'Nodes' table
     if (entry.hasOwnProperty('node_data')) {

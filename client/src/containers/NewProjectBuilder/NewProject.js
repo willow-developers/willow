@@ -85,7 +85,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleSaveProject: (projectDetails) => {
       console.log('Saving project, here are the details within NewProject.js!!', projectDetails);
-      debugger;
       dispatch(handleSaveProject(projectDetails));
     }
   }
