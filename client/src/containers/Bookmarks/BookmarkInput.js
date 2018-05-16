@@ -28,6 +28,7 @@ class BookmarkInput extends Component {
 						value={ 'Preview' }
 						iconSide={ 'right' }
 						type="submit"
+						styleClass={ 'noShadow' }
 					/>
 				);
 			}
