@@ -70,6 +70,7 @@ CREATE TABLE nodes (
   label_id INTEGER,
   node_description varchar(100),
   node_status varchar(100), -- Completed, In Progress, Closed/Cancelled, etc.
+  milestone boolean, --true/false
   x double PRECISION,
   y double PRECISION,
   node_data jsonb,
@@ -148,79 +149,83 @@ INSERT INTO labels (label_type, label_sub_type, label_notes)
 -- NODES:
 -- TOMS PROJECT
 -- START NODE: (1)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('107740050254369789353', 1, 1, 'Solo Week Project', 'twagner55-1-1525548651799', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('107740050254369789353', 1, 1, TRUE, 'Solo Week Project', 'twagner55-1-1525548651799', 0, 0);
 
 -- FIRST SUBTASK: (2)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('107740050254369789353', 1, 3, 'Settle on a project idea', 'twagner55-1-1525548648849', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('107740050254369789353', 1, 3, TRUE, 'Settle on a project idea', 'twagner55-1-1525548648849', 0, 0);
 
 -- SUBTASK 2a: (3)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('107740050254369789353', 1, 3, 'Develop/write front-end code', 'twagner55-1-1525548645408', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('107740050254369789353', 1, 3, FALSE, 'Develop/write front-end code', 'twagner55-1-1525548645408', 0, 0);
 
 -- SUBTASK 2b: (4)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('107740050254369789353', 1, 3, 'Write back-end code (server and datbase)', 'twagner55-1-1525548581795', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('107740050254369789353', 1, 3, FALSE, 'Write back-end code (server and datbase)', 'twagner55-1-1525548581795', 0, 0);
 
 -- END GOAL: (5)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('107740050254369789353', 1, 2, 'Deploy MVP-version of Solo Week Project', 'twagner55-1-1525548748852', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('107740050254369789353', 1, 2, TRUE, 'Deploy MVP-version of Solo Week Project', 'twagner55-1-1525548748852', 0, 0);
 
 -- JUNS PROJECT
 -- OBJECTIVE NODES
 -- START NODE: (1)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 1, 'Solo Week Project', '110227128753222443119-1-1525548651799', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 1, TRUE, 'Solo Week Project', '110227128753222443119-1-1525548651799', 0, 0);
 
 -- FIRST SUBTASK: (2) Project Idea
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 3, 'Settle on a project idea', '110227128753222443119-1-1526053213655', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, TRUE, 'Settle on a project idea', '110227128753222443119-1-1526053213655', 0, 0);
 
 -- SUBTASK 2: (3) MVP
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 3, 'Create MVP', '110227128753222443119-1-1526053540949', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, TRUE, 'Create MVP', '110227128753222443119-1-1526053540949', 0, 0);
 
 -- SUBTASK 2a:
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 3, 'Develop/write front-end code', '110227128753222443119-1-1526053307632', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, FALSE, 'Develop/write front-end code', '110227128753222443119-1-1526053307632', 0, 0);
 
 -- SUBTASK 2b:
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 3, 'Write back-end code (server and datbase)', '110227128753222443119-1-1526053388522', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, FALSE, 'Write back-end code (server and datbase)', '110227128753222443119-1-1526053388522', 0, 0);
 
 -- SUBTASK 3: (4) Styling
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 3, 'Add Styling', '110227128753222443119-1-1526053608614', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, TRUE, 'Add Styling', '110227128753222443119-1-1526053608614', 0, 0);
+
+-- SUBTASK 3a: 
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, FALSE, 'Choose Style', '110227128753222443119-1-1526053608123', 0, 0);
 
 -- SUBTASK 3: (5) Deployment
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 3, 'Deploy to AWS', '110227128753222443119-1-1526053624015', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 3, TRUE, 'Deploy to AWS', '110227128753222443119-1-1526053624015', 0, 0);
 
 -- END NODE: (6)
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 2, 'Deploy MVP-version of Solo Week Project', '110227128753222443119-1-1526053261592', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 2, TRUE, 'Deploy MVP-version of Solo Week Project', '110227128753222443119-1-1526053261592', 0, 0);
 
 -- EXPLORATIVE NODES
 -- YELP NODE
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 4, 'Yelp App', '110227128753222443119-1-1526053962676', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 4, FALSE, 'Yelp App', '110227128753222443119-1-1526053962676', 0, 0);
 
 -- SPRITE NODE
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 4, 'Sprite Chat App', '110227128753222443119-1-1526053972228', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 4, FALSE, 'Sprite Chat App', '110227128753222443119-1-1526053972228', 0, 0);
 
 -- BOOKMARK NODE
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 4, 'Bookmark Manager App', '110227128753222443119-1-1526053979820', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 4, FALSE, 'Bookmark Manager App', '110227128753222443119-1-1526053979820', 0, 0);
 
 -- LEARNING NODE
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 4, 'Learning Journey App', '110227128753222443119-1-1526053989580', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 4, FALSE, 'Learning Journey App', '110227128753222443119-1-1526053989580', 0, 0);
 
 -- WILLOW NODE
-INSERT INTO nodes (owner_id, project_id, label_id, node_description, hash_id, x, y)
-  VALUES ('110227128753222443119', 2, 4, 'Willow App', '110227128753222443119-1-1526053997541', 0, 0);
+INSERT INTO nodes (owner_id, project_id, label_id, milestone, node_description, hash_id, x, y)
+  VALUES ('110227128753222443119', 2, 4, FALSE, 'Willow App', '110227128753222443119-1-1526053997541', 0, 0);
 
 -- LINKS:
 -- TOMS PROJECT
@@ -248,22 +253,30 @@ INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
 -- START TO IDEA
 INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
   VALUES ('110227128753222443119-1-1525548651799', '110227128753222443119-1-LINK-1526059901144', '110227128753222443119-1-1526053213655', 8, 2);
-
+-- IDEA TO MVP
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('110227128753222443119-1-1526053213655', '110227128753222443119-1-LINK-1526059235572', '110227128753222443119-1-1526053540949', 8, 2);
 -- IDEA TO FRONT END
-INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
-  VALUES ('110227128753222443119-1-1526053213655', '110227128753222443119-1-LINK-1526059953572', '110227128753222443119-1-1526053307632', 8, 2);
+-- INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+--   VALUES ('110227128753222443119-1-1526053213655', '110227128753222443119-1-LINK-1526059953572', '110227128753222443119-1-1526053307632', 8, 2);
 -- IDEA TO BACK END
-INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
-  VALUES ('110227128753222443119-1-1526053213655', '110227128753222443119-1-LINK-1526059968053', '110227128753222443119-1-1526053388522', 8, 2);
+-- INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+--   VALUES ('110227128753222443119-1-1526053213655', '110227128753222443119-1-LINK-1526059968053', '110227128753222443119-1-1526053388522', 8, 2);
 -- FRONT END TO MVP
 INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
-  VALUES ('110227128753222443119-1-1526053307632', '110227128753222443119-1-LINK-1526060101425', '110227128753222443119-1-1526053540949', 8, 2);
+  VALUES ('110227128753222443119-1-1526053307632', '110227128753222443119-1-LINK-1526060101425', '110227128753222443119-1-1526053540949', 7, 2);
 -- BACK END TO MVP
 INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
-  VALUES ('110227128753222443119-1-1526053388522', '110227128753222443119-1-LINK-1526060190877', '110227128753222443119-1-1526053540949', 8, 2);
+  VALUES ('110227128753222443119-1-1526053388522', '110227128753222443119-1-LINK-1526060190877', '110227128753222443119-1-1526053540949', 7, 2);
 -- MVP TO STYLING
 INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
   VALUES ('110227128753222443119-1-1526053540949', '110227128753222443119-1-LINK-1526060241260', '110227128753222443119-1-1526053608614', 8, 2);
+
+-- CHOOSE STYLE TO STYLING
+INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
+  VALUES ('110227128753222443119-1-1526053608123', '110227128753222443119-1-LINK-1526060241123', '110227128753222443119-1-1526053608614', 7, 2);
+
+
 -- STYLING TO DEPLOYMENT
 INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
   VALUES ('110227128753222443119-1-1526053608614', '110227128753222443119-1-LINK-1526060269724', '110227128753222443119-1-1526053624015', 8, 2);

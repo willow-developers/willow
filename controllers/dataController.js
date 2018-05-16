@@ -13,10 +13,10 @@ const { saveNodes, saveLinks } = require('./helper_functions/saveNodesAndLinks')
 const knex = require('../database/index');
 
 exports.test = (req, res) => {
-    const dataPath = path.join(path.dirname(__dirname),'/dummy_data/graph_data.json');
+    const dataPath = path.join(path.dirname(__dirname),'/dummy_data/objectiveTest.json');
     
     fs.readFile(dataPath, (err, data) => {
-        console.log(data);
+        console.log('data: ', JSON.parse(data));
         if (err) console.error(err);
         res.send(JSON.parse(data));
     })
@@ -73,6 +73,7 @@ exports.fetchProjects = (req, res) => {
 };
 
 exports.getProjectData = (req, res) => {
+    // exports.test(req, res);
     let projectID = req.query.projectID;
 
     Promise.all([
