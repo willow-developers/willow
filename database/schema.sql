@@ -294,4 +294,3 @@ INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
 -- WILLOW TO IDEA
 INSERT INTO links (source_id, hash_id, target_id, label_id, project_id)
   VALUES ('110227128753222443119-1-1526053997541', '110227128753222443119-1-LINK-1526060635418', '110227128753222443119-1-1526053213655', 6, 2);
-

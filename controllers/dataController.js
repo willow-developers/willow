@@ -5,9 +5,10 @@ const metascraper = require('metascraper');
 const got = require('got');
 
 // HELPER FUNCTIONS:
+const formatNewProjectData = require('./helper_functions/formatNewProjectData');
 const formatProjectData = require('./helper_functions/formatProjectData');
 const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatBeforeSaving');
-const {saveNodes, saveLinks} = require('./helper_functions/saveNodesAndLinks');
+const { saveNodes, saveLinks } = require('./helper_functions/saveNodesAndLinks');
 
 const knex = require('../database/index');
 
@@ -22,23 +23,39 @@ exports.test = (req, res) => {
 };
 
 exports.createNewProject = (req, res) => {
-    let { project_name, owner_id, nodes, links } = req.query;
-    let projectData = { project_name, owner_id };
+    let { user, title, milestones } = req.body.data;
+ 
 
-    knex('projects').insert(projectData).then(result => {
-        // TO DO: Finish functionality to save nodes/links:
-        // saveNodesAndLinks(nodes, links)
-        //     .then(result => {
-        //         console.log('result: ', result);
-        //         res.status(200).send(result);
-        //     });
+    let projectData = {
+        project_name: title,
+        owner_id: user.google_id,
+    };
 
-        console.log('result: ', result);
-        res.status(200).send(result);
-    }).catch(err => {
-        console.log('err: ', err);
-        res.status(500).send(err);
-    });
+    knex('projects')
+        .insert(projectData, 'id')
+        .then(project_id => {
+            // project_id is a single-value array containing the project_id, thus ->
+            let { nodes, links } = formatNewProjectData(project_id[0], user.google_id, title, milestones);
+
+            console.log('nodes and links: ', { nodes, links });
+
+            // TO DO: Finish functionality to save nodes/links:
+            saveNodesAndLinks(nodes, [])
+                .then(result => {
+                    console.log('result of save nodes: ', result);
+
+                    saveNodesAndLinks([], links)
+                        .then(result => {
+                            console.log('result of save links!!', result);
+                            res.status(200).send(result);
+                        });
+                });
+
+            // res.status(200).send(result);
+        }).catch(err => {
+            console.log('err: ', err);
+            res.status(500).send(err);
+        });
 };
 
 exports.fetchProjects = (req, res) => {

@@ -44,6 +44,8 @@ class Modal extends Component {
       })
     );
 
+    console.log('this.props within ModalActions: ', this.props);
+
     if (type === 'confirmation') {
       return (
         <div className={ styles.modal_overlay }>
@@ -121,8 +123,29 @@ class Modal extends Component {
             </div>
           </div>
         </div>
-      )
+      );
+    } else if (type === 'newProject') {
+      return (
+        <div className={ styles.modal_overlay }>
+          <div className={ _modalClassNames(styles) }>
+            <div className={ styles.row }>
+              <div className={ _modalContentClassNames(styles) }>
+                { content }
+              </div>
+              <div className={_btnBarClassNames(styles)}>
+                <Button
+                  icon={ 'close' }
+                  styleClass={ 'closeNotification' }
+                  type={ 'round' }
+                  handleClick={ () => this.onClose() }
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     }
+
     return (
       <div></div>
     );
