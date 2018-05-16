@@ -106,25 +106,25 @@ exports.saveProject = (req, res) => {
     // console.log('LINKS TO UPDATE: ', linksToUpdate);
     
     // Jun's code:
-    // saveNodes(nodesToUpdate)
-    //     .then(() => saveLinks(linksToUpdate))
-    //     .then(() => res.status(200).send('success!'))
-    //     .catch((err) => console.error(err));
+    saveNodes(nodesToUpdate)
+        .then(() => saveLinks(linksToUpdate))
+        .then(() => res.status(200).send('success!'))
+        .catch((err) => console.error(err));
 
-    saveNodesAndLinks(nodesToUpdate, [])
-        .then(result => {
-            console.log('result of save nodes: ', result);
-            console.log('nodes saved successfully!')
+    // saveNodesAndLinks(nodesToUpdate, [])
+    //     .then(result => {
+    //         console.log('result of save nodes: ', result);
+    //         console.log('nodes saved successfully!')
 
-            saveNodesAndLinks([], linksToUpdate)
-                .then(result => {
-                    console.log('result of save links!!', result);
-                    res.status(200).send(result);
-                });
-        }).catch(err => {
-            console.log('err saving dynamic project! ', err)
-            res.status(500).send(err);
-        });
+    //         saveNodesAndLinks([], linksToUpdate)
+    //             .then(result => {
+    //                 console.log('result of save links!!', result);
+    //                 res.status(200).send(result);
+    //             });
+    //     }).catch(err => {
+    //         console.log('err saving dynamic project! ', err)
+    //         res.status(500).send(err);
+    //     });
 };
 
 
