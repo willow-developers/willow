@@ -101,6 +101,18 @@
 			box-shadow: none;
 		}
 	}
+
+	&.skinnyIcon {
+		box-shadow: none;
+		margin-left: 5px;
+
+		&:hover {
+			box-shadow: none;
+		}
+		.btn__icon {
+			margin: 0;
+		}
+	}
 }
 
 .btn__icon {
