@@ -405,8 +405,8 @@ class WillowCore extends Component {
             })
         })
         
-        console.log(leftSideNodes);
-        console.log(rightSideNodes);
+        console.log('leftSideNodes: ',leftSideNodes);
+        console.log('rightSideNodes: ', rightSideNodes);
     }
 //--------------------------------------------------- UNLOCK MENU BUTTON
 //--------------------------------------------------- DELETE MENU BUTTON
