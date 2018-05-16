@@ -4,7 +4,8 @@ import { Field, reduxForm } from "redux-form";
 import { loadFormData } from '../../actions/bookmarks';
 import _ from 'lodash';
 
-import BookmarkInput from './BookmarkInput';
+import validateUrl from '../../utils/validateUrl';
+import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 import styles from '../../assets/sass/BookmarkMetaEdit.module.scss';
 
@@ -17,18 +18,18 @@ class BookmarkMetaEdit extends Component {
 	renderInputs() {
 		let { formFields } = this.props;
 		return _.map(formFields, (field, i) => (
-			<Field key={ field.name } { ...field } component={ BookmarkInput } inlineBtn={ 'remove' } />
+			<Field key={ field.name } { ...field } component={ Input } inlineBtn={ 'remove' } />
 		));
 	}
 
 	render() {
-		const { pristine, reset, submitting } = this.props;
+		const { pristine, reset, submitting, valid } = this.props;
 
 		return (
 			<div className={ styles.row }>
 				<div className={ styles.col_12_of_12 }>
 					<h2>Edit Your Bookmark</h2>
-					<form onSubmit={ this.props.handleSubmit((values) => this.props.handleBookmarkInfoUpdate(values)) }>
+					<form onSubmit={ this.props.handleSubmit((values) => this.props.handleBookmarkInfoUpdate(values)) } className={ styles.editForm }>
 						<div className={ styles.col_12_of_12 }>
 							{ this.renderInputs() }
 						</div>
@@ -46,14 +47,14 @@ class BookmarkMetaEdit extends Component {
 								iconSide={ 'left' }
 								btnFloat={ 'right' }
 								type="submit"
-								disabledStyle={ pristine || submitting ? true : false }
+								disabledStyle={ !valid || pristine || submitting ? true : false  }
 							/>
 							<Button
 								icon={ 'undo' }
 								value={ 'Reset' }
 								iconSide={ 'left' }
 								btnFloat={ 'right' }
-								disabledStyle={ pristine || submitting ? true : false }
+								disabledStyle={ !valid || pristine || submitting ? true : false }
 								handleClick={ reset }
 							/>
 						</div>
@@ -64,30 +65,25 @@ class BookmarkMetaEdit extends Component {
 	}
 };
 
-// <Button
-// 	icon={ 'check' }
-// 	value={ 'Save' }
-// 	iconSide={ 'left' }
-// 	type="submit"
-// 	disabled={ pristine || submitting }
-// />
-// <Button
-// 	icon={ 'undo' }
-// 	value={ 'Undo' }
-// 	iconSide={ 'left' }
-// 	disabled={ pristine || submitting }
-// 	handleClick={ reset }
-// />
-
-// const tester = (dispatch) => ({ previewBookmarkView: () => dispatch(previewBookmarkView()) });
+const validate = (values) => {
+	const errors = {};
+	if (!values.url) {
+		errors.url = 'You forgot to add a url!';
+	}
+	if (values.url) {
+		errors.url = validateUrl(values.url);
+	}
+  return errors;
+};
 
 BookmarkMetaEdit = reduxForm({
+	validate,
 	enableReinitialize: true,
 	form: 'BookmarkMetaEdit'
 })(BookmarkMetaEdit);
 
 BookmarkMetaEdit = connect((state) => ({
-		initialValues: state.loadBookmarkScrape.data, // pull initial values from loadBookmarkScrape reducer
+		initialValues: state.loadBookmarkScrape.data,
 		// formFields: state.bookmarkFields,
 		// { label: 'Description', name: 'description', type: 'text' },
 		formFields: [
@@ -100,21 +96,3 @@ BookmarkMetaEdit = connect((state) => ({
 )(BookmarkMetaEdit);
 
 export default BookmarkMetaEdit;
-
-
-
-
-
-
-
-// import React from "react";
-
-// const BookmarkMetaEdit = () => {
-// 	return (
-// 		<div>
-// 			<h2>Edit Your Bookmark</h2>
-// 		</div>
-// 	);
-// };
-
-// export default BookmarkMetaEdit;
