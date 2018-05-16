@@ -1,15 +1,15 @@
-import React from "react";
-import Milestone from "./Milestone";
-import EditMilestone from "./EditMilestone";
+import React from 'react';
+import Milestone from './Milestone';
+import EditMilestone from './EditMilestone';
 
 const getVisibleMilestones = (milestones, filter) => {
   switch (filter) {
     case "SHOW_ALL":
       return milestones;
     case "SHOW_COMPLETED":
-      return milestones.filter( ms => ms.completed );
+      return milestones.filter(ms => ms.completed);
     case "SHOW_ACTIVE":
-      return milestones.filter( ms => !ms.completed );
+      return milestones.filter(ms => !ms.completed);
     default:
       return milestones;
   }

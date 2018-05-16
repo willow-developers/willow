@@ -1,29 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { createMilestone, toggleMilestone, editMilestone, updateMilestone, filterMilestone } from "../../actions/milestone";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createMilestone, toggleMilestone, editMilestone, updateMilestone, filterMilestone } from '../../actions/milestone';
 
-import MilestoneList from "./MilestoneList";
-import AddMilestone from "./AddMilestone";
-import FilterNav from "./FilterNav";
+import MilestoneList from './MilestoneList';
+import AddMilestone from './AddMilestone';
+import FilterNav from './FilterNav';
 
 class MilestoneBody extends Component {
-  createMilestone = data => {
+  createMilestone = (data) => {
     this.props.createMilestone(data);
   };
 
-  toggleMilestone = id => {
+  toggleMilestone = (id) => {
     this.props.toggleMilestone(id);
   };
 
-  filterMilestone = filter => {
+  filterMilestone = (filter) => {
     this.props.filterMilestone(filter);
   };
 
-  editMilestone = id => {
+  editMilestone = (id) => {
     this.props.editMilestone(id);
   };
 
-  updateMilestone = data => {
+  updateMilestone = (data) => {
     this.props.updateMilestone(data);
   };
 
@@ -50,17 +50,17 @@ class MilestoneBody extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   milestones: state.milestones,
   visibilityFilter: state.visibilityFilter
 });
 
-const mapDispatchToProps = dispatch => ({
-  createMilestone: data => dispatch(createMilestone(data)),
-  toggleMilestone: id => dispatch(toggleMilestone(id)),
-  filterMilestone: filter => dispatch(filterMilestone(filter)),
-  editMilestone: id => dispatch(editMilestone(id)),
-  updateMilestone: data => dispatch(updateMilestone(data))
+const mapDispatchToProps = (dispatch) => ({
+  createMilestone: (data) => dispatch(createMilestone(data)),
+  toggleMilestone: (id) => dispatch(toggleMilestone(id)),
+  filterMilestone: (filter) => dispatch(filterMilestone(filter)),
+  editMilestone: (id) => dispatch(editMilestone(id)),
+  updateMilestone: (data) => dispatch(updateMilestone(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MilestoneBody);

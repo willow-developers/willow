@@ -47,28 +47,20 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<div>
-				{this.renderProjectList()}
+				{ this.renderProjectList() }
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = (state) => {
-	return { 
-		userStatus: state.userStatus,
-		projectsList: state.projectsList
-	};
-  };
-  
-  const mapDispatchToProps = (dispatch) => {
-	return { 
-		  projectsGetList: (userID) => {
-			  dispatch(projectsGetList(userID));
-		  },
-		  projectGetData: (projectID) => {
-			  dispatch(projectGetData(projectID));
-		  }
-	  };
-  };
+const mapStateToProps = (state) => ({
+	userStatus: state.userStatus,
+	projectsList: state.projectsList
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	projectsGetList: (userID) => dispatch(projectsGetList(userID)),
+	projectGetData: (projectID) => dispatch(projectGetData(projectID))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

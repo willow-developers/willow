@@ -1,11 +1,11 @@
-import React from "react";
-import { Field, reduxForm } from "redux-form";
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 
 const AddMilestone = (props) => {
   const { pristine, reset, handleSubmit, submitting, createMilestone } = props;
 
   return (
-    <form onSubmit={ handleSubmit(value => {
+    <form onSubmit={ handleSubmit((value) => {
         createMilestone(value);
         reset();
       })

@@ -54,7 +54,10 @@ class Modals extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ modals: state.isModalOpen.modals });
+const mapStateToProps = (state) => ({
+  modals: state.isModalOpen.modals
+});
+
 export default connect(mapStateToProps)(Modals);
 
 // <Button

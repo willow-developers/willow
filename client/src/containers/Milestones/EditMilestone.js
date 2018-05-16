@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-import { load } from "../../actions/milestone";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import { load } from '../../actions/milestone';
 
 class EditMilestone extends Component {
   componentDidMount() {
@@ -45,18 +45,16 @@ class EditMilestone extends Component {
   }
 }
 
-// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
 EditMilestone = reduxForm({
   enableReinitialize: true,
-  form: "editMilestone" // a unique identifier for this form
+  form: 'editMilestone'
 })(EditMilestone);
 
-// You have to connect() to any reducers that you wish to connect to yourself
 EditMilestone = connect(
   state => ({
-    initialValues: state.milestoneLoader.data // pull initial values from account reducer
+    initialValues: state.milestoneLoader.data
   }),
-  { load } // bind account loading action creator
+  { load }
 )(EditMilestone);
 
 export default EditMilestone;

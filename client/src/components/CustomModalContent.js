@@ -13,18 +13,14 @@ class CustomModalContent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    bookmarkHasErrored: state.bookmarkHasErrored,
-    bookmarkIsLoading: state.bookmarkIsLoading,
-    bookmarkStatus: state.bookmarkStatus,
-  };
-};
+const mapStateToProps = (state) => ({
+  bookmarkHasErrored: state.bookmarkHasErrored,
+  bookmarkIsLoading: state.bookmarkIsLoading,
+  bookmarkStatus: state.bookmarkStatus,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL))
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomModalContent);
