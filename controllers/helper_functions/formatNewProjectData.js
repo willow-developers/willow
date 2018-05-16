@@ -56,7 +56,6 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
   // generate links --- FORMAT: (source_id, hash_id, target_id, label_id, project_id)
   links = [];
   for (var i = 0; i < nodes.length - 1; i++) {
-    console.log('nodes[i]', nodes[i]);
     links.push({
       source_id: nodes[i].hash_id,
       hash_id: google_id + '-' + project_id + '-' + 'LINK' + '-' + i + '-' + Date.now(),
