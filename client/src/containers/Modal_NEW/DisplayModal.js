@@ -9,7 +9,7 @@ import Button from '../../components/UI/Button';
 class DisplayModal extends Component {
   render() {
 
-    const { content, id, name } = this.props;
+    const { content, id, name, value } = this.props;
 
     const onOpen = (obj) => {
       this.props.modalOpen(obj);
@@ -22,7 +22,7 @@ class DisplayModal extends Component {
     return (
       <div>
         <Button
-	        value={ 'Open custom modal' }
+	        value={ value }
 	        icon={ 'create' }
 	        iconSide={ 'left' }
 	        handleClick={() => onOpen({

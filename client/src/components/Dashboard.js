@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import { projectsGetList} from '../actions/projects';
 import { projectGetData} from '../actions/project';
 import { Link } from 'react-router-dom';
+
 import DisplayModal from '../containers/Modal_NEW/DisplayModal';
 import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
+import MilestoneBody from '../containers/Milestones/MilestoneBody';
+
 import styles from '../assets/sass/Dashboard.module.scss';
 
 class Dashboard extends Component {
@@ -29,6 +32,13 @@ class Dashboard extends Component {
 					content={ <BookmarkBody /> }
 					name={ 'BookmarkBody' }
 					id={ 2 }
+				/>
+				<br/>
+				<br/>
+				<DisplayModal
+					value={ 'I\'m an Milestone Node'}
+					content={ <MilestoneBody /> }
+					id={ 3 }
 				/>
 			</div>
 		)
