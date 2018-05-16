@@ -36,21 +36,15 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    hasErrored: state.userHasErrored,
-    isLoading: state.userIsLoading,
-    userInfo: state.userStatus,
-  };
-};
+const mapStateToProps = (state) => ({
+  hasErrored: state.userHasErrored,
+  isLoading: state.userIsLoading,
+  userInfo: state.userStatus,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userCheckStatus: (url) => {
-      console.log('firing user check status in App.js to: ', url);
-      dispatch(userCheckStatus(url))
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  userCheckStatus: (url) => dispatch(userCheckStatus(url))
+});
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

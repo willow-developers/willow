@@ -93,7 +93,12 @@ class Header extends Component {
 	}
 };
 
-const mapStateToProps = (state) => ({ userStatus: state.userStatus });
-const mapDispatchToProps = (dispatch) => ({ userCheckStatus: (url) => dispatch(userCheckStatus(url)) });
+const mapStateToProps = (state) => ({
+	userStatus: state.userStatus
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	userCheckStatus: (url) => dispatch(userCheckStatus(url))
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

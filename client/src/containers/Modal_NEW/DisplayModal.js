@@ -38,7 +38,10 @@ class DisplayModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ modals: state.isModalOpen.modals });
+const mapStateToProps = (state) => ({
+  modals: state.isModalOpen.modals
+});
+
 const mapDispatchToProps = (dispatch) => ({
   modalClose: (obj) => dispatch(modalClose(obj)),
   modalOpen: (obj) => dispatch(modalOpen(obj)),

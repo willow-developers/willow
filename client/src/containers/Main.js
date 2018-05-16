@@ -47,8 +47,9 @@ class Main extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-  return { userStatus: state.userStatus };
-};
+const mapStateToProps = (state) => ({
+  userStatus: state.userStatus
+});
+
 
 export default withRouter(connect(mapStateToProps)(Main));
