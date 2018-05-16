@@ -39,12 +39,10 @@ exports.createNewProject = (req, res) => {
 
             console.log('nodes and links: ', { nodes, links });
 
-            // TO DO: Finish functionality to save nodes/links:
             saveNodesAndLinks(nodes, [])
                 .then(result => {
                     console.log('result of save nodes: ', result);
-
-                    saveNodesAndLinks([], links)
+                    saveNodesAndLinks([], linksToUpdate)
                         .then(result => {
                             console.log('result of save links!!', result);
                             res.status(200).send(result);
@@ -104,12 +102,29 @@ exports.saveProject = (req, res) => {
     // data = { nodes: [nodes that need updating], links: [links that need updating] }; */
     let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
 
-    console.log('NODES TO UPDATE: ', nodesToUpdate);
-    console.log('LINKS TO UPDATE: ', linksToUpdate);
-    saveNodes(nodesToUpdate)
-        .then(() => saveLinks(linksToUpdate))
-        .then(() => res.status(200).send('success!'))
-        .catch((err) => console.error(err));
+    // console.log('NODES TO UPDATE: ', nodesToUpdate);
+    // console.log('LINKS TO UPDATE: ', linksToUpdate);
+    
+    // Jun's code:
+    // saveNodes(nodesToUpdate)
+    //     .then(() => saveLinks(linksToUpdate))
+    //     .then(() => res.status(200).send('success!'))
+    //     .catch((err) => console.error(err));
+
+    saveNodesAndLinks(nodesToUpdate, [])
+        .then(result => {
+            console.log('result of save nodes: ', result);
+            console.log('nodes saved successfully!')
+
+            saveNodesAndLinks([], linksToUpdate)
+                .then(result => {
+                    console.log('result of save links!!', result);
+                    res.status(200).send(result);
+                });
+        }).catch(err => {
+            console.log('err saving dynamic project! ', err)
+            res.status(500).send(err);
+        });
 };
 
 
