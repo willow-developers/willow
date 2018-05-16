@@ -18,7 +18,7 @@ class WillowCore extends Component {
             let y = (d3.event.offsetY - zoomTrans.y)/zoomTrans.scale;
 
             let dataObject = {
-                owner_id: this.props.projectData.project.owner_id, 
+                owner_id: this.props.projectData.project.owner_id,
                 project_id: this.props.projectData.project.id, 
                 label_id: 4, 
                 node_description: 'testing out creating new Explorative Node functionality',
@@ -65,10 +65,21 @@ class WillowCore extends Component {
             .selectAll("line")
             .data(linksData)
             .enter().append("line")
-                .attr("stroke-width", 2)
-                .style("stroke", '#999');   
+                // .attr("stroke-width", 2)
+                // .style("stroke", '#999');   
+        //selecting all CONNECTS links
+        link.filter((d) => d.label_id === 8)
+            .attr('stroke-width', 6)
+            .style('stroke', '#999')
+
+        link.filter((d) => d.label_id === 7)
+            .attr('stroke-width', 4)
+            .style('stroke', '#999')
+        
+        link.filter((d) => d.label_id !== 8 && d.label_id !== 7)
+            .attr('stroke-width', 2)
+            .style('stroke', '#999')
             
-      
         var node = d3.select('.nodes').selectAll('g')
                 .data(nodesData, (d) => d.hash_id)
                 .enter()
@@ -95,6 +106,7 @@ class WillowCore extends Component {
         .attr('height', 0)
         .style('fill', '#DDD')
         
+        
         node
         .append('text')
         .attr('class', 'unlockButtonLabel menuLabel')
@@ -103,23 +115,27 @@ class WillowCore extends Component {
         .attr('y', `0`)
         .style('font-size', '0')
         .style('visibility', 'hidden')
+
         
         //==================================================
         node
         .append('rect')
-        .attr('class', 'displayButton menu')
+        .attr('class', 'displayButton menu displayMenu')
         .attr('width', 0)
         .attr('height', 0)
         .style('fill', '#DDD')
         
         node
         .append('text')
-        .attr('class', 'displayButtonLabel menuLabel')
+        .attr('class', 'displayButtonLabel menuLabel displayMenu')
         .text('display')
         .attr('x', `0`)
         .attr('y', `0`)
             .style('font-size', '0')
             .style('visibility', 'hidden')
+
+        node.selectAll('.displayMenu')
+            .on('click', (d) => {this.clickDisplayMenuMode(d)})
             
         //==================================================
         node
@@ -159,11 +175,44 @@ class WillowCore extends Component {
         .style('font-size', '0')
         .style('visibility', 'hidden')
         //==================================================
+
         node
-        .append("circle")
-        .attr("r", 10)
+            .filter((d) => d.label_id === 4)
+            .append('circle')
+                .attr("r", 10)
+                .attr("fill", (d) => nodeColor(d))
+                    .on('click', (d) => this.clickOpenNodeMenu(d))
+    
+        node
+        .filter((d) => d.label_id !== 4 && d.milestone === true)
+        .append('rect')
+            .attr('width', 30)
+            .attr('height', 30)
+            .attr('transform', 'rotate(45) translate(-15, -15)')
+            .attr("fill", (d) => nodeColor(d))
+                .on('click', (d) => this.clickOpenNodeMenu(d))
+            
+                
+        node
+        .filter((d) => d.label_id !== 4 && d.milestone === false)
+        .append('rect')
+        .attr('width', 20)
+        .attr('height', 20)
+        .attr('transform', 'rotate(45) translate(-10, -10)')
         .attr("fill", (d) => nodeColor(d))
-            .on('click', (d) => this.clickOpenNodeMenu(d))
+        .on('click', (d) => this.clickOpenNodeMenu(d))
+                
+        node.filter((d) => d.label_id !== 4)
+        .append('text')
+        .text((d) => d.data)
+            .attr('x', '0')
+            .attr('y', '0')
+            .attr('transform', 'translate(0, 0)')
+            .style('font-size', 5)
+            .style('text-anchor', 'middle')
+            .style('fill', 'white');
+        // node
+        // .append("circle")
     }
 //--------------------------------------------------- D3 SETUP        
     d3Setup() {
@@ -173,7 +222,7 @@ class WillowCore extends Component {
         svg.append("rect")
         .attr("width", "100%")
         .attr("height", "100%")
-        .attr("fill", "grey");
+        .attr("fill", '#e5eef4');
 
         const zoomLayer = svg.append('g')
         .attr('class', 'zoomLayer');
@@ -222,6 +271,7 @@ class WillowCore extends Component {
             .attr('width', 30)
             .attr('height', 30)
             .attr('transform', `translate(-31, -31)`)
+            
 
             clickedNode.select('.unlockButtonLabel')
             .transition()
@@ -231,6 +281,7 @@ class WillowCore extends Component {
             .style('visibility', 'visible')
             .style('font-size', '10px')
             
+            
             //UpperRight
             clickedNode.select('.displayButton')
             .transition()
@@ -238,6 +289,7 @@ class WillowCore extends Component {
             .attr('width', 30)
             .attr('height', 30)
             .attr('transform', `translate(1, -31)`)
+            
             
             clickedNode.select('.displayButtonLabel')
             .transition()
@@ -247,6 +299,7 @@ class WillowCore extends Component {
             .style('visibility', 'visible')
             .style('font-size', '10px')
             
+            
             //LowerRight
             clickedNode.select('.linkButton')
             .transition()
@@ -254,6 +307,7 @@ class WillowCore extends Component {
             .attr('width', 30)
             .attr('height', 30)
             .attr('transform', `translate(1, 1)`)
+            
             
             clickedNode.select('.linkButtonLabel')
             .transition()
@@ -263,6 +317,7 @@ class WillowCore extends Component {
             .style('visibility', 'visible')
             .style('font-size', '10px')
             
+            
             //LowerLeft
             clickedNode.select('.deleteButton')
             .transition()
@@ -270,6 +325,7 @@ class WillowCore extends Component {
             .attr('width', 30)
             .attr('height', 30)
             .attr('transform', `translate(-31, 1)`)
+            
             
             clickedNode.select('.deleteButtonLabel')
             .transition()
@@ -324,6 +380,34 @@ class WillowCore extends Component {
         this.d3Restart();
     }
 //--------------------------------------------------- DISPLAY MENU BUTTON
+    clickDisplayMenuMode(d) {
+        const leftSideNodes = [];
+        const rightSideNodes = [];
+
+        const leftLinks = this.props.projectData.links.filter((link) => link.label_id === 7 && link.target_id === d.hash_id);
+
+
+        leftLinks.forEach((link) => {
+            this.props.projectData.nodes.forEach((node) => {
+                if (link.source_id === node.hash_id) leftSideNodes.push(node);
+            })
+        })
+
+        const nextMilestone = this.props.projectData.nodes.filter((node) => 
+                                node.hash_id === this.props.projectData.links.filter((link) => 
+                                    link.label_id === 8 && link.source_id === d.hash_id)[0].target_id)[0];
+
+        const nextLinks = this.props.projectData.links.filter((link) => link.label_id === 7 && link.target_id === nextMilestone.hash_id);
+
+        nextLinks.forEach((link) => {
+            this.props.projectData.nodes.forEach((node) => {
+                if (link.source_id === node.hash_id) rightSideNodes.push(node);
+            })
+        })
+        
+        console.log('leftSideNodes: ',leftSideNodes);
+        console.log('rightSideNodes: ', rightSideNodes);
+    }
 //--------------------------------------------------- UNLOCK MENU BUTTON
 //--------------------------------------------------- DELETE MENU BUTTON
 //--------------------------------------------------- TICKED

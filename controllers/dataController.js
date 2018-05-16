@@ -13,10 +13,10 @@ const { saveNodes, saveLinks } = require('./helper_functions/saveNodesAndLinks')
 const knex = require('../database/index');
 
 exports.test = (req, res) => {
-    const dataPath = path.join(path.dirname(__dirname),'/dummy_data/graph_data.json');
+    const dataPath = path.join(path.dirname(__dirname),'/dummy_data/objectiveTest.json');
     
     fs.readFile(dataPath, (err, data) => {
-        console.log(data);
+        console.log('data: ', JSON.parse(data));
         if (err) console.error(err);
         res.send(JSON.parse(data));
     })
@@ -37,14 +37,10 @@ exports.createNewProject = (req, res) => {
             // project_id is a single-value array containing the project_id, thus ->
             let { nodes, links } = formatNewProjectData(project_id[0], user.google_id, title, milestones);
 
-            console.log('nodes and links: ', { nodes, links });
-
             saveNodesAndLinks(nodes, [])
                 .then(result => {
-                    console.log('result of save nodes: ', result);
-                    saveNodesAndLinks([], linksToUpdate)
+                    saveNodesAndLinks([], links)
                         .then(result => {
-                            console.log('result of save links!!', result);
                             res.status(200).send(result);
                         });
                 });
@@ -60,10 +56,12 @@ exports.fetchProjects = (req, res) => {
     // update as needed!!
     let owner_id = req.query.userID;
 
+    // to go to Jun's google account:
+    // owner_id = '110227128753222443119';
+
     knex('projects')
         .where('owner_id', owner_id)
         .then(result => {
-            console.log('result: ', result);
             res.status(200).send(result);
         })
         .catch(err => {
@@ -73,6 +71,7 @@ exports.fetchProjects = (req, res) => {
 };
 
 exports.getProjectData = (req, res) => {
+    // exports.test(req, res);
     let projectID = req.query.projectID;
 
     Promise.all([
@@ -101,30 +100,11 @@ exports.saveProject = (req, res) => {
     // /* The function below returns an object as follows:
     // data = { nodes: [nodes that need updating], links: [links that need updating] }; */
     let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
-
-    // console.log('NODES TO UPDATE: ', nodesToUpdate);
-    // console.log('LINKS TO UPDATE: ', linksToUpdate);
     
-    // Jun's code:
     saveNodes(nodesToUpdate)
         .then(() => saveLinks(linksToUpdate))
         .then(() => res.status(200).send('success!'))
         .catch((err) => console.error(err));
-
-    // saveNodesAndLinks(nodesToUpdate, [])
-    //     .then(result => {
-    //         console.log('result of save nodes: ', result);
-    //         console.log('nodes saved successfully!')
-
-    //         saveNodesAndLinks([], linksToUpdate)
-    //             .then(result => {
-    //                 console.log('result of save links!!', result);
-    //                 res.status(200).send(result);
-    //             });
-    //     }).catch(err => {
-    //         console.log('err saving dynamic project! ', err)
-    //         res.status(500).send(err);
-    //     });
 };
 
 
