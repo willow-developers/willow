@@ -8,11 +8,11 @@ class Custom extends Component {
   render() {
     return (
       <Button
-        value={ 'Open custom modal' }
-        icon={ 'create' }
+        value={ this.props.value }
+        icon={ this.props.icon }
         iconSide={ 'left' }
         handleClick={() => this.props.dispatch(openModal({
-          id: 2,
+          id: this.props.id,
           type: 'custom',
           onClose: () => console.log("fire at closing event on custom"),
           onConfirm: () => console.log("fire at confirming event on custom"),

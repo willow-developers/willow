@@ -1,382 +1,371 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as d3 from 'd3';
 
-d3.selection.prototype.moveToFront = function() {  
-    return this.each(function(){
-        this.parentNode.appendChild(this);
-    });
-    };
-
 class WillowCore extends Component {
-  constructor(props) {
-      super(props);
-      
-      this.d3State = {
-          spaceDown: false,
-          menuOpen: false,
-          selectedNode: {},
-      }
-      this.d3Simulation = this.d3Simulation.bind(this);
-      this.zoom_actions = this.zoom_actions.bind(this);
-      this.reset = this.reset.bind(this);
-
-      this.ticked = this.ticked.bind(this);
-      this.drag = this.drag.bind(this);
-
-      this.clickCreate = this.clickCreate.bind(this);
-      this.clickOpenNodeMenu = this.clickOpenNodeMenu.bind(this);
-      this.clickRenderDoc = this.clickRenderDoc.bind(this);
-      this.clickUnlockNode = this.clickUnlockNode.bind(this);
-
-      this.keyPress = this.keyPress.bind(this);
-      this.keyUp = this.keyUp.bind(this);
-      this.handleMouseOver = this.handleMouseOver.bind(this);
-      this.handleMouseOut = this.handleMouseOut.bind(this);
-  }
-//--------------------------------------------------- LIFECYCLE METHODS
-  componentDidMount() {
-    this.d3Simulation(this.props);
-  }
-
-  componentDidUpdate() {
-    this.d3UpdateSimulation(this.props);
-  }
-//--------------------------------------------------- D3 FORCE SIMULATION SETUP
-
-  d3UpdateSimulation(props) {
-    const nodes = props.data.nodes;
-    const links = props.data.links;
-
-    this.simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id))
-        .force('charge', d3.forceManyBody().strength(-100))
-        .force('center', d3.forceCenter(1000 / 2, 500 / 2));
-        
-    const node = d3.select('.node').selectAll('g')
-        .data(nodes, (d) => d.id)
-        .enter().append('g')
-        .attr('class', 'circleGroup')
-            .call(this.drag(this.simulation))
-
-    //-------------------------------------------- POP OUT MENU
-    node
-        .append('rect')
-            .attr('class', 'unlockButton menu')
-            .attr('width', 0)
-            .attr('height', 0)
-            .style('fill', '#DDD')
-            .on('click', d => this.clickUnlockNode(d))
-
-    node.append('text')
-        .append('tspan')
-        .attr('class', 'unlockButtonLabel menuLabel')
-        .text('unlock')
-            .attr('x', `0`)
-            .attr('y', `0`)
-            .style('font-size', '0')
-            .style('visibility', 'hidden')
-            .on('click', d => this.clickUnlockNode(d))
-    //======================================
-    
-    node       
-        .append('rect')
-            .attr('class', 'displayButton menu')
-            .attr('width', 0)
-            .attr('height', 0)
-            .style('fill', '#DDD')
-            .on('click', (d) => this.clickRenderDoc(d))
-
-    node.append('text')
-        .append('tspan')
-        .attr('class', 'displayButtonLabel menuLabel')
-        .text('display')
-            .attr('x', `0`)
-            .attr('y', `0`)
-            .style('font-size', '0')
-            .style('visibility', 'hidden')
-            .on('click', (d) => this.clickRenderDoc(d))
-     //======================================
-    //MVP++ Feature
-    node       
-        .append('rect')
-            .attr('class', 'markButton menu')
-            .attr('width', 0)
-            .attr('height', 0)
-            .style('fill', '#DDD')
-    
-    node.append('text')
-        .append('tspan')
-        .attr('class', 'markButtonLabel menuLabel')
-        .text('mark')
-            .attr('x', `0`)
-            .attr('y', `0`)
-            .style('font-size', '0')
-            .style('visibility', 'hidden')
-     //======================================
-    node       
-        .append('rect')
-            .attr('class', 'deleteButton menu')
-            .attr('width', 0)
-            .attr('height', 0)
-            .style('fill', '#DDD')
-    
-    node.append('text')
-        .append('tspan')
-        .attr('class', 'deleteButtonLabel menuLabel')
-        .text('delete')
-            .attr('x', `0`)
-            .attr('y', `0`)
-            .style('font-size', '0')
-            .style('visibility', 'hidden')
-    //=============================================
-
-    node
-        .append('circle')
-            .attr("r", 10)
-            .attr("fill", "#1c2354")
-            .on('click', (d) => this.clickOpenNodeMenu(d))
-            .on('mouseover', (d) => this.handleMouseOver(d))
-            .on('mouseout', (d) => this.handleMouseOut(d))
-            
-    const link = d3.select('.link').selectAll("line")
-        .data(links)
-        .enter().append("line")
-        .attr("stroke-width", 5);
-    
-    this.simulation
-        .on("tick", () => this.ticked(node, link));
-
-    this.simulation.force("link").links(links);
-    this.simulation.alpha(1).restart();
-  }
-
-  d3Simulation(props) {
-    const data = props.data || {nodes:[], links:[]};
-    const nodes = data.nodes;
-    const links = data.links;
-    this.simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id));
-    
-    const svg = d3.select('#testingGround');
-
-    //Background Color
-    svg.append("rect")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .attr("fill", "grey");
-
-    const body = d3.select('body');
-    const g = svg.append("g")
-        .attr("class", "everything");
-    const link = g.append("g")
-            .attr("stroke", "#999")
-            .attr("stroke-opacity", 0.6)
-            .attr("class", "link")
-        .selectAll("line")
-        .data(links)
-        .enter().append("line")
-            .attr("stroke-width", 5);
-    const node = g.append("g")
-            .attr("Stroke", "#fff")
-            .attr("stroke-width", 1.5)
-            .attr("class", "node")
-        .data(nodes)
-        .enter().append('g').append("circle")
-            .attr("r", 10)
-            .attr("fill", "#1c2354");
-    
-    node.append("title")
-        .text(d => d.id);
-
-    // Drag Link
-    // var drag_line = svg.append('svg:path')
-    //     .attr('class', 'link dragline hidden')
-    //     .attr('d', 'M0,0L0,0');
-
-    // console.log(drag_line);
-
-    // Event Listeners
-    this.simulation
-        .on("tick", () => this.ticked(node, link));
-    body
-        .on("keypress", () => this.keyPress())
-        .on("keyup", () => this.keyUp());
-    node
-        .on('click', (d) => this.clickNode(d))
-        .call(this.drag(this.simulation));
-    svg
-        .on('click', () => this.clickCreate(nodes));
-    const zoom_handler = d3.zoom().on("zoom", () => this.zoom_actions(g));
-    zoom_handler(svg);
-  }
-//--------------------------------------------------- SIMULATION TIMESTEP
-    ticked(node, link) {
-        node.attr('transform', d => `translate(${d.x}, ${d.y})`);
-
-        link
-            .attr("x1", d => d.source.x)
-            .attr("y1", d => d.source.y)
-            .attr("x2", d => d.target.x)
-            .attr("y2", d => d.target.y);
-
-  }
-//--------------------------------------------------- USER INTERACTIONS
-//-------------------------------------- ZOOM  
-  zoom_actions(g) {
-    g.attr("transform", d3.event.transform);
-  }
-//-------------------------------------- CLICK 
-  clickCreate() {
-      if (this.d3State.spaceDown === true) {
-        this.props.createNode();
-      }
-  }
-
-  clickUnlockNode(d) {
-    if (!d3.event.active) this.simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-  }
-
-  clickRenderDoc(d) {
-    this.props.clickFunction(d);
-  }
-
-  clickOpenNodeMenu(d) {
-    const clickedNode = d3.selectAll('.circleGroup').filter((data) => data.id === d.id)
-    this.d3State.selectedNode = clickedNode;
-
-    if (this.d3State.menuOpen === true) {
-        this.reset();
-        this.d3State.menuOpen = false;
-    } else {    
-        //UpperLeft
-        clickedNode.select('.unlockButton')
-        .transition()
-        .duration(500)
-        .attr('width', 30)
-        .attr('height', 30)
-        .attr('transform', `translate(-31, -31)`)
-        
-        clickedNode.select('.unlockButtonLabel')
-        .transition()
-        .duration(500)
-        .attr('x', `-30`)
-        .attr('y', `-20`)
-        .style('visibility', 'visible')
-        .style('font-size', '10px')
-        
-        //UpperRight
-        clickedNode.select('.displayButton')
-        .transition()
-        .duration(500)
-        .attr('width', 30)
-        .attr('height', 30)
-        .attr('transform', `translate(1, -31)`)
-        
-        clickedNode.select('.displayButtonLabel')
-        .transition()
-        .duration(500)
-        .attr('x', `1`)
-        .attr('y', `-20`)
-        .style('visibility', 'visible')
-        .style('font-size', '10px')
-        
-        //LowerRight
-        clickedNode.select('.markButton')
-        .transition()
-        .duration(500)
-        .attr('width', 30)
-        .attr('height', 30)
-        .attr('transform', `translate(1, 1)`)
-        
-        clickedNode.select('.markButtonLabel')
-        .transition()
-        .duration(500)
-        .attr('x', `5`)
-        .attr('y', `20`)
-        .style('visibility', 'visible')
-        .style('font-size', '10px')
-        
-        //LowerLeft
-        clickedNode.select('.deleteButton')
-        .transition()
-        .duration(500)
-        .attr('width', 30)
-        .attr('height', 30)
-        .attr('transform', `translate(-31, 1)`)
-        
-        clickedNode.select('.deleteButtonLabel')
-        .transition()
-        .duration(500)
-        .attr('x', `-30`)
-        .attr('y', `20`)
-        .style('visibility', 'visible')
-        .style('font-size', '10px')
-        
-        clickedNode.select('circle')
-            .attr('fill', '#d83d2f')
-        this.d3State.menuOpen = true
+    componentDidMount() {
+        this.clickCreateNewNode = this.clickCreateNewNode.bind(this);
+        this.d3Setup();
     }
-}
-//-------------------------------------- HOVER
-    handleMouseOver(d) {
-        const hoverNode = d3.selectAll('.circleGroup').filter((data) => data.id === d.id)
-        hoverNode.select('circle')
-            .attr('fill', '#d83d2f');
-    }
-    handleMouseOut(d) {
-        const hoverNode = d3.selectAll('.circleGroup').filter((data) => data.id === d.id)
 
-        if(JSON.stringify(hoverNode) !== JSON.stringify(this.d3State.selectedNode)){
-            hoverNode.select('circle')
-                .attr('fill', '#1c2354');
+    componentDidUpdate() {
+        this.d3Restart();
+    }
+//--------------------------------------------------- CLICK CREATE NEW EXPLORATIVE NODE
+    clickCreateNewNode() {
+        if (d3State.spaceDown) {
+            let x = (d3.event.offsetX - zoomTrans.x)/zoomTrans.scale;
+            let y = (d3.event.offsetY - zoomTrans.y)/zoomTrans.scale;
+
+            let dataObject = {
+                owner_id: this.props.projectData.project.owner_id, 
+                project_id: this.props.projectData.project.id, 
+                label_id: 4, 
+                node_description: 'testing out creating new Explorative Node functionality',
+                status: 'new',
+                hash_id: `${this.props.userStatus.google_id}-${this.props.projectData.project.id}-${Date.now()}`,
+                x: x,
+                y: y,
+            }
+            console.log('im a new node: ', dataObject);
+            this.simulation.stop();
+            this.props.projectData.nodes.push(dataObject);
+            this.d3Restart();
         }
     }
-//-------------------------------------- DRAG
-  drag(simulation) {
-    function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-      }
-      
-      function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-      }
-      
-      function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-      }
-      
-      return d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended);
-    }
-//-------------------------------------- KEYPRESS
+//--------------------------------------------------- KEYPRESS/KEYUP
     keyPress() {
-        console.log(d3.event.shiftkey);
-        if (d3.event.keyCode === 80) {
-            this.d3State.menuOpen = false;
-            this.d3State.selectedNode = {};
-            this.reset();
-        }
-        if (d3.event.keyCode === 32 && this.d3State.spaceDown !== true) {
-            this.d3State.spaceDown = true;
+        if (d3.event.keyCode === 32 && d3State.spaceDown !== true) {
+            d3State.spaceDown = true;
         }
     }
     keyUp() {
         if (d3.event.keyCode === 32) {
-            this.d3State.spaceDown = false;
-            console.log(this.d3State);
+            d3State.spaceDown = false;
+        }
+    }
+//--------------------------------------------------- D3 RESTART
+    d3Restart() {
+        d3.selectAll('line').remove();
+        d3.selectAll('.node').remove();
+
+        const nodesData = this.props.projectData.nodes;
+        const linksData = this.props.projectData.links;
+
+        this.simulation = d3.forceSimulation().nodes(nodesData)
+
+        let link_force = d3.forceLink(linksData).id((d) => d.hash_id).strength(0);
+
+        this.simulation 
+            .force('links', link_force);
+
+        this.simulation.on('tick', this.ticked);
+
+        var link = d3.select('.links')
+            .selectAll("line")
+            .data(linksData)
+            .enter().append("line")
+                .attr("stroke-width", 2)
+                .style("stroke", '#999');   
+            
+      
+        var node = d3.select('.nodes').selectAll('g')
+                .data(nodesData, (d) => d.hash_id)
+                .enter()
+                .append('g')
+                .attr('class', 'node')
+
+        this.createNodes();
+
+        var drag_handler = d3.drag()
+                .on("start", (d) => this.drag_start(d, this.simulation))
+                .on("drag", (d) => this.drag_drag(d, this.simulation))
+                .on("end", (d) => this.drag_end(d, this.simulation));	
+       
+        drag_handler( d3.select('.nodes').selectAll('.node'));
+    }
+//--------------------------------------------------- CREATE NODES
+    createNodes() {
+        let node = d3.selectAll('.node');
+        //POP OUT MENU
+        node
+        .append('rect')
+        .attr('class', 'unlockButton menu')
+        .attr('width', 0)
+        .attr('height', 0)
+        .style('fill', '#DDD')
+        
+        node
+        .append('text')
+        .attr('class', 'unlockButtonLabel menuLabel')
+        .text('unlock')
+        .attr('x', `0`)
+        .attr('y', `0`)
+        .style('font-size', '0')
+        .style('visibility', 'hidden')
+        
+        //==================================================
+        node
+        .append('rect')
+        .attr('class', 'displayButton menu')
+        .attr('width', 0)
+        .attr('height', 0)
+        .style('fill', '#DDD')
+        
+        node
+        .append('text')
+        .attr('class', 'displayButtonLabel menuLabel')
+        .text('display')
+        .attr('x', `0`)
+        .attr('y', `0`)
+            .style('font-size', '0')
+            .style('visibility', 'hidden')
+            
+        //==================================================
+        node
+        .append('rect')
+        .attr('class', 'linkButton menu linkMenu')
+        .attr('width', 0)
+        .attr('height', 0)
+        .attr('id', d => d.hash_id)
+        .style('fill', '#DDD')
+        
+        node
+        .append('text')
+        .attr('class', 'linkButtonLabel menu linkMenu menuLabel')
+        .text('link')
+        .attr('x', `0`)
+        .attr('y', `0`)
+        .style('font-size', '0')
+        .style('visibility', 'hidden')
+
+        node.selectAll('.linkMenu')
+            .on('click', (d) => {this.clickNewLinkMode(d)})
+        
+        //==================================================
+        node
+        .append('rect')
+        .attr('class', 'deleteButton menu')
+        .attr('width', 0)
+        .attr('height', 0)
+        .style('fill', '#DDD')
+        
+        node
+        .append('text')
+        .attr('class', 'deleteButtonLabel menuLabel')
+        .text('delete')
+        .attr('x', `0`)
+        .attr('y', `0`)
+        .style('font-size', '0')
+        .style('visibility', 'hidden')
+        //==================================================
+        node
+        .append("circle")
+        .attr("r", 10)
+        .attr("fill", (d) => nodeColor(d))
+            .on('click', (d) => this.clickOpenNodeMenu(d))
+    }
+//--------------------------------------------------- D3 SETUP        
+    d3Setup() {
+        const svg = d3.select('#willowCore');
+        const body = d3.select('body');
+        
+        svg.append("rect")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("fill", "grey");
+
+        const zoomLayer = svg.append('g')
+        .attr('class', 'zoomLayer');
+        
+        const zoom_handler = d3.zoom().scaleExtent([0.25, 2.25]).on("zoom", () => {
+            zoomTrans.x = d3.event.transform.x;
+            zoomTrans.y = d3.event.transform.y;
+            zoomTrans.scale = d3.event.transform.k;
+            zoomLayer.attr('transform', d3.event.transform);
+            this.zoom_actions(zoomLayer)
+        });
+        zoom_handler(svg);
+        
+        const linksGroup = zoomLayer.append('g')
+            .attr('class', 'links')
+            .attr('stroke', '#999')
+            .attr('stroke-opacity', 0.6);
+        
+        const nodesGroup = zoomLayer.append('g')
+            .attr('class', 'nodes');
+
+        svg
+            .on('click', this.clickCreateNewNode);
+        body
+            .on('keypress', this.keyPress)
+            .on('keyup', this.keyUp)
+    }
+//--------------------------------------------------- CLICK OPEN MENU
+    clickOpenNodeMenu(d) {
+        if (d3State.newLinkMode) {
+            this.clickCreateNewLink(d);
+            return;
+        }
+        if (d3State.menuOpen) {
+            this.reset();
+        } else {
+            const clickedNode = d3.selectAll('.node').filter((data) => data.hash_id === d.hash_id)
+
+            d3State.menuOpen = true;
+            d3State.selectedNode = d;
+        
+            // UpperLeft
+            clickedNode.select('.unlockButton')
+            .transition()
+            .duration(200)
+            .attr('width', 30)
+            .attr('height', 30)
+            .attr('transform', `translate(-31, -31)`)
+
+            clickedNode.select('.unlockButtonLabel')
+            .transition()
+            .duration(200)
+            .attr('x', `-30`)
+            .attr('y', `-20`)
+            .style('visibility', 'visible')
+            .style('font-size', '10px')
+            
+            //UpperRight
+            clickedNode.select('.displayButton')
+            .transition()
+            .duration(200)
+            .attr('width', 30)
+            .attr('height', 30)
+            .attr('transform', `translate(1, -31)`)
+            
+            clickedNode.select('.displayButtonLabel')
+            .transition()
+            .duration(200)
+            .attr('x', `1`)
+            .attr('y', `-20`)
+            .style('visibility', 'visible')
+            .style('font-size', '10px')
+            
+            //LowerRight
+            clickedNode.select('.linkButton')
+            .transition()
+            .duration(200)
+            .attr('width', 30)
+            .attr('height', 30)
+            .attr('transform', `translate(1, 1)`)
+            
+            clickedNode.select('.linkButtonLabel')
+            .transition()
+            .duration(200)
+            .attr('x', `5`)
+            .attr('y', `20`)
+            .style('visibility', 'visible')
+            .style('font-size', '10px')
+            
+            //LowerLeft
+            clickedNode.select('.deleteButton')
+            .transition()
+            .duration(200)
+            .attr('width', 30)
+            .attr('height', 30)
+            .attr('transform', `translate(-31, 1)`)
+            
+            clickedNode.select('.deleteButtonLabel')
+            .transition()
+            .duration(200)
+            .attr('x', `-30`)
+            .attr('y', `20`)
+            .style('visibility', 'visible')
+            .style('font-size', '10px')
+
+            //Node Circle
+            clickedNode.select('circle')
+                .attr('fill', '#d83d2f')
         }
     }
 
+//--------------------------------------------------- LINK MENU BUTTON
+    clickNewLinkMode(d) {
+        d3State.newLinkMode = true;
+        d3.selectAll('.node').filter((data) => data.hash_id === d.hash_id).select('.linkButton')
+            .style('fill', 'red');
+    }
+
+    clickCreateNewLink(d) {
+        let hash_id = `${this.props.userStatus.google_id}-${this.props.projectData.project.id}-LINK-${Date.now()}`;
+        
+        const newLinkObject = {
+            hash_id: hash_id,
+            project_id: this.props.projectData.project.id,
+            id: hash_id,
+            node_status: null,
+            node_data: null,
+            status: 'new',
+            source_id: d3State.selectedNode.hash_id,
+            source: d3State.selectedNode.hash_id,
+            target_id: d.hash_id,
+            target: d.hash_id,
+            label_id: 4
+
+        }
+        console.log('im a new link: ', newLinkObject);
+
+        d3.selectAll('.node').filter((data) => data.hash_id === d3State.selectedNode.hash_id).select('.linkButton')
+        .style('fill', '#DDD');
+
+
+        this.simulation.stop();
+
+        let links = this.props.projectData.links;
+        links.push(newLinkObject);
+
+        this.reset(); 
+        this.d3Restart();
+    }
+//--------------------------------------------------- DISPLAY MENU BUTTON
+//--------------------------------------------------- UNLOCK MENU BUTTON
+//--------------------------------------------------- DELETE MENU BUTTON
+//--------------------------------------------------- TICKED
+    ticked() {
+        d3.select('.nodes').selectAll('.node').attr('transform', d => `translate(${d.x}, ${d.y})`);
+
+        d3.selectAll('.links').selectAll('line')
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+    }
+//--------------------------------------------------- DRAG NODE
+    drag_start(d, simulation) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+            d.status = 'updated';
+        }
+        //make sure you can't drag the circle outside the box
+    drag_drag(d, simulation) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+        
+    drag_end(d, simulation) {
+        if (!d3.event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+//--------------------------------------------------- D3 ZOOM LAYER
+    zoom_actions(zoomLayer) {
+        zoomLayer.attr('transform', d3.event.transform);
+    }
+//--------------------------------------------------- RESET
     reset() {
+        d3State.menuOpen = false;
+        d3State.newLinkMode = false;
+        d3State.selectedNode = {};
+
         d3.selectAll('circle')
-        .attr('fill', '#1c2354')
+        .attr('fill', (d) => nodeColor(d))
 
         d3.selectAll('.menu')
             .transition()
@@ -393,13 +382,59 @@ class WillowCore extends Component {
             .style('font-size', '0')
             .style('visibility', 'hidden')
     }
-
+//--------------------------------------------------- RENDER
     render() {
         return (
             <div>
-                <svg id="testingGround" width={1000} height={500}/>
+                <svg id="willowCore" width={960} height={500}/>
             </div>
         );
     }
 }
-export default WillowCore;
+
+const mapStateToProps = (state) => {
+    return { 
+        projectData: state.projectData,
+        userStatus: state.userStatus
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return { 
+        dispatch
+    }
+};
+
+
+const nodeColor = (d) => {
+    return (d.label_id === 4) ?
+        'rgb(255, 255, 255' :
+        'rbg(0, 0, 0'
+}
+
+function linkLabelID(sourceNodeType, targetNodeType) {
+    if (sourceNodeType === 'Explorative' && targetNodeType === 'Explorative') {
+        return 5;
+    } 
+    if (sourceNodeType === 'Objective' && targetNodeType === 'Explorative') {
+        return 5;
+    }
+    if (sourceNodeType === 'Explorative' && targetNodeType === 'Objective') {
+        return 6;
+    }  
+    if (sourceNodeType === 'Objective' && targetNodeType === 'Objective') {
+        return 8;
+    } 
+}
+
+let zoomTrans = {x:0, y:0, scale:1};
+
+const d3State = {
+    selectedNode: {},
+    menuOpen: false,
+    newLinkMode: false,
+    spaceDown: false,
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(WillowCore);

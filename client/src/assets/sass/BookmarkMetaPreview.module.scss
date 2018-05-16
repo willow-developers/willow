@@ -12,7 +12,7 @@
 		@include cf;
 	}
 
-	h3 {
+	h3, h4 {
 		margin: 0;
 		margin-bottom: 5px;
 	}
@@ -33,5 +33,27 @@
 			@include centered;
 			max-height: 50%;
 		}
+	}
+}
+
+.displayLink {
+	border-bottom: 1px dotted #666;
+	display: block;
+	margin-bottom: 20px;
+	@include cf;
+	text-decoration: none;
+	color: #000;
+}
+
+.bookmarkList {
+	text-align: left;
+	max-height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	h2 {
+		margin-top: 0;
+		padding-bottom: 0.415em;
+		border-bottom: 1px solid #999;
 	}
 }

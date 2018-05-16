@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmarkInfo } from '../../actions/bookmarks';
+import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmark } from '../../actions/bookmarks';
 
 import BookmarkForm from './BookmarkForm';
 import BookmarkMetaPreview from './BookmarkMetaPreview';
@@ -23,32 +23,31 @@ class BookmarkBody extends Component {
     this.props.updateBookmarkInfo(info);
   }
 
-  handleBookmarkSave = (save) => {
-    this.props.saveBookmarkInfo(save);
+  handleBookmarkSave = (data) => {
+    // console.log(data)
+    this.props.saveBookmark(data);
   }
 
 	renderBookmarkView = () => {
-    if (this.props.bookmarkHasErrored) {
-      return <p>Sorry! There was an error with your request :(</p>;
-    }
-    if (this.props.bookmarkIsLoading) {
-      return <Loading />;
-    }
+    const { bookmarkHasErrored, bookmarkIsLoading, bookmarkShowAdd, bookmarkShowPreview, bookmarkShowEdit } = this.props;
+
+    if (bookmarkHasErrored) return <p>Sorry! There was an error with your request :(</p>;
+    if (bookmarkIsLoading) return <Loading />;
     return (
       <div>
-      	{ this.props.bookmarkShowAdd
+      	{ bookmarkShowAdd
           ? (<BookmarkForm
               handleBookmarkSubmit={ this.handleBookmarkSubmit }
             />)
           : ('')
         }
-				{ this.props.bookmarkShowPreview
+				{ bookmarkShowPreview
           ? (<BookmarkMetaPreview
               handleBookmarkSave={ this.handleBookmarkSave }
             />)
           : ('')
         }
-				{ this.props.bookmarkShowEdit
+				{ bookmarkShowEdit
           ? (<BookmarkMetaEdit
               handleBackToPreview={ this.handleBackToPreview }
               handleBookmarkInfoUpdate={ this.handleBookmarkInfoUpdate }
@@ -68,24 +67,21 @@ class BookmarkBody extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-  return {
-    bookmarkHasErrored: state.bookmarkHasErrored,
-    bookmarkIsLoading: state.bookmarkIsLoading,
-    bookmarkStatus: state.bookmarkStatus,
-    bookmarkShowAdd: state.bookmarkShowAdd,
-    bookmarkShowPreview: state.bookmarkShowPreview,
-    bookmarkShowEdit: state.bookmarkShowEdit,
-  };
-};
+const mapStateToProps = (state) => ({
+  bookmarkHasErrored: state.bookmarkHasErrored,
+  bookmarkIsLoading: state.bookmarkIsLoading,
+  bookmarkStatus: state.bookmarkStatus,
+  bookmarkShowAdd: state.bookmarkShowAdd,
+  bookmarkShowPreview: state.bookmarkShowPreview,
+  bookmarkShowEdit: state.bookmarkShowEdit,
+  bookmarkListAdd: state.bookmarkListAdd,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL)),
-    previewBookmarkView: () => dispatch(previewBookmarkView()),
-    updateBookmarkInfo: (info) => dispatch(updateBookmarkInfo(info)),
-    saveBookmarkInfo: (info) => dispatch(saveBookmarkInfo(info))
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  bookmarkGetInfo: (bookmarkURL) => dispatch(bookmarkGetInfo(bookmarkURL)),
+  previewBookmarkView: () => dispatch(previewBookmarkView()),
+  updateBookmarkInfo: (info) => dispatch(updateBookmarkInfo(info)),
+  saveBookmark: (data) => dispatch(saveBookmark(data)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookmarkBody);

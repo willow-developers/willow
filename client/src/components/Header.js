@@ -23,12 +23,14 @@ class Header extends Component {
 							history.push("/");
 						}}
 					/>)
-				: (<NavLink exact to='/login'><Button
-						value={ 'Login' }
-						icon={ 'account_circle' }
-						type={ 'small' }
-						iconSide={ 'left' }
-					/></NavLink>)
+				: (<a href="/auth/google">
+						<Button
+							value={ 'Login With Google' }
+							icon={ 'account_circle' }
+							type={ 'small' }
+							iconSide={ 'left' }
+						/>
+					</a>)
 		);
 		if (this.props.userStatus === null) {
 			return;
@@ -38,17 +40,6 @@ class Header extends Component {
 					<li>
 						<AuthButton />
 					</li>
-					{/* NO LONGER USING AFTER GOOGLE OAUTH REFACTOR */}
-					{/* <li>
-						<NavLink exact to='/signup'>
-							<Button
-								value={ 'Sign Up' }
-								icon={ 'create' }
-								type={ 'small' }
-								iconSide={ 'left' }
-							/>
-						</NavLink>
-					</li> */}
 				</ul>
 			);
 		} else {
@@ -102,12 +93,12 @@ class Header extends Component {
 	}
 };
 
-const mapStateToProps = (state) => {
-  return { userStatus: state.userStatus };
-};
+const mapStateToProps = (state) => ({
+	userStatus: state.userStatus
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
-};
+const mapDispatchToProps = (dispatch) => ({
+	userCheckStatus: (url) => dispatch(userCheckStatus(url))
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

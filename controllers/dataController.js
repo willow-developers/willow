@@ -5,9 +5,10 @@ const metascraper = require('metascraper');
 const got = require('got');
 
 // HELPER FUNCTIONS:
+const formatNewProjectData = require('./helper_functions/formatNewProjectData');
 const formatProjectData = require('./helper_functions/formatProjectData');
 const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatBeforeSaving');
-const saveNodesAndLinks = require('./helper_functions/saveNodesAndLinks');
+const { saveNodes, saveLinks } = require('./helper_functions/saveNodesAndLinks');
 
 const knex = require('../database/index');
 
@@ -22,28 +23,42 @@ exports.test = (req, res) => {
 };
 
 exports.createNewProject = (req, res) => {
-    let { project_name, owner_id, nodes, links } = req.query;
-    let projectData = { project_name, owner_id };
+    let { user, title, milestones } = req.body.data;
+ 
 
-    knex('projects').insert(projectData).then(result => {
-        // TO DO: Finish functionality to save nodes/links:
-        // saveNodesAndLinks(nodes, links)
-        //     .then(result => {
-        //         console.log('result: ', result);
-        //         res.status(200).send(result);
-        //     });
+    let projectData = {
+        project_name: title,
+        owner_id: user.google_id,
+    };
 
-        console.log('result: ', result);
-        res.status(200).send(result);
-    }).catch(err => {
-        console.log('err: ', err);
-        res.status(500).send(err);
-    });
+    knex('projects')
+        .insert(projectData, 'id')
+        .then(project_id => {
+            // project_id is a single-value array containing the project_id, thus ->
+            let { nodes, links } = formatNewProjectData(project_id[0], user.google_id, title, milestones);
+
+            console.log('nodes and links: ', { nodes, links });
+
+            saveNodesAndLinks(nodes, [])
+                .then(result => {
+                    console.log('result of save nodes: ', result);
+                    saveNodesAndLinks([], linksToUpdate)
+                        .then(result => {
+                            console.log('result of save links!!', result);
+                            res.status(200).send(result);
+                        });
+                });
+
+            // res.status(200).send(result);
+        }).catch(err => {
+            console.log('err: ', err);
+            res.status(500).send(err);
+        });
 };
 
 exports.fetchProjects = (req, res) => {
     // update as needed!!
-    let owner_id = req.query.user;
+    let owner_id = req.query.userID;
 
     knex('projects')
         .where('owner_id', owner_id)
@@ -58,7 +73,7 @@ exports.fetchProjects = (req, res) => {
 };
 
 exports.getProjectData = (req, res) => {
-    let projectID = req.query.id;
+    let projectID = req.query.projectID;
 
     Promise.all([
         knex('projects').where('id', projectID),
@@ -81,26 +96,37 @@ exports.getProjectData = (req, res) => {
 };
 
 exports.saveProject = (req, res) => {
-    // delete/update later if client sends an object, testing with string in Postman for now
-    if (typeof req.query.project === 'string') {
-        var { nodes, links } = JSON.parse(req.query.project);
-    } else if (req.query) {
-        var { nodes, links } = req.query.project;
-    }
+    var { nodes, links } = req.body.project;
 
     // /* The function below returns an object as follows:
     // data = { nodes: [nodes that need updating], links: [links that need updating] }; */
     let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
 
-    saveNodesAndLinks(nodesToUpdate, linksToUpdate)
-        .then(response => {
-            console.log('res: ', response);
-            res.status(200).send('success!');
-        }).catch(err => {
-            console.log('err: ', err);
-            res.status(500).send('error!!');
-        });
+    // console.log('NODES TO UPDATE: ', nodesToUpdate);
+    // console.log('LINKS TO UPDATE: ', linksToUpdate);
+    
+    // Jun's code:
+    saveNodes(nodesToUpdate)
+        .then(() => saveLinks(linksToUpdate))
+        .then(() => res.status(200).send('success!'))
+        .catch((err) => console.error(err));
+
+    // saveNodesAndLinks(nodesToUpdate, [])
+    //     .then(result => {
+    //         console.log('result of save nodes: ', result);
+    //         console.log('nodes saved successfully!')
+
+    //         saveNodesAndLinks([], linksToUpdate)
+    //             .then(result => {
+    //                 console.log('result of save links!!', result);
+    //                 res.status(200).send(result);
+    //             });
+    //     }).catch(err => {
+    //         console.log('err saving dynamic project! ', err)
+    //         res.status(500).send(err);
+    //     });
 };
+
 
 exports.getBookmarkMetadata = async (req, res) => {
     const { targetUrl } = req.query;
