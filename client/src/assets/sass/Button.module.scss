@@ -93,6 +93,14 @@
 			opacity: .75;
 		}
 	}
+
+	&.noShadow {
+		box-shadow: none;
+
+		&:hover {
+			box-shadow: none;
+		}
+	}
 }
 
 .btn__icon {
