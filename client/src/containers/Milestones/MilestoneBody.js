@@ -33,17 +33,17 @@ class MilestoneBody extends Component {
     return (
       <div>
         <AddMilestone createMilestone={ this.createMilestone } />
+        { milestones.length > 0 ? (<FilterNav
+          filterOptions={ filterOptions }
+          filterMilestone={ this.filterMilestone }
+          currentFilter={ visibilityFilter }
+        />) : ('') }
         <MilestoneList
           milestones={ milestones }
           visibilityFilter={ visibilityFilter }
           toggleMilestone={ this.toggleMilestone }
           editMilestone={ this.editMilestone }
           updateMilestone={ this.updateMilestone }
-        />
-        <FilterNav
-          filterOptions={ filterOptions }
-          filterMilestone={ this.filterMilestone }
-          currentFilter={ visibilityFilter }
         />
       </div>
     );
