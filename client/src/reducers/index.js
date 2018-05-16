@@ -8,7 +8,8 @@ import { createProjectModalToShow, createProjectHasErrored, createProjectDataIsL
 import { projectsList, projectsListHasErrored, projectsListIsLoading } from './projectsReducer';
 import { projectData, projectHasErrored, projectIsLoading, clearProjectData } from './projectReducer';
 import { newExplorativeNodeCreated } from './explorativeNodeReducer';
-// import { loadBookmarkScrape } from './exampleReducer';
+
+import { milestones, visibilityFilter, milestoneLoader } from './milestoneReducer';
 
 export default combineReducers({
 	userStatus,
@@ -35,5 +36,8 @@ export default combineReducers({
 	projectHasErrored,
 	projectIsLoading,
 	clearProjectData,
-	newExplorativeNodeCreated
+	newExplorativeNodeCreated,
+	milestones,
+	visibilityFilter,
+	milestoneLoader,
 });
