@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { openModal } from '../actions/modal';
+// import { openModal } from '../actions/modal';
 
 import styles from '../assets/sass/Dashboard.module.scss';
 
@@ -32,12 +32,16 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return { 
-			saveProject: (projectData) => {
-				dispatch(projectSave(projectData))
-			}
-	}
-};
+const mapDispatchToProps = (dispatch) => ({
+  saveProject: (projectData) => dispatch(projectSave(projectData)),
+});
+
+// const mapDispatchToProps = (dispatch) => {
+// 	return { 
+// 			saveProject: (projectData) => {
+// 				dispatch(projectSave(projectData))
+// 			}
+// 	}
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectView);

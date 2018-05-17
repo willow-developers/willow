@@ -58,7 +58,8 @@ exports.createNewProject = (req, res) => {
 
 exports.fetchProjects = (req, res) => {
     // update as needed!!
-    let owner_id = req.query.userID;
+    // let owner_id = req.query.userID;
+    let owner_id = '110227128753222443119';
 
     knex('projects')
         .where('owner_id', owner_id)

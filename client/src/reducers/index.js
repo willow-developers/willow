@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import  { reducer as reduxForm } from 'redux-form';
+
 import { userStatus, userHasErrored, userIsLoading } from './authReducer';
 import { isModalOpen } from './modalReducer';
 import { bookmarkStatus, bookmarkHasErrored, bookmarkIsLoading, bookmarkShowAdd, bookmarkShowPreview, bookmarkShowEdit, bookmarkFields, loadBookmarkScrape, bookmarkListAdd } from './bookmarkReducer';
@@ -9,7 +10,7 @@ import { projectsList, projectsListHasErrored, projectsListIsLoading } from './p
 import { projectData, projectHasErrored, projectIsLoading, clearProjectData } from './projectReducer';
 import { newExplorativeNodeCreated } from './explorativeNodeReducer';
 
-import { milestones, visibilityFilter, milestoneLoader } from './milestoneReducer';
+import { milestones, visibilityFilter, milestoneLoader, visibilityFilterColumn } from './milestoneReducer';
 
 export default combineReducers({
 	userStatus,
@@ -42,4 +43,5 @@ export default combineReducers({
 	milestones,
 	visibilityFilter,
 	milestoneLoader,
+	visibilityFilterColumn,
 });
