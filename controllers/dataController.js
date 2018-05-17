@@ -41,7 +41,8 @@ exports.createNewProject = (req, res) => {
                 .then(result => {
                     saveNodesAndLinks([], links)
                         .then(result => {
-                            res.status(200).send(result);
+                            let data = { project_id: project_id[0] };
+                            res.status(200).send(data);
                         });
                 });
 

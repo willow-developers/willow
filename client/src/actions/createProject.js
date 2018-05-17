@@ -7,6 +7,8 @@ import {
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING
 } from '../actions/types';
 
+import { closeModal } from './modal';
+
 export const handleProjectNaming = projectName => ({
   type: CREATE_PROJECT_ADD_PROJECT_TITLE,
   payload: projectName
@@ -22,15 +24,22 @@ export const resetProjectBuilder = () => ({
   payload: null,
 });
 
-export const handleSaveProject = projectDetails => dispatch => {
+export const redirectTo = projectID => ({
+  type: CREATE_PROJECT_SAVE_PROJECT,
+  payload: projectID,
+});
+
+export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
   
   // UPDATE AS NEEDED:
   axios.post('/api/newProject', {
     data: projectDetails,
-  }).then(resp => {
-    console.log('resp in createProject.js: ', resp);
+  }).then(data => {
+    let projectID = data.data.project_id;
     dispatch(resetProjectBuilder());
+    dispatch(closeModal(modal));
+    dispatch(redirectTo(projectID));
     dispatch(createProjectIsLoading(false));
   }).catch(err => {
     console.log('err: ', err);

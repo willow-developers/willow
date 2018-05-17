@@ -59,3 +59,22 @@ export function createProjectDataIsLoading(state = false, action) {
 			return state;
 	}
 }
+
+export function shouldRedirect(state = false, action) {
+	switch (action.type) {
+		case CREATE_PROJECT_SAVE_PROJECT:
+			return true;
+		default:
+			return state;
+	}
+}
+
+export function shouldRedirectTo(state = null, action) {
+	console.log('action in shouldRedirectTo: ', action);
+	switch (action.type) {
+		case CREATE_PROJECT_SAVE_PROJECT:
+			return action.payload;
+		default:
+			return state;
+	}
+}

@@ -84,8 +84,8 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleSaveProject: (projectDetails, modal) => {
       console.log('firing save Project');
-      dispatch(closeModal(modal));
-      dispatch(handleSaveProject(projectDetails));
+      // dispatch(closeModal(modal));
+      dispatch(handleSaveProject(projectDetails, modal));
     }
   }
 };
