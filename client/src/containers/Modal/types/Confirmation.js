@@ -12,6 +12,7 @@ class Confirmation extends Component {
           value={ 'Open confirmation modal' }
           icon={ 'account_circle' }
           iconSide={ 'left' }
+          type={ this.props.size }
           handleClick={() => this.props.dispatch(openModal({
             id: 1,
             type: 'confirmation',

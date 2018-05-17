@@ -10,6 +10,7 @@ class Notification extends Component {
     return (
       <Button
         value={ 'Open notification modal' }
+        type={ this.props.size }
         handleClick={() => this.props.dispatch(openModal({
           id,
           type: 'notification',

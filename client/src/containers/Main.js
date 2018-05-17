@@ -37,6 +37,7 @@ class Main extends Component {
 					<Switch>
 						<PrivateRoute path='/dashboard' component={ Dashboard } />
 						<PrivateRoute path='/project' component={ Project } />
+						<PrivateRoute path='/newProject' component={ NewProject } />
 						<MainRoute exact path='/' component={ Home } />
 						<MainRoute path='/login' component={ Login } />
 						<MainRoute path='/signup' component={ Signup } />
