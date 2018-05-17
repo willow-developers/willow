@@ -13,7 +13,6 @@ export function createProjectModalToShow(state = 'NewProjectTitle', action) {
 		case CREATE_PROJECT_ADD_MILESTONES:
 			return 'ProjectSummary';
 		case CREATE_PROJECT_SAVE_PROJECT:
-			console.log('bingo!!!');
 			return 'NewProjectTitle';
 		default:
 			return state;
