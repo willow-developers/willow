@@ -32,15 +32,21 @@ export const redirectTo = projectID => ({
 export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
   
-  // UPDATE AS NEEDED:
   axios.post('/api/newProject', {
     data: projectDetails,
   }).then(data => {
-    let projectID = data.data.project_id;
-    dispatch(resetProjectBuilder());
-    dispatch(closeModal(modal));
-    dispatch(redirectTo(projectID));
+    // turn off loading icon
     dispatch(createProjectIsLoading(false));
+    
+    // reset projectBuilding functionality
+    dispatch(resetProjectBuilder());
+    
+    // close modal
+    dispatch(closeModal(modal));
+    
+    // redirect to newly create project
+    let projectID = data.data.project_id;
+    dispatch(redirectTo(projectID));
   }).catch(err => {
     console.log('err: ', err);
     dispatch(resetProjectBuilder());

@@ -10,9 +10,6 @@ import MilestoneBody from '../containers/Milestones/MilestoneBody';
 
 import styles from '../assets/sass/Dashboard.module.scss';
 
-
-// temp, delete later!!
-
 class Dashboard extends Component {
 	componentDidMount() {
 		this.props.projectsGetList(this.props.userStatus.google_id)
@@ -20,17 +17,15 @@ class Dashboard extends Component {
 
 	clickHandler(projectID) {
 		this.props.projectGetData(projectID);
-
 	}
 
 	renderProjectList() {
-		console.log('this.props: ', this.props);
-
-		// if (this.props.shouldRedirect) {
-		if (false) {
-			console.log('firing!!');
+		if (this.props.shouldRedirect && this.props.shouldRedirectTo) {
+			// make sure data is available as we redirect to the project
+			let projectID = this.props.shouldRedirectTo;
+			this.props.projectGetData(projectID)
 			return (
-				<Redirect to={{ pathname:`/project/${this.props.projectsList[0].id}`}}/>
+				<Redirect to={{ pathname:`/project/${this.props.shouldRedirectTo}`}}/>
 			);
 		} else {
 			return (
