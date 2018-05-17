@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 // ACTIONS:
 import { handleProjectNaming, handleAddMilestones, handleSaveProject } from '../../actions/createProject';
+import { closeModal } from '../../actions/modal';
 
 // COMPONENTS:
 import Loading from '../../components/UI/Loading';
@@ -16,19 +17,17 @@ import styles from '../../assets/sass/BookmarkBody.module.scss';
 class NewProjectBody extends Component {
   handleProjectNaming = (projectName) => {
     this.props.handleProjectNaming(projectName);
-  }
+  };
 
   handleAddMilestones = (milestones) => {
     this.props.handleAddMilestones(milestones);
-  }
+  };
 
   handleSaveProject = (projectDetails) => {
-    console.log(projectDetails);
-    this.props.handleSaveProject(projectDetails);
-  }
+    this.props.handleSaveProject(projectDetails, this.props.modal[0]);
+  };
 
   renderCreateProjectView = () => {
-    console.log('this.props within NewProject.js : ', this.props);
 
     if (this.props.createProjectHasErrored) {
       return <p>Sorry! There was an error with your request. Please try again later.</p>;
@@ -55,7 +54,6 @@ class NewProjectBody extends Component {
   };
   
   render() {
-    console.log('firing in newProject.js!!');
 		return (
       <div className={ styles.forLoader }>
         { this.renderCreateProjectView() }
@@ -70,6 +68,7 @@ const mapStateToProps = (state) => {
     createProjectHasErrored: state.createProjectHasErrored,
     createProjectDataIsLoading: state.createProjectDataIsLoading,
     createProjectMilestones: state.createProjectMilestones,
+    modal: state.isModalOpen.modals,
   };
 };
 
@@ -83,8 +82,9 @@ const mapDispatchToProps = (dispatch) => {
       console.log('firing addMilestones!!', milestones)
       dispatch(handleAddMilestones(milestones));
     },
-    handleSaveProject: (projectDetails) => {
-      console.log('Saving project, here are the details within NewProject.js!!', projectDetails);
+    handleSaveProject: (projectDetails, modal) => {
+      console.log('firing save Project');
+      dispatch(closeModal(modal));
       dispatch(handleSaveProject(projectDetails));
     }
   }

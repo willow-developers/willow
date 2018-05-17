@@ -44,8 +44,6 @@ class Modal extends Component {
       })
     );
 
-    console.log('this.props within ModalActions: ', this.props);
-
     if (type === 'confirmation') {
       return (
         <div className={ styles.modal_overlay }>

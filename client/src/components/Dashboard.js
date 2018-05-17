@@ -28,15 +28,15 @@ class Dashboard extends Component {
 					return (
 						<div>
 							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
-							<br/>
-							<br/>
 							{/* temporary styling fix, fix later */}
+							<br/>
+							<br/>
 						</div>
 					);
 				})}
 
 				{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
-				the header. add back later if needed ----> SEE GITHUB */}
+				the header. add back later if needed ----> SEE GITHUB FOR CODE */}
 			</div>
 		)
 	}
