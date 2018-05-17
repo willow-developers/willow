@@ -25,21 +25,18 @@ class Dashboard extends Component {
 			<div className={ styles.col_12_of_12 }>
 				<h1>Dashboard</h1>
 				{this.props.projectsList.map((project, i ) => {
-					return (<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>)
+					return (
+						<div>
+							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
+							{/* temporary styling fix, fix later */}
+							<br/>
+							<br/>
+						</div>
+					);
 				})}
-				<DisplayModal
-					value={ 'I\'m an Exploratory Node'}
-					content={ <BookmarkBody /> }
-					name={ 'BookmarkBody' }
-					id={ 2 }
-				/>
-				<br/>
-				<br/>
-				<DisplayModal
-					value={ 'I\'m an Milestone Node'}
-					content={ <MilestoneBody /> }
-					id={ 3 }
-				/>
+
+				{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
+				the header. add back later if needed ----> SEE GITHUB FOR CODE */}
 			</div>
 		)
 	}
