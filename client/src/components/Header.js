@@ -9,6 +9,9 @@ import logo from '../assets/images/logo.svg';
 import styles from '../assets/sass/Header.module.scss';
 import '../assets/sass/Header.scss';
 
+import DisplayModal from '../containers/Modal/DisplayModal';
+import NewProject from '../containers/NewProjectBuilder/NewProject';
+
 class Header extends Component {
 	renderHeader() {
 		const AuthButton = withRouter(({ history }) =>
@@ -46,14 +49,14 @@ class Header extends Component {
 			return (
 				<ul>
 					<li>
-						<Link to='/'>
-							<Button
-								value={ 'New Project' }
-								icon={ 'add' }
-								type={ 'small' }
-								iconSide={ 'left' }
-							/>
-						</Link>
+						<DisplayModal
+							type={'newProject'}
+							body={<NewProject />}
+							size={'small'}
+							id={4}
+							icon={'create'}
+							value={'Create New Project'}
+						/>
 					</li>
 					<li>
 						<NavLink exact to='/dashboard'>
@@ -88,6 +91,7 @@ class Header extends Component {
 						</div>
 					</div>
 				</div>
+
 			</nav>
 		);
 	}

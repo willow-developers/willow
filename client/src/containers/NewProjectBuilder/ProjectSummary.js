@@ -27,7 +27,7 @@ class ProjectSummary extends Component {
           icon={ 'navigate_next' }
           value={ 'Create Project' }
           iconSide={ 'right' }
-          handleClick={ () => { this.props.handleSaveProject(this.props); } }
+          handleClick={ () => { this.props.handleSaveProject(this.props, this.props.modal); } }
         />
 			</div>
 		);

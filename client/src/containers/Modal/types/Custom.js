@@ -11,6 +11,7 @@ class Custom extends Component {
         value={ this.props.value }
         icon={ this.props.icon }
         iconSide={ 'left' }
+        type={ this.props.size }
         handleClick={() => this.props.dispatch(openModal({
           id: this.props.id,
           type: 'custom',
