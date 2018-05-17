@@ -134,9 +134,11 @@ class Modal extends Component {
               </div>
               <div className={_btnBarClassNames(styles)}>
                 <Button
+                  value={ 'Cancel' }
                   icon={ 'close' }
-                  styleClass={ 'closeNotification' }
-                  type={ 'round' }
+                  iconSide={ 'right' }
+                  btnFloat={ 'right' }
+                  styleClass={ 'closeModal' }
                   handleClick={ () => this.onClose() }
                 />
               </div>
