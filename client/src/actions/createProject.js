@@ -17,6 +17,11 @@ export const handleAddMilestones = milestones => ({
   payload: milestones
 });
 
+export const resetProjectBuilder = () => ({
+  type: CREATE_PROJECT_SAVE_PROJECT,
+  payload: null,
+});
+
 export const handleSaveProject = projectDetails => dispatch => {
   dispatch(createProjectIsLoading(true));
   
@@ -24,10 +29,12 @@ export const handleSaveProject = projectDetails => dispatch => {
   axios.post('/api/newProject', {
     data: projectDetails,
   }).then(resp => {
-    console.log('resp: ', resp);
+    console.log('resp in createProject.js: ', resp);
+    dispatch(resetProjectBuilder());
     dispatch(createProjectIsLoading(false));
   }).catch(err => {
     console.log('err: ', err);
+    dispatch(resetProjectBuilder());
     dispatch(createProjectIsLoading(false));
   });
 
