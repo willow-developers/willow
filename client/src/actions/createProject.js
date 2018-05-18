@@ -7,6 +7,8 @@ import {
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING
 } from '../actions/types';
 
+import { closeModal } from './modal';
+
 export const handleProjectNaming = projectName => ({
   type: CREATE_PROJECT_ADD_PROJECT_TITLE,
   payload: projectName
@@ -17,17 +19,40 @@ export const handleAddMilestones = milestones => ({
   payload: milestones
 });
 
-export const handleSaveProject = projectDetails => dispatch => {
+export const resetProjectBuilder = () => ({
+  type: CREATE_PROJECT_SAVE_PROJECT,
+  payload: null,
+});
+
+export const redirectTo = projectID => ({
+  type: CREATE_PROJECT_SAVE_PROJECT,
+  payload: projectID,
+});
+
+export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
   
-  // UPDATE AS NEEDED:
   axios.post('/api/newProject', {
     data: projectDetails,
-  }).then(resp => {
-    console.log('resp: ', resp);
+  }).then(data => {
+    console.log('getting here!!');
+    // turn off loading icon
     dispatch(createProjectIsLoading(false));
+    
+    // reset projectBuilding functionality
+    // accomplished below --> redirectTo does the same thing
+    // dispatch(resetProjectBuilder());
+    
+    // close modal
+    dispatch(closeModal(modal));
+    
+    // redirect to newly create project
+    let projectID = data.data.project_id;
+    console.log('PID: ', projectID);
+    dispatch(redirectTo(projectID));
   }).catch(err => {
     console.log('err: ', err);
+    dispatch(resetProjectBuilder());
     dispatch(createProjectIsLoading(false));
   });
 

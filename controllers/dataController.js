@@ -37,11 +37,14 @@ exports.createNewProject = (req, res) => {
             // project_id is a single-value array containing the project_id, thus ->
             let { nodes, links } = formatNewProjectData(project_id[0], user.google_id, title, milestones);
 
-            saveNodesAndLinks(nodes, [])
-                .then(result => {
-                    saveNodesAndLinks([], links)
-                        .then(result => {
-                            res.status(200).send(result);
+            console.log('nodes and links:', {nodes, links});
+
+            saveNodes(nodes)
+                .then(() => {
+                    saveLinks(links)
+                        .then(() => {
+                            let data = { project_id: project_id[0] };
+                            res.status(200).send(data);
                         });
                 });
 

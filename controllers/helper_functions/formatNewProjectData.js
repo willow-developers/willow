@@ -20,6 +20,7 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
       status: 'new', // see schema for example
       x: 0,
       y: 0,
+      milestone: true,
     };
   });
 
@@ -35,6 +36,7 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     status: 'new', // see schema for example
     x: 0,
     y: 0,
+    milestone: true,
   });
 
   // add final node to the nodes array
@@ -49,6 +51,7 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     status: 'new', // see schema for example
     x: 0,
     y: 0,
+    milestone: true,
   });
 
   // console.log('nodes: ', nodes);
