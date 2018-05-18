@@ -1,35 +1,39 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import styles from '../../assets/sass/AddMilestone.module.scss';
+import Input from '../../components/UI/Input';
 
 const AddMilestone = (props) => {
-  const { pristine, reset, handleSubmit, submitting, createMilestone } = props;
+  const { reset, handleSubmit, createMilestone, addMilestoneField } = props;
+  const renderInputs = () => {
+    return _.map(addMilestoneField, (field, i) => (
+      <Field key={ field.name } { ...field } component={ Input } inlineBtn={ 'addMilestone' } />
+    ));
+  }
 
   return (
-    <form onSubmit={ handleSubmit((value) => {
-        createMilestone(value);
-        reset();
-      })
-    }>
-      <div>
-        <label>Add Milestone</label>
-        <div>
-          <Field
-            name="text"
-            component="input"
-            type="text"
-            placeholder="Add Milestone"
-          />
-        </div>
-      </div>
-      <div>
-        <button type="submit" disabled={ pristine || submitting }>
-          Submit
-        </button>
-      </div>
-    </form>
+    <div className={ styles.addInput }>
+      <form onSubmit={ handleSubmit((value) => {
+          createMilestone(value);
+          reset();
+        })
+      }>
+        { renderInputs() }
+      </form>
+    </div>
   );
 };
 
-export default reduxForm({
-  form: 'AddMilestone'
-})(AddMilestone);
+const mapStateToProps = (state, ownProps) => ({
+  form: ownProps.column
+});
+
+export default compose(
+  connect(mapStateToProps),
+  reduxForm({
+    addMilestoneField: [{ label: 'Add Milestone', name: 'text', type: 'text', value: '', placeholder: '' }]
+  })
+)(AddMilestone);

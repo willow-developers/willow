@@ -33,7 +33,6 @@ class BookmarkInput extends Component {
 				);
 			}
 			return;
-			// if (this.props.inlineBtn === 'edit')
 		}
 
 		return (

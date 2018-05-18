@@ -9,7 +9,6 @@ import ModalRender from '../../modalRoot';
 class Modals extends Component {
   render() {
     const modals = this.props.modals.map((item, i) => {
-
       const onClose = () => {
         if(item.onClose){
           item.onClose();

@@ -1,0 +1,21 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.msList {
+	padding: 0 25px;
+	margin: 0 0 25px 0;
+	text-align: left;
+	list-style-type: none;
+
+	li {
+		padding: 15px 10px;
+		border-bottom: 1px dotted #666;
+		line-height: 28px;
+
+		&:last-of-type {
+			border: 0;
+		}
+	}
+}
+
+

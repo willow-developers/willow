@@ -1,0 +1,11 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.navHeader {
+	text-align: right;
+	padding: 10px;
+	padding-top: 0;
+	border-bottom: 1px solid #666;
+	margin: 0 25px 3px;
+	font-size: 14px;
+}

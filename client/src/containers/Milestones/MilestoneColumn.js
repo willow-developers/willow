@@ -8,6 +8,8 @@ import FilterNav from './FilterNav';
 
 class MilestoneBody extends Component {
   createMilestone = (data) => {
+    data.column = this.props.column;
+    console.log('in react component: ', data);
     this.props.createMilestone(data);
   };
 
@@ -16,7 +18,9 @@ class MilestoneBody extends Component {
   };
 
   filterMilestone = (filter) => {
-    this.props.filterMilestone(filter);
+    const extraFilter = [filter, this.props.column];
+    console.log(extraFilter);
+    this.props.filterMilestone(extraFilter);
   };
 
   editMilestone = (id) => {
@@ -38,6 +42,8 @@ class MilestoneBody extends Component {
         const populateData = {};
         populateData.id = hash_id;
         populateData.text = data;
+        populateData.column = this.props.column;
+        // console.log('from component: ', populateData);
         this.props.populateMilestone(populateData);
       }
     });
@@ -48,31 +54,44 @@ class MilestoneBody extends Component {
   }
 
   render() {
+    const { milestones, visibilityFilter, column, visibilityFilterColumn } = this.props;
     const filterOptions = ["SHOW_ALL", "SHOW_ACTIVE", "SHOW_COMPLETED"];
-    const { milestones, visibilityFilter } = this.props;
     return (
       <div>
-        <AddMilestone createMilestone={ this.createMilestone } />
-        { milestones.length > 0 ? (<FilterNav
-          filterOptions={ filterOptions }
-          filterMilestone={ this.filterMilestone }
-          currentFilter={ visibilityFilter }
-        />) : ('') }
+        <AddMilestone
+          createMilestone={ this.createMilestone }
+          column={ column }
+        />
         <MilestoneList
           milestones={ milestones }
           visibilityFilter={ visibilityFilter }
           toggleMilestone={ this.toggleMilestone }
           editMilestone={ this.editMilestone }
           updateMilestone={ this.updateMilestone }
+          column={ column }
+          visibilityFilterColumn={ visibilityFilterColumn }
         />
       </div>
     );
   }
 }
 
+
+
+// { milestones.length > 0
+//   ? (<FilterNav
+//     filterOptions={ filterOptions }
+//     filterMilestone={ this.filterMilestone }
+//     currentFilter={ visibilityFilter }
+//     column={ column }
+//   />)
+//   : ('')
+// }
+
 const mapStateToProps = (state) => ({
   milestones: state.milestones,
-  visibilityFilter: state.visibilityFilter
+  visibilityFilter: state.visibilityFilter,
+  visibilityFilterColumn: state.visibilityFilterColumn,
 });
 
 const mapDispatchToProps = (dispatch) => ({

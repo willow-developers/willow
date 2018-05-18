@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { projectsGetList} from '../actions/projects';
-import { projectGetData} from '../actions/project';
-import { Link } from 'react-router-dom';
+import { projectGetData, resetRedirects } from '../actions/project';
+import { projectsGetList } from '../actions/projects';
+import { Link, Redirect } from 'react-router-dom';
 
 import DisplayModal from '../containers/Modal_NEW/DisplayModal';
 import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
@@ -17,28 +17,38 @@ class Dashboard extends Component {
 
 	clickHandler(projectID) {
 		this.props.projectGetData(projectID);
-
 	}
 
 	renderProjectList() {
-		return (
-			<div className={ styles.col_12_of_12 }>
-				<h1>Dashboard</h1>
-				{this.props.projectsList.map((project, i ) => {
-					return (
-						<div>
-							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
-							{/* temporary styling fix, fix later */}
-							<br/>
-							<br/>
-						</div>
-					);
-				})}
+		if (this.props.shouldRedirect && this.props.shouldRedirectTo) {
+			// make sure data is available as we redirect to the project
+			let projectID = this.props.shouldRedirectTo;
+			this.props.projectGetData(projectID);
+			// reset redirects in store to ensure user can navigate back to dashboard
+			this.props.resetRedirects();
+			return (
+				<Redirect to={{ pathname:`/project/${this.props.shouldRedirectTo}`}}/>
+			);
+		} else {
+			return (
+				<div className={ styles.col_12_of_12 }>
+					<h1>Dashboard</h1>
+					{this.props.projectsList.map((project, i ) => {
+						return (
+							<div>
+								<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
+								{/* temporary styling fix, fix later */}
+								<br/>
+								<br/>
+							</div>
+						);
+					})}
 
-				{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
-				the header. add back later if needed ----> SEE GITHUB FOR CODE */}
-			</div>
-		)
+					{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
+					the header. add back later if needed ----> SEE GITHUB FOR CODE */}
+				</div>
+			);
+		}
 	}
 
 	render() {
@@ -52,12 +62,15 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => ({
 	userStatus: state.userStatus,
-	projectsList: state.projectsList
+	projectsList: state.projectsList,
+	shouldRedirect: state.shouldRedirect,
+	shouldRedirectTo: state.shouldRedirectTo,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	projectsGetList: (userID) => dispatch(projectsGetList(userID)),
-	projectGetData: (projectID) => dispatch(projectGetData(projectID))
+	projectGetData: (projectID) => dispatch(projectGetData(projectID)),
+	resetRedirects: () => dispatch(resetRedirects()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

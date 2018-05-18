@@ -17,8 +17,6 @@ class NewProjectDetails extends Component {
 	}
 
 	render() {
-		console.log('this.props within newProjectDetails: ', this.props)
-
 		return (
 			<div>
 				<h2>Milestones required to complete this project: </h2>
