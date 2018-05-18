@@ -35,17 +35,20 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
   axios.post('/api/newProject', {
     data: projectDetails,
   }).then(data => {
+    console.log('getting here!!');
     // turn off loading icon
     dispatch(createProjectIsLoading(false));
     
     // reset projectBuilding functionality
-    dispatch(resetProjectBuilder());
+    // accomplished below --> redirectTo does the same thing
+    // dispatch(resetProjectBuilder());
     
     // close modal
     dispatch(closeModal(modal));
     
     // redirect to newly create project
     let projectID = data.data.project_id;
+    console.log('PID: ', projectID);
     dispatch(redirectTo(projectID));
   }).catch(err => {
     console.log('err: ', err);

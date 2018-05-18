@@ -3,7 +3,8 @@ import {
   CREATE_PROJECT_ADD_MILESTONES,
 	CREATE_PROJECT_SAVE_PROJECT,
   CREATE_PROJECT_HAS_ERRORED,
-  DATA_WITHIN_CREATE_PROJECT_IS_LOADING
+	DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
+	RESET_REDIRECTS,
 } from '../actions/types';
 
 export function createProjectModalToShow(state = 'NewProjectTitle', action) {
@@ -63,6 +64,8 @@ export function shouldRedirect(state = false, action) {
 	switch (action.type) {
 		case CREATE_PROJECT_SAVE_PROJECT:
 			return true;
+		case RESET_REDIRECTS:
+			return false;
 		default:
 			return state;
 	}
@@ -72,6 +75,8 @@ export function shouldRedirectTo(state = null, action) {
 	switch (action.type) {
 		case CREATE_PROJECT_SAVE_PROJECT:
 			return action.payload;
+		case RESET_REDIRECTS:
+			return null;
 		default:
 			return state;
 	}
