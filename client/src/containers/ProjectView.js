@@ -12,9 +12,10 @@ import Modals from './Modal/Modals';
 
 class ProjectView extends Component {
 	render() {
+		console.log('PD', this.props.projectData);
 		return (
 			<div className={styles.col_12_of_12}>
-				<h4> Project View </h4>
+				<h4>{this.props.projectData.project.project_name}</h4>
 				<WillowCore />
 				<Modals />
 				<button onClick={() => {

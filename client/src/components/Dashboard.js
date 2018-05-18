@@ -25,7 +25,7 @@ class Dashboard extends Component {
 				<h1>Dashboard</h1>
 				{this.props.projectsList.map((project, i ) => {
 					return (
-						<div>
+						<div key={project.id}>
 							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
 							{/* temporary styling fix, fix later */}
 							<br/>

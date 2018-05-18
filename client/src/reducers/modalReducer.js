@@ -7,7 +7,6 @@ const initialState = {
 export function isModalOpen(state = initialState, action) {
 	switch (action.type) {
 		case OPEN_MODAL:
-			console.log('hitting open modal!!');
 			return {
 				...state,
 				modals: state.modals.concat(action.obj)
