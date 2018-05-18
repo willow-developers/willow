@@ -10,7 +10,7 @@ export const userCheckStatus = (url) => ((dispatch) => {
 		axios
 			.get(url)
 			.then((response) => {
-				console.log('response.data[0]: ', response.data[0]);
+				// console.log('response.data[0]: ', response.data[0]);
 				dispatch(userIsLoading(false));
 				return response.data[0];
 			})

@@ -12,11 +12,14 @@
 	button {
 		position: absolute;
 		right: 0;
+		z-index: 2;
 		@include vert_align;
-		top: calc(50% - .25rem);
+		top: calc(50% - .22rem);
 	}
 
 	input {
+		position: relative;
+		z-index: 1;
 		line-height: 1.15;
 		overflow: visible;
 		background-color: transparent;
@@ -127,8 +130,43 @@
 
 	&.inlinePreviewBtn {
 		input {
-			width: calc(100% - 150px);
+			width: calc(100% - 135px);
 			padding-right: 10px;
 		}
-	} 
+	}
+
+	&.inlineAddMilestoneBtn {
+		input {
+			width: calc(100% - 100px);
+			padding-right: 10px;
+			margin-top: 11px;
+		}
+	}
+
+	&.inlineEditMilestoneBtn {
+		margin: 5px 0 0;
+		border-bottom: 1px dotted #666;
+
+		input {
+			width: calc(100% - 212px);
+			padding-right: 10px;
+			padding-left: 10px;
+			margin-top: 11px;
+		}
+
+		.btnBox {
+			position: absolute;
+			right: 0;
+			z-index: 2;
+			@include vert_align;
+			top: calc(50% - .22rem);
+			width: 207px;
+
+			button {
+				position: relative;
+				top: auto;
+				transform: translate(0, 0);
+			}
+		}
+	}
 }
