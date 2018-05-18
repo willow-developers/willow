@@ -9,6 +9,5 @@ export const modalClose = (obj) => ((dispatch) => {
 );
 
 export const modalOpen = (obj) => ((dispatch) => {
-		dispatch(openModal(obj));
-	}
-);
+	dispatch(openModal(obj));
+});

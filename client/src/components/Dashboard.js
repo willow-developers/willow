@@ -20,35 +20,24 @@ class Dashboard extends Component {
 	}
 
 	renderProjectList() {
-		if (this.props.shouldRedirect && this.props.shouldRedirectTo) {
-			// make sure data is available as we redirect to the project
-			let projectID = this.props.shouldRedirectTo;
-			this.props.projectGetData(projectID);
-			// reset redirects in store to ensure user can navigate back to dashboard
-			this.props.resetRedirects();
-			return (
-				<Redirect to={{ pathname:`/project/${this.props.shouldRedirectTo}`}}/>
-			);
-		} else {
-			return (
-				<div className={ styles.col_12_of_12 }>
-					<h1>Dashboard</h1>
-					{this.props.projectsList.map((project, i ) => {
-						return (
-							<div>
-								<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
-								{/* temporary styling fix, fix later */}
-								<br/>
-								<br/>
-							</div>
-						);
-					})}
+		return (
+			<div className={ styles.col_12_of_12 }>
+				<h1>Dashboard</h1>
+				{this.props.projectsList.map((project, i ) => {
+					return (
+						<div>
+							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
+							{/* temporary styling fix, fix later */}
+							<br/>
+							<br/>
+						</div>
+					);
+				})}
 
-					{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
-					the header. add back later if needed ----> SEE GITHUB FOR CODE */}
-				</div>
-			);
-		}
+				{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
+				the header. add back later if needed ----> SEE GITHUB FOR CODE */}
+			</div>
+		);
 	}
 
 	render() {
