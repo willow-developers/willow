@@ -4,12 +4,12 @@ exports.saveNodes = (nodes) => {
   return Promise.all(nodes.map(entry => {
     if (entry.status === 'new') {
       delete entry.status;
-      return knex('nodes').insert(entry).then(() => 1);
+      return knex('nodes').insert(entry);
     } else if (entry.status === 'updated') {
       delete entry.status;
-      return knex('nodes').where('hash_id', '=', entry.hash_id).update(entry).then(() => 1);
+      return knex('nodes').where('hash_id', '=', entry.hash_id).update(entry);
     } else if (entry.status === 'delete') {
-      return knex('nodes').where('hash_id', '=', entry.hash_id).del().then(() => 1);
+      return knex('nodes').where('hash_id', '=', entry.hash_id).del();
     }
   })).catch((err) => console.log('err: ', err))
 }
@@ -28,34 +28,39 @@ exports.saveLinks = (links) => {
   })).catch(err => console.log('err: ', err))
 }
 
-exports = saveNodesAndLinks = (nodes, links) => {
-  let allUpdates = [...nodes, ...links];
 
-  return Promise.all(allUpdates.map(entry => {
+// SPLIT INTO TWO FUNCTIONS ABOVE:
 
-    // if the entry is a node --> update 'Nodes' table
-    if (entry.hasOwnProperty('node_data')) {
-      if (entry.status === 'new') {
-        delete entry.status;
-        return knex('nodes').insert(entry);
-      } else if (entry.status === 'updated') {
-        delete entry.status;
-        return knex('nodes').where('hash_id', '=', entry.hash_id).update(entry);
-      } else if (entry.status === 'delete') {
-        return knex('nodes').where('hash_id', '=', entry.hash_id).del();
-      }
+// exports = saveNodesAndLinks = (nodes, links) => {
+//   let allUpdates = [...nodes, ...links];
 
-      // else: update 'Links' table
-    } else {
-      if (entry.status === 'new') {
-        delete entry.status;
-        return knex.select().table('nodes');
-      } else if (entry.status === 'updated') {
-        delete entry.status;
-        return knex.select().table('nodes');
-      } else if (entry.status === 'delete') {
-        return knex('links').where('hash_id', '=', entry.hash_id).del();
-      }
-    }
-  }));
-};
+//   console.log('nodes and links:', {nodes, links});
+
+//   return Promise.all(allUpdates.map(entry => {
+
+//     // if the entry is a node --> update 'Nodes' table
+//     if (entry.hasOwnProperty('node_data')) {
+//       if (entry.status === 'new') {
+//         delete entry.status;
+//         return knex('nodes').insert(entry);
+//       } else if (entry.status === 'updated') {
+//         delete entry.status;
+//         return knex('nodes').where('hash_id', '=', entry.hash_id).update(entry);
+//       } else if (entry.status === 'delete') {
+//         return knex('nodes').where('hash_id', '=', entry.hash_id).del();
+//       }
+
+//       // else: update 'Links' table
+//     } else {
+//       if (entry.status === 'new') {
+//         delete entry.status;
+//         return knex.select().table('nodes');
+//       } else if (entry.status === 'updated') {
+//         delete entry.status;
+//         return knex.select().table('nodes');
+//       } else if (entry.status === 'delete') {
+//         return knex('links').where('hash_id', '=', entry.hash_id).del();
+//       }
+//     }
+//   }));
+// };

@@ -4,7 +4,7 @@ import  { reducer as reduxForm } from 'redux-form';
 import { userStatus, userHasErrored, userIsLoading } from './authReducer';
 import { isModalOpen } from './modalReducer';
 import { bookmarkStatus, bookmarkHasErrored, bookmarkIsLoading, bookmarkShowAdd, bookmarkShowPreview, bookmarkShowEdit, bookmarkFields, loadBookmarkScrape, bookmarkListAdd } from './bookmarkReducer';
-import { createProjectModalToShow, createProjectMilestones, createProjectTitle, createProjectHasErrored, createProjectDataIsLoading } from './createProjectReducer';
+import { createProjectModalToShow, createProjectMilestones, createProjectTitle, createProjectHasErrored, createProjectDataIsLoading, shouldRedirect, shouldRedirectTo } from './createProjectReducer';
 
 import { projectsList, projectsListHasErrored, projectsListIsLoading } from './projectsReducer';
 import { projectData, projectHasErrored, projectIsLoading, clearProjectData } from './projectReducer';
@@ -32,6 +32,8 @@ export default combineReducers({
 	createProjectMilestones,
 	createProjectHasErrored, // consider deleting later
 	createProjectDataIsLoading, // consider deleting later
+	shouldRedirect,
+	shouldRedirectTo,
 	projectsList,
 	projectsListHasErrored,
 	projectsListIsLoading,
