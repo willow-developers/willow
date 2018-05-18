@@ -28,7 +28,7 @@ class DisplayModal extends Component {
 	        handleClick={() => onOpen({
 	          id,
 	          onClose: () => this.props.closeBookmark(),
-	          onConfirm: () => console.log("fire at confirming event on custom"),
+	          // onConfirm: () => console.log("fire at confirming event on custom"),
 	          content,
 	        })}
 	      />

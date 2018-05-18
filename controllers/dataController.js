@@ -54,7 +54,8 @@ exports.createNewProject = (req, res) => {
 
 exports.fetchProjects = (req, res) => {
     // update as needed!!
-    let owner_id = req.query.userID;
+    // let owner_id = req.query.userID;
+    let owner_id = '110227128753222443119';
 
     // to go to Jun's google account:
     // owner_id = '110227128753222443119';

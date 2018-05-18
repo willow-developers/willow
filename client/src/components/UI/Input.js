@@ -61,7 +61,6 @@ class BookmarkInput extends Component {
 						<Button
 							icon={ 'undo' }
 							iconSide={ 'center' }
-							styleClass={ 'noShadow' }
 							handleClick={ reset }
 							styleClass={ 'skinnyIcon' }
 							disabledStyle={ pristine || submitting ? true : false  }
@@ -69,7 +68,6 @@ class BookmarkInput extends Component {
 						<Button
 							icon={ 'cancel' }
 							iconSide={ 'center' }
-							styleClass={ 'noShadow' }
 							btnFloat={ 'none' }
 							styleClass={ 'skinnyIcon' }
 							handleClick={ editMilestone }

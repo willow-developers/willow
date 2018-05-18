@@ -1,5 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 import styles from '../../assets/sass/AddMilestone.module.scss';
 import Input from '../../components/UI/Input';
@@ -25,7 +27,13 @@ const AddMilestone = (props) => {
   );
 };
 
-export default reduxForm({
-  form: 'AddMilestone',
-  addMilestoneField: [{ label: 'Add Milestone', name: 'text', type: 'text', value: '', placeholder: '' }]
-})(AddMilestone);
+const mapStateToProps = (state, ownProps) => ({
+  form: ownProps.column
+});
+
+export default compose(
+  connect(mapStateToProps),
+  reduxForm({
+    addMilestoneField: [{ label: 'Add Milestone', name: 'text', type: 'text', value: '', placeholder: '' }]
+  })
+)(AddMilestone);
