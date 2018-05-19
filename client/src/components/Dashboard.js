@@ -4,10 +4,6 @@ import { projectGetData, resetRedirects } from '../actions/project';
 import { projectsGetList } from '../actions/projects';
 import { Link, Redirect } from 'react-router-dom';
 
-import DisplayModal from '../containers/Modal_NEW/DisplayModal';
-import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
-import MilestoneBody from '../containers/Milestones/MilestoneBody';
-
 import styles from '../assets/sass/Dashboard.module.scss';
 
 class Dashboard extends Component {

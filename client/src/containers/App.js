@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userCheckStatus } from '../actions/auth';
+import { screenResize } from '../actions/windowSize';
 
 import Header from '../components/Header';
 import Main from './Main';
@@ -10,6 +11,11 @@ import Loading from '../components/UI/Loading';
 class App extends Component {
   componentDidMount() {
     this.props.userCheckStatus('/api/userData');
+    window.addEventListener('resize', this.props.screenResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.props.screenResize);
   }
 
   renderApp = () => {
@@ -40,10 +46,12 @@ const mapStateToProps = (state) => ({
   hasErrored: state.userHasErrored,
   isLoading: state.userIsLoading,
   userInfo: state.userStatus,
+  screenWidth: state.uiReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  userCheckStatus: (url) => dispatch(userCheckStatus(url))
+  userCheckStatus: (url) => dispatch(userCheckStatus(url)),
+  screenResize: () => dispatch(screenResize(window.innerWidth)),
 });
 
 

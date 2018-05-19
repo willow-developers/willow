@@ -17,9 +17,6 @@ const milestoneAdd = (state = initalState, action) => {
         edit: false
       };
     case POPULATE_MILESTONE:
-      console.log('from reducer: ', action.data);
-      // const { text, column, id } = action.data;
-      // return state;
       return {
         id: action.data.id,
         text: action.data.text,

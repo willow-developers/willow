@@ -10,9 +10,14 @@ import { projectsList, projectsListHasErrored, projectsListIsLoading } from './p
 import { projectData, projectHasErrored, projectIsLoading, clearProjectData } from './projectReducer';
 import { newExplorativeNodeCreated } from './explorativeNodeReducer';
 
+import { uiReducer } from './windowSizeReducer';
+
 import { milestones, visibilityFilter, milestoneLoader, visibilityFilterColumn } from './milestoneReducer';
 
+import { notes, noteShowForm, noteShowList } from './notesReducer';
+
 export default combineReducers({
+	uiReducer,
 	userStatus,
 	userHasErrored,
 	userIsLoading,
@@ -46,4 +51,7 @@ export default combineReducers({
 	visibilityFilter,
 	milestoneLoader,
 	visibilityFilterColumn,
+	notes,
+	noteShowForm,
+	noteShowList,
 });
