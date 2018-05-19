@@ -12,11 +12,11 @@ export const bookmarkShowAdd = (bool) => ({ type: BOOKMARK_SHOW_ADD, showAdd: bo
 export const bookmarkShowPreview = (bool) => ({ type: BOOKMARK_SHOW_PREVIEW, showPreview: bool });
 export const bookmarkShowEdit = (bool) => ({ type: BOOKMARK_SHOW_EDIT, showEdit: bool });
 
+export const BookmarkSave = (data) => ({ type: SAVE_BOOKMARK, data });
 export const bookmarkStatusSuccess = (status) => ({ type: BOOKMARK_STATUS_SUCCESS, bookmarkStatus: status });
 export const bookmarkFieldsSuccess = (status) => ({ type: BOOKMARK_FIELDS_SUCCESS, bookmarkFields: status });
-export const loadFormData = (data) => ({ type: LOAD_BOOKMARK_SCRAPE, data });
 
-export const BookmarkSave = (data) => ({ type: SAVE_BOOKMARK, data });
+export const loadFormData = (data) => ({ type: LOAD_BOOKMARK_SCRAPE, data });
 
 export const bookmarkGetInfo = (targetUrl) => ((dispatch) => {
 		dispatch(bookmarkIsLoading(true));
@@ -40,11 +40,10 @@ export const bookmarkGetInfo = (targetUrl) => ((dispatch) => {
 			})
 			.then((fields) => dispatch(bookmarkFieldsSuccess(fields)))
 			.then(() => {
-				dispatch(bookmarkShowAdd(false))
-				dispatch(bookmarkShowPreview(true))
+				dispatch(bookmarkShowAdd(false));
+				dispatch(bookmarkShowPreview(true));
 			})
-			.catch(() => dispatch(bookmarkHasErrored(true))
-		)
+			.catch(() => dispatch(bookmarkHasErrored(true)));
 	}
 );
 

@@ -1,4 +1,13 @@
-import { ADD_MILESTONE, POPULATE_MILESTONE, TOGGLE_MILESTONE, EDIT_MILESTONE, UPDATE_MILESTONE, SET_VISIBILITY_FILTER, SET_VISIBILITY_FILTER_COLUMN, LOAD } from "./types";
+import {
+  ADD_MILESTONE,
+  POPULATE_MILESTONE,
+  TOGGLE_MILESTONE,
+  EDIT_MILESTONE,
+  UPDATE_MILESTONE,
+  SET_VISIBILITY_FILTER,
+  SET_VISIBILITY_FILTER_COLUMN,
+  LOAD,
+} from './types';
 
 export const milestoneAdd = (text) => ({ type: ADD_MILESTONE, text });
 export const milestonePopulate = (data) => ({ type: POPULATE_MILESTONE, data });
@@ -8,7 +17,6 @@ export const milestoneUpdate = (data) => ({ type: UPDATE_MILESTONE, data });
 export const milestoneFilter = (filter) => ({ type: SET_VISIBILITY_FILTER, filter });
 export const milestoneFilterColumn = (filter) => ({ type: SET_VISIBILITY_FILTER_COLUMN, filter });
 export const load = (data) => ({ type: LOAD, data });
-
 
 export const createMilestone = (data) => (dispatch) => {
   dispatch(milestoneAdd(data));
