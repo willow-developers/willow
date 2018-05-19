@@ -40,7 +40,6 @@ class Login extends Component {
 								icon={ 'account_circle' }
 								type={ 'small' }
 								iconSide={ 'left' }
-								/* handleClick={ () => this.props.userCheckStatus('http://localhost:3000/auth/google') } */
 							/>
 						</a>
 					</div>
@@ -49,16 +48,8 @@ class Login extends Component {
 	}
 };
 
-const mapStateToProps = (state) => {
-  return { userStatus: state.userStatus };
-};
+const mapStateToProps = (state) => ({ userStatus: state.userStatus });
 
-const mapDispatchToProps = (dispatch) => {
-  return { 
-		userCheckStatus: (url) => {
-			dispatch(userCheckStatus(url));
-		}
-	};
-};
+const mapDispatchToProps = (dispatch) => ({ userCheckStatus: (url) => dispatch(userCheckStatus(url)) });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

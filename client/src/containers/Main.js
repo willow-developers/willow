@@ -27,9 +27,7 @@ class Main extends Component {
 			);
 		};
 		const MainRoute = ({ component: Component, ...rest }) => (
-			<Route { ...rest } render={(info) =>
-				<Component { ...info } />}
-			/>
+			<Route { ...rest } render={(info) => <Component { ...info } />} />
 		);
 
 		return (
@@ -49,9 +47,6 @@ class Main extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-  userStatus: state.userStatus
-});
-
+const mapStateToProps = (state) => ({ userStatus: state.userStatus });
 
 export default withRouter(connect(mapStateToProps)(Main));

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userCheckStatus } from '../actions/auth';
 import { Redirect } from 'react-router-dom';
-
 import Button from '../components/UI/Button';
 
 class Signup extends Component {
@@ -36,12 +35,10 @@ class Signup extends Component {
 	}
 };
 
-const mapStateToProps = (state) => {
-  return { userStatus: state.userStatus };
-};
+const mapStateToProps = (state) => ({ userStatus: state.userStatus });
 
-const mapDispatchToProps = (dispatch) => {
-  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
-};
+const mapDispatchToProps = (dispatch) => ({
+  userCheckStatus: (url) => dispatch(userCheckStatus(url))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

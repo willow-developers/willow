@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { openModal } from '../actions/modal';
-import { Redirect } from 'react-router-dom';
 
 import styles from '../assets/sass/Dashboard.module.scss';
 
-import {projectSave, projectGetData} from '../actions/project';
+import { projectSave, projectGetData } from '../actions/project';
 
 import WillowCore from '../components/WillowCore';
 import Modals from './Modal/Modals';
@@ -13,11 +11,13 @@ import Modals from './Modal/Modals';
 class ProjectView extends Component {
 
 	render() {
+		let projectName;
+		
 		if (this.props.projectData.project) {
 			// if the projectName has been retrieved from the server
-			var projectName = this.props.projectData.project.project_name;
+			projectName = this.props.projectData.project.project_name;
 		} else {
-			var projectName = '';
+			projectName = '';
 		}
 
 		return (
@@ -32,18 +32,14 @@ class ProjectView extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return { 
-		projectData: state.projectData,
-		userStatus: state.userStatus,
-	};
-};
+const mapStateToProps = (state) => ({
+	projectData: state.projectData,
+	userStatus: state.userStatus,
+});
 
-const mapDispatchToProps = (dispatch) => {
-	return { 
-		saveProject: (projectData) => dispatch(projectSave(projectData)),
-		projectGetData: (projectID) => dispatch(projectGetData(projectID))
-	}
-};
+const mapDispatchToProps = (dispatch) => ({
+	saveProject: (projectData) => dispatch(projectSave(projectData)),
+	projectGetData: (projectID) => dispatch(projectGetData(projectID)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectView);
