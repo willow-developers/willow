@@ -8,7 +8,7 @@ class Project extends Component {
 	render() {
 		const PrivateRoute = ({ component: Component, ...rest }) => {
 			return (
-				<Route { ...rest } render={(info) =>
+				<Route { ...rest } render={(info) => 
 					!!this.props.userStatus
 					? (<Component { ...info } />)
 					: (<Redirect to={{
@@ -28,8 +28,6 @@ class Project extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-  userStatus: state.userStatus
-});
+const mapStateToProps = (state) => ({ userStatus: state.userStatus });
 
 export default withRouter(connect(mapStateToProps)(Project));
