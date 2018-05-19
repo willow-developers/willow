@@ -57,11 +57,11 @@ exports.createNewProject = (req, res) => {
 
 exports.fetchProjects = (req, res) => {
     
-    // update as needed!!
-    let owner_id = req.query.userID;
+    // // update as needed!!
+    // let owner_id = req.query.userID;
 
     // to go to Jun's google account:
-    // owner_id = '110227128753222443119';
+    owner_id = '110227128753222443119';
 
     knex('projects')
         .where('owner_id', owner_id)

@@ -11,15 +11,21 @@ import WillowCore from '../components/WillowCore';
 import Modals from './Modal/Modals';
 
 class ProjectView extends Component {
+
 	render() {
+		if (this.props.projectData.project) {
+			// if the projectName has been retrieved from the server
+			var projectName = this.props.projectData.project.project_name;
+		} else {
+			var projectName = '';
+		}
+
 		return (
 			<div className={styles.col_12_of_12}>
-				<h4> Project View </h4>
+				<h4>{projectName}</h4>
 				<WillowCore />
 				<Modals />
-				<button onClick={() => {
-					console.log(this.props.projectData);
-				}}> See projectData </button>
+				<button onClick={() => { console.log(this.props.projectData); }}> See projectData </button>
 				<button onClick={() => this.props.saveProject(this.props.projectData)}> Save </button>
 			</div>
 		);

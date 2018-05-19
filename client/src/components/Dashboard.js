@@ -4,10 +4,6 @@ import { projectGetData, resetRedirects } from '../actions/project';
 import { projectsGetList } from '../actions/projects';
 import { Link, Redirect } from 'react-router-dom';
 
-import DisplayModal from '../containers/Modal_NEW/DisplayModal';
-import BookmarkBody from '../containers/Bookmarks/BookmarkBody';
-import MilestoneBody from '../containers/Milestones/MilestoneBody';
-
 import styles from '../assets/sass/Dashboard.module.scss';
 
 class Dashboard extends Component {
@@ -23,9 +19,9 @@ class Dashboard extends Component {
 		return (
 			<div className={ styles.col_12_of_12 }>
 				<h1>Dashboard</h1>
-				{this.props.projectsList.map((project, i ) => {
+				{this.props.projectsList.map((project, i) => {
 					return (
-						<div>
+						<div key={project.id}>
 							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
 							{/* temporary styling fix, fix later */}
 							<br/>
