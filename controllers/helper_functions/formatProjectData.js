@@ -1,4 +1,4 @@
-module.exports = formatProjectData = data => {
+module.exports = formatProjectData = (data) => {
   
   // format links:
   for (var link of data.links) {
@@ -17,4 +17,4 @@ module.exports = formatProjectData = data => {
   }
 
   return data;
-}
+};

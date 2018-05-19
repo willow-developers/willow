@@ -12,7 +12,7 @@ exports.saveNodes = (nodes) => {
       return knex('nodes').where('hash_id', '=', entry.hash_id).del();
     }
   })).catch((err) => console.log('err: ', err))
-}
+};
 
 exports.saveLinks = (links) => {
   return Promise.all(links.map(entry => {
@@ -26,41 +26,4 @@ exports.saveLinks = (links) => {
       return knex('links').where('hash_id', '=', entry.hash_id).del();
     }
   })).catch(err => console.log('err: ', err))
-}
-
-
-// SPLIT INTO TWO FUNCTIONS ABOVE:
-
-// exports = saveNodesAndLinks = (nodes, links) => {
-//   let allUpdates = [...nodes, ...links];
-
-//   console.log('nodes and links:', {nodes, links});
-
-//   return Promise.all(allUpdates.map(entry => {
-
-//     // if the entry is a node --> update 'Nodes' table
-//     if (entry.hasOwnProperty('node_data')) {
-//       if (entry.status === 'new') {
-//         delete entry.status;
-//         return knex('nodes').insert(entry);
-//       } else if (entry.status === 'updated') {
-//         delete entry.status;
-//         return knex('nodes').where('hash_id', '=', entry.hash_id).update(entry);
-//       } else if (entry.status === 'delete') {
-//         return knex('nodes').where('hash_id', '=', entry.hash_id).del();
-//       }
-
-//       // else: update 'Links' table
-//     } else {
-//       if (entry.status === 'new') {
-//         delete entry.status;
-//         return knex.select().table('nodes');
-//       } else if (entry.status === 'updated') {
-//         delete entry.status;
-//         return knex.select().table('nodes');
-//       } else if (entry.status === 'delete') {
-//         return knex('links').where('hash_id', '=', entry.hash_id).del();
-//       }
-//     }
-//   }));
-// };
+};
