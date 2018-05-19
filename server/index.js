@@ -5,7 +5,6 @@ const path = require('path');
 // google OAuth and express session:
 const session = require('express-session');
 const passport = require('passport');
-
 const db = require('../database/index');
 
 const { EXPRESS_SESSION_SECRET } = require('../config/keys');
@@ -19,7 +18,7 @@ app.use(session({
 	secret: EXPRESS_SESSION_SECRET,
 	resave: true,
 	saveUninitialized: true,
-	cookie: { secure: false }
+	cookie: { secure: false },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
