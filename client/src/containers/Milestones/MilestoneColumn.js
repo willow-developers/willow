@@ -4,9 +4,8 @@ import { createMilestone, toggleMilestone, editMilestone, updateMilestone, filte
 
 import MilestoneList from './MilestoneList';
 import AddMilestone from './AddMilestone';
-import FilterNav from './FilterNav';
 
-class MilestoneBody extends Component {
+class MilestoneColumn extends Component {
   createMilestone = (data) => {
     data.column = this.props.column;
     console.log('in react component: ', data);
@@ -43,7 +42,6 @@ class MilestoneBody extends Component {
         populateData.id = hash_id;
         populateData.text = data;
         populateData.column = this.props.column;
-        // console.log('from component: ', populateData);
         this.props.populateMilestone(populateData);
       }
     });
@@ -55,7 +53,6 @@ class MilestoneBody extends Component {
 
   render() {
     const { milestones, visibilityFilter, column, visibilityFilterColumn } = this.props;
-    const filterOptions = ["SHOW_ALL", "SHOW_ACTIVE", "SHOW_COMPLETED"];
     return (
       <div>
         <AddMilestone
@@ -77,7 +74,10 @@ class MilestoneBody extends Component {
 }
 
 
+// For Filtering the list do not remove
 
+// import FilterNav from './FilterNav';
+// const filterOptions = ["SHOW_ALL", "SHOW_ACTIVE", "SHOW_COMPLETED"];
 // { milestones.length > 0
 //   ? (<FilterNav
 //     filterOptions={ filterOptions }
@@ -103,4 +103,4 @@ const mapDispatchToProps = (dispatch) => ({
   populateMilestone: (data) => dispatch(populateMilestone(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MilestoneBody);
+export default connect(mapStateToProps, mapDispatchToProps)(MilestoneColumn);

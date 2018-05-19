@@ -15,7 +15,7 @@ class ProjectView extends Component {
 		console.log('in project view shouldRedirect and shouldRedirectTo: ', { shouldRedirect: this.props.shouldRedirect, shouldRedirectTo: this.props.shouldRedirectTo });
 		console.log('in project view projectData: ', this.props.projectData);
 
-		debugger;
+		// debugger;
 
 		// BROKEN:
 		// if a new project has been created --> redirect
