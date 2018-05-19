@@ -19,10 +19,10 @@ class Dashboard extends Component {
 		return (
 			<div className={ styles.col_12_of_12 }>
 				<h1>Dashboard</h1>
-				{this.props.projectsList.map((project, i ) => {
+				{this.props.projectsList.map((project, i) => {
 					return (
-						<div key={ project.id }>
-							<Link to={ `/project/${project.id}` } onClick={ () => { this.clickHandler(project.id)} }>{ `${project.id}.` } { project.project_name }</Link>
+						<div key={project.id}>
+							<Link to={`/project/${project.id}`} key={project.id} onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
 							{/* temporary styling fix, fix later */}
 							<br/>
 							<br/>

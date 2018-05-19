@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 import Button from '../../components/UI/Button';
 
@@ -10,7 +11,6 @@ import NewProjectInput from './NewProjectInput';
 class NewProjectDetails extends Component {
 	renderInputs() {
 		let { milestoneField } = this.props;
-		console.log('milestone field: ', milestoneField);
 		return _.map(milestoneField, (field, i) => (
 			<Field key={ field.name } { ...field } component={ NewProjectInput } />
 		));
@@ -46,12 +46,27 @@ const validate = (values) => {
 	return errors;
 };
 
+const mapStateToProps = (state)=> ({
+	userStatus: state.userStatus
+});
+
+const mapDispatchToProps = (state) => ({
+
+});
+
+NewProjectDetails = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(NewProjectDetails);
+
 export default reduxForm({
 	validate,
 	form: 'NewProjectDetails',
 	milestoneField: [
 		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone1', type: 'text', value: '', placeholder: '' },
 		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone2', type: 'text', value: '', placeholder: '' },
-		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone3', type: 'text', value: '', placeholder: '' }
+		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone3', type: 'text', value: '', placeholder: '' },
+		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone4', type: 'text', value: '', placeholder: '' },
+		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone5', type: 'text', value: '', placeholder: '' },
 	]
 })(NewProjectDetails);
