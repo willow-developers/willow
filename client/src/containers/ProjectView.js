@@ -13,8 +13,6 @@ import Modals from './Modal/Modals';
 class ProjectView extends Component {
 
 	render() {
-		console.log('t.p: ', this.props);
-
 		if (this.props.projectData.project) {
 			// if the projectName has been retrieved from the server
 			var projectName = this.props.projectData.project.project_name;
@@ -25,7 +23,6 @@ class ProjectView extends Component {
 		return (
 			<div className={styles.col_12_of_12}>
 				<h4>{projectName}</h4>
-				{/* <h4>Project Name: </h4> */}
 				<WillowCore />
 				<Modals />
 				<button onClick={() => { console.log(this.props.projectData); }}> See projectData </button>
