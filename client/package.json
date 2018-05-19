@@ -15,6 +15,7 @@
     "classnames": "^2.2.5",
     "d3": "^5.1.0",
     "lodash": "^4.17.10",
+    "moment": "^2.22.1",
     "node-sass": "^4.9.0",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",
