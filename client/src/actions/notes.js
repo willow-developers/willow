@@ -1,4 +1,9 @@
-import { ADD_NOTE, TOGGLE_PREVIEW_NOTE, NOTE_SHOW_FORM, NOTE_SHOW_LIST } from "./types";
+import {
+  ADD_NOTE,
+  TOGGLE_PREVIEW_NOTE,
+  NOTE_SHOW_FORM,
+  NOTE_SHOW_LIST
+} from "./types";
 
 export const noteAdd = (data) => ({ type: ADD_NOTE, data });
 export const noteTogglePreview = (id) => ({ type: TOGGLE_PREVIEW_NOTE, id });

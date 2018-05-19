@@ -6,9 +6,7 @@ import Button from '../../components/UI/Button';
 class ProjectSummary extends Component {
 
   renderProject() {
-    console.log('this.props.milestones: ', this.props.milestones);
     let values = Object.values(this.props.milestones);
-
     return _.map(values, (item, i) => (
 			<li key={i}>{ item }</li>
 		));
@@ -42,12 +40,5 @@ const mapStateToProps = (state) => {
     user: state.userStatus,
   };
 };
-
-// IF NEEDED:
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-
-//   }
-// };
 
 export default connect(mapStateToProps, null)(ProjectSummary);

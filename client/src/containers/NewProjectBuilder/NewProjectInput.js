@@ -11,10 +11,10 @@ class NewProjectInput extends Component {
 		if (this.props.input.name === 'projectName') {
 			return (
 				<Button
-								icon={ 'navigate_next' }
-								value={ 'Next' }
-								iconSide={ 'right' }
-								type="submit"
+					icon={ 'navigate_next' }
+					value={ 'Next' }
+					iconSide={ 'right' }
+					type="submit"
 				/>
 			);
 		} else {
@@ -25,7 +25,7 @@ class NewProjectInput extends Component {
 	}
 
 	render() {
-		const { input, label, type, placeholder, meta: { error, touched } } = this.props;
+		const { input, label, type, placeholder, meta: { error, touched }} = this.props;
 
 		const { isActive } = this.state;
 
