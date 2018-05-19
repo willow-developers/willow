@@ -47,5 +47,11 @@ const validateProjectName = title => {
 export default reduxForm({
 	validate,
 	form: 'NewProjectTitle',
-	newProjectField: [{ label: 'Enter project title here (50 characters or less)', name: 'projectName', type: 'text', value: '', placeholder: '' }]
+	newProjectField: [{
+		label: 'Enter project title here (50 characters or less)',
+		name: 'projectName',
+		type: 'text',
+		value: '',
+		placeholder: ''
+	}],
 })(NewProjectTitle);
