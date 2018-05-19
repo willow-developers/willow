@@ -6,6 +6,7 @@ import Button from '../../components/UI/Button';
 class ProjectSummary extends Component {
 
   renderProject() {
+    console.log('this.props.milestones: ', this.props.milestones);
     let values = Object.values(this.props.milestones);
 
     return _.map(values, (item, i) => (
