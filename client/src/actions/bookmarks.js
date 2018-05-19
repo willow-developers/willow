@@ -1,9 +1,17 @@
 import axios from 'axios';
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 
-import { BOOKMARK_HAS_ERRORED, BOOKMARK_IS_LOADING } from './types';
-import { BOOKMARK_SHOW_ADD, BOOKMARK_SHOW_PREVIEW, BOOKMARK_SHOW_EDIT } from './types';
-import { BOOKMARK_STATUS_SUCCESS, BOOKMARK_FIELDS_SUCCESS, LOAD_BOOKMARK_SCRAPE, SAVE_BOOKMARK } from './types';
+import {
+	BOOKMARK_HAS_ERRORED,
+	BOOKMARK_IS_LOADING,
+	BOOKMARK_SHOW_ADD,
+	BOOKMARK_SHOW_PREVIEW,
+	BOOKMARK_SHOW_EDIT,
+	BOOKMARK_STATUS_SUCCESS,
+	BOOKMARK_FIELDS_SUCCESS,
+	LOAD_BOOKMARK_SCRAPE,
+	SAVE_BOOKMARK,
+} from './types';
 
 export const bookmarkHasErrored = (bool) => ({ type: BOOKMARK_HAS_ERRORED, hasErrored: bool });
 export const bookmarkIsLoading = (bool) => ({ type: BOOKMARK_IS_LOADING, isLoading: bool });
