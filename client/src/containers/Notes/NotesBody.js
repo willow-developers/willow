@@ -4,15 +4,21 @@ import { addNote, previewToggleNote, createNoteView, closeNoteView, editNote, up
 
 import CardList from './CardList';
 import NotesForm from './NotesForm';
+import Button from '../../components/UI/Button';
+import styles from '../../assets/sass/NotesBody.module.scss';
 
 class NotesBody extends Component {
 	render() {
 		const { notes, previewToggleNote, addNote, noteShowForm, noteShowList, createNoteView, closeNoteView, editNote, noteEdit, updateNote } = this.props;
 		return (
-			<div>
-				{ noteShowList ? <CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } /> : '' }
-				{ noteShowForm ? <NotesForm closeNoteView={ closeNoteView } addNote={ addNote } noteEdit={ noteEdit } updateNote={ updateNote } /> : '' }
-				<button onClick={ () => createNoteView() }>New</button>
+			<div className={ styles.row }>
+				<div className={` ${styles.col_12_of_12} ${styles.pusher}`}>
+					{ noteShowList
+						? (<CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } />)
+						: '' }
+					{ noteShowForm ? <NotesForm closeNoteView={ closeNoteView } addNote={ addNote } noteEdit={ noteEdit } updateNote={ updateNote } /> : '' }
+					{ noteShowForm ? '' : <div className={ styles.btnBar }><Button type={ 'bigRound' } icon={ 'add' } btnFloat={ 'right' } handleClick={ () => createNoteView() } /></div> }
+				</div>
 			</div>
 		);
 	}

@@ -1,0 +1,23 @@
+@import 'variables';
+@import 'waffleGrid';
+
+
+.btnBox {
+	@include cf;
+
+	button {
+		float: left;
+
+		&:last-of-type {
+			float: right;
+		}
+
+		&:nth-child(3) {
+			background-color: #f44336;
+
+			&:hover {
+				background-color: #d32f2f;
+			}
+		}
+	}
+}
