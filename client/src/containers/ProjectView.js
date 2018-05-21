@@ -25,8 +25,7 @@ class ProjectView extends Component {
 				<h4>{projectName}</h4>
 				<WillowCore />
 				<Modals />
-				<button onClick={() => { console.log(this.props.projectData); }}> See projectData </button>
-				<button onClick={() => this.props.saveProject(this.props.projectData)}> Save </button>
+
 			</div>
 		);
 	}
@@ -38,8 +37,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	saveProject: (projectData) => dispatch(projectSave(projectData)),
-	projectGetData: (projectID) => dispatch(projectGetData(projectID)),
+	dispatch
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectView);
