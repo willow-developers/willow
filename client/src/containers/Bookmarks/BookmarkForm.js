@@ -44,12 +44,12 @@ const validate = (values) => {
 BookmarkForm =  reduxForm({
 	validate,
 	form: 'bookmarkForm',
-	addBookmarkField: [{ label: 'Add A Bookmark', name: 'bookmark', type: 'text', value: '', placeholder: '' }]
+	addBookmarkField: [{ label: 'Add A Bookmark', name: 'bookmark', type: 'text', value: '', placeholder: '' }],
 })(BookmarkForm);
 
 BookmarkForm = connect(
   state => ({
-    bookmarkListAdd: state.bookmarkListAdd
+    bookmarkListAdd: state.bookmarkListAdd,
   }))(BookmarkForm);
 
 export default BookmarkForm;
