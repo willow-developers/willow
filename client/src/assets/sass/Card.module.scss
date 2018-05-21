@@ -1,0 +1,68 @@
+@import 'variables';
+@import 'waffleGrid';
+
+
+.card {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	text-align: left;
+	overflow: hidden;
+	margin-bottom: 15px;
+
+	.header {
+		padding: 15px;
+		background: #f2f2f2;
+		position: relative;
+		border-bottom: 1px solid #ccc;
+
+		.title {
+			margin: 0;
+		}
+
+		button {
+			position: absolute;
+			right: 15px;
+			box-shadow: none;
+			background-color: #ccc;
+			@include vert_align;
+
+			&:hover {
+				background-color: #999;
+			}
+		}
+	}
+
+	&:last-of-type {
+		margin-bottom: 0;
+	}
+
+	.content {
+		padding: 15px;
+		padding-bottom: 0;
+		line-height: 22px;
+		cursor: context-menu;
+		position: relative;
+
+		.expander {
+			font-style: italic;
+			font-size: 12px;
+			opacity: .75;
+			float: right;
+			line-height: 22px;
+			width: 100%;
+
+		}
+	}
+
+	.footer {
+		padding: 15px;
+
+		.createdAt {
+			text-align: right;
+			font-style: italic;
+			font-size: 12px;
+			opacity: .75;
+			display: block;
+		}
+	}
+}

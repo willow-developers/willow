@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { load } from '../../actions/milestone';
 import _ from 'lodash';
-// import styles from '../../assets/sass/AddMilestone.module.scss';
+import styles from '../../assets/sass/AddNote.module.scss';
 
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
@@ -35,10 +35,11 @@ class AddNote extends Component {
           closeNoteView();
         })}>
           { renderInputs() }
-          <div className="btnBox">
+          <div className={ styles.btnBox }>
             <Button
               value={ isUpdating ? 'Update' : 'Save' }
               iconSide={ 'right' }
+              icon={ 'check' }
               disabledStyle={ pristine || submitting ? true : false }
               type="submit"
             />
@@ -54,6 +55,7 @@ class AddNote extends Component {
             }
             <Button
               icon={ 'cancel' }
+              value={ 'Cancel' }
               iconSide={ 'center' }
               btnFloat={ 'none' }
               handleClick={ () => closeNoteView() }
