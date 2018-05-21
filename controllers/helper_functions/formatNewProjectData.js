@@ -8,7 +8,7 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
 
   // Calculated using values as outlined above
   let length = nodes.length;
-  let nodeGap = (svgWidth - (leftAndRightPadding * 2)) / length;
+  let nodeGap = (svgWidth - (leftAndRightPadding * 2)) / (length + 1);
   let yLocation = svgHeight / 2;
   let firstXLocation = leftAndRightPadding;
   let lastXLocation = svgWidth - leftAndRightPadding;
@@ -27,7 +27,6 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
       status: 'new', // see schema for example
       x: xLocation,
       y: yLocation,
-      milestone: true,
     };
   });
 
@@ -41,9 +40,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     node_status: null, // see schema for example
     node_data: null, // see schema for example
     status: 'new', // see schema for example
-    x: leftAndRightPadding,
+    x: firstXLocation,
     y: yLocation,
-    milestone: true,
   });
 
   // add final node to the nodes array
@@ -56,9 +54,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     node_status: null, // see schema for example
     node_data: null, // see schema for example
     status: 'new', // see schema for example
-    x: svgWidth - leftAndRightPadding,
+    x: lastXLocation,
     y: yLocation,
-    milestone: true,
   });
   
   // generate links --- FORMAT: (source_id, hash_id, target_id, label_id, project_id)
