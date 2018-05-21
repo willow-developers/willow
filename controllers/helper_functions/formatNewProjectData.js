@@ -1,12 +1,20 @@
 module.exports = formatNewProjectData = (project_id, google_id, title, milestones) => {
   let nodes = Object.values(milestones);
 
-  // assuming a 960 viewport, 100px padding left and 100px padding right
+  // EDIT THESE VALUES TO ADJUST DEFAULT LOCATION OF NEW PROJECT NODES
+  let svgWidth = 1100;
+  let svgHeight = 640;
+  let leftAndRightPadding = 100;
+
+  // Calculated using values as outlined above
   let length = nodes.length;
-  let nodeGap = 760 /length;
+  let nodeGap = (svgWidth - (leftAndRightPadding * 2)) / length;
+  let yLocation = svgHeight / 2;
+  let firstXLocation = leftAndRightPadding;
+  let lastXLocation = svgWidth - leftAndRightPadding;
 
   nodes = nodes.map((node, idx) => {
-    let xLocation = 100 + (nodeGap * (idx + 1));
+    let xLocation = leftAndRightPadding + (nodeGap * (idx + 1));
 
     return {
       hash_id: google_id + '-' + project_id + '-' +  Date.now() + '-' + idx, // need to make
@@ -18,7 +26,7 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
       node_data: null, // see schema for example
       status: 'new', // see schema for example
       x: xLocation,
-      y: 250,
+      y: yLocation,
       milestone: true,
     };
   });
@@ -33,8 +41,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     node_status: null, // see schema for example
     node_data: null, // see schema for example
     status: 'new', // see schema for example
-    x: 100,
-    y: 250,
+    x: leftAndRightPadding,
+    y: yLocation,
     milestone: true,
   });
 
@@ -48,8 +56,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     node_status: null, // see schema for example
     node_data: null, // see schema for example
     status: 'new', // see schema for example
-    x: 860,
-    y: 250,
+    x: svgWidth - leftAndRightPadding,
+    y: yLocation,
     milestone: true,
   });
   
