@@ -14,7 +14,7 @@ import { uiReducer } from './windowSizeReducer';
 
 import { milestones, visibilityFilter, milestoneLoader, visibilityFilterColumn } from './milestoneReducer';
 
-import { notes, noteShowForm, noteShowList } from './notesReducer';
+import { notes, noteShowForm, noteShowList, noteEdit } from './notesReducer';
 
 export default combineReducers({
 	uiReducer,
@@ -54,4 +54,5 @@ export default combineReducers({
 	notes,
 	noteShowForm,
 	noteShowList,
+	noteEdit,
 });
