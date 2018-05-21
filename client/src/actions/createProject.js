@@ -50,6 +50,11 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
     });
 };
 
+export const handleAddItem = item => ({
+  type: 'TO_BE_DETERMINED',
+  payload: 'TO_BE_DETERMINED',
+});
+
 export const createProjectIsLoading = boolean => ({
   type: 'TYPE_GOES_HERE',
   payload: boolean,
