@@ -1,7 +1,13 @@
 module.exports = formatNewProjectData = (project_id, google_id, title, milestones) => {
   let nodes = Object.values(milestones);
 
+  // assuming a 960 viewport, 100px padding left and 100px padding right
+  let length = nodes.length;
+  let nodeGap = 760 /length;
+
   nodes = nodes.map((node, idx) => {
+    let xLocation = 100 + (nodeGap * (idx + 1));
+
     return {
       hash_id: google_id + '-' + project_id + '-' +  Date.now() + '-' + idx, // need to make
       owner_id: google_id,
@@ -11,8 +17,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
       node_status: null, // see schema for example
       node_data: null, // see schema for example
       status: 'new', // see schema for example
-      x: 0,
-      y: 0,
+      x: xLocation,
+      y: 250,
       milestone: true,
     };
   });
@@ -27,8 +33,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     node_status: null, // see schema for example
     node_data: null, // see schema for example
     status: 'new', // see schema for example
-    x: 0,
-    y: 0,
+    x: 100,
+    y: 250,
     milestone: true,
   });
 
@@ -42,8 +48,8 @@ module.exports = formatNewProjectData = (project_id, google_id, title, milestone
     node_status: null, // see schema for example
     node_data: null, // see schema for example
     status: 'new', // see schema for example
-    x: 0,
-    y: 0,
+    x: 860,
+    y: 250,
     milestone: true,
   });
   
