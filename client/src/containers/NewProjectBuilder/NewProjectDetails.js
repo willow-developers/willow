@@ -56,8 +56,6 @@ export default reduxForm({
 	milestoneField: [
 		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone1', type: 'text', value: '', placeholder: '' },
 		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone2', type: 'text', value: '', placeholder: '' },
-		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone3', type: 'text', value: '', placeholder: '' },
-		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone4', type: 'text', value: '', placeholder: '' },
-		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone5', type: 'text', value: '', placeholder: '' },
+		{ label: 'Enter a major project milestone that must be completed ', name: 'milestone3', type: 'text', value: '', placeholder: '' }
 	],
 })(NewProjectDetails);
