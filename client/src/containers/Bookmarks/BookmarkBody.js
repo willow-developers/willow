@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmark } from '../../actions/bookmarks';
 
@@ -34,7 +34,7 @@ class BookmarkBody extends Component {
     if (bookmarkHasErrored) return <p>Sorry! There was an error with your request :(</p>;
     if (bookmarkIsLoading) return <Loading />;
     return (
-      <div>
+      <Fragment>
       	{ bookmarkShowAdd
           ? (<BookmarkForm
               handleBookmarkSubmit={ this.handleBookmarkSubmit }
@@ -54,7 +54,7 @@ class BookmarkBody extends Component {
             />)
           : ('')
         }
-      </div>
+      </Fragment>
     );
   }
 
