@@ -18,6 +18,7 @@ class BookmarkInput extends Component {
 
 	componentDidMount() {
 		this.setFilledTextareaHeight();
+		this.setFilledTextareaHeight();
 	}
 
 	setFilledTextareaHeight() {
