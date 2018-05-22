@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import Button from '../../components/UI/Button';
 import styles from '../../assets/sass/AddMilestone.module.scss';
-import NewProjectInput from './NewProjectInput';
 import Input from '../../components/UI/Input';
 
 class NewProjectDetails extends Component {
@@ -15,7 +14,6 @@ class NewProjectDetails extends Component {
 			<div key={ field.name }>
 				<Field key={ field.name } { ...field } component={ Input }/>
 				Type: <Field component="select" name="label">
-					{/* <option></option> */}
 					<option value="Action">Action Item/Task</option>
 					<option value="Objective">Objective</option>
 				</Field>
@@ -32,8 +30,8 @@ class NewProjectDetails extends Component {
 	render() {
 		return (
 			<div>
-				<h2>Milestones required to complete this project: </h2>
-				<p>Sequentially enter project milestones that must be completed prior to the completion of the project</p>
+				<h2>Steps required to complete this project: </h2>
+				<p>Sequentially enter project actions or objectives that must be completed prior to the completion of the project</p>
 				<br/>
 				<form onSubmit={ this.props.handleSubmit((values) => {
 					this.props.handleAddItem(values);

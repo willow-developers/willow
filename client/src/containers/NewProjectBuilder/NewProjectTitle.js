@@ -1,9 +1,6 @@
-// CURRENTLY BILLY'S BOOKMARK CODE, NEED TO REFACTOR
-
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
-
 import NewProjectInput from './NewProjectInput';
 
 class NewProjectTitle extends Component {
@@ -28,19 +25,13 @@ class NewProjectTitle extends Component {
 
 const validate = (values) => {
 	const errors = {};
-	if (!values.projectName) {
-		errors.projectName = 'You forgot to add a project name!';
-	}
-	if (values.projectName) {
-		errors.projectName = validateProjectName(values.projectName);
-	}
+	if (!values.projectName) errors.projectName = 'You forgot to add a project name!';
+	if (values.projectName) errors.projectName = validateProjectName(values.projectName);
   return errors;
 };
 
 const validateProjectName = title => {
-	if (title.length > 40) {
-		return 'Please limit your project title to 40 characters or less.';
-	}
+	if (title.length > 40) return 'Please limit your project title to 40 characters or less.';
 	return;
 };
 

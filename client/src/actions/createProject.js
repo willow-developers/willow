@@ -33,8 +33,6 @@ export const redirectTo = projectID => ({
 
 export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
-
-  console.log({ projectDetails });
   
   axios
     .post('/api/newProject', { data: projectDetails, })
