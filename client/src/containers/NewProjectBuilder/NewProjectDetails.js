@@ -14,24 +14,36 @@ class NewProjectDetails extends Component {
 		return _.map(milestoneField, (field, i) => (
 			<div key={ field.name }>
 				<Field key={ field.name } { ...field } component={ Input }/>
-				Type: <Field component="select">
-					<option></option>
-					<option value="LABEL_GOES_HERE">Action Item/Task</option>
-					<option value="LABEL_GOES_HERE_2">Objective</option>
+				Type: <Field component="select" name="label">
+					{/* <option></option> */}
+					<option value="Action">Action Item/Task</option>
+					<option value="Objective">Objective</option>
 				</Field>
 			</div>
 		));
 	}
 
+	renderItems() {
+    return _.map(this.props.createProjectItems, (item, i) => (
+      <li key={i}>Item: { item.item }  --  Category: { item.label }</li>
+    ));
+	}
+
 	render() {
+		console.log('t.p: ', this.props.createProjectMilestones);
 		return (
 			<div>
 				<h2>Milestones required to complete this project: </h2>
 				<p>Sequentially enter project milestones that must be completed prior to the completion of the project</p>
 				<br/>
-				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleAddItem(values)) }>
+				<form onSubmit={ this.props.handleSubmit((values) => {
+					this.props.handleAddItem(values);
+					this.props.reset();
+				})}>
 					{ this.renderInputs() }
+					
 					<br/> {/* REPLACE WITH STYLING LATER */}
+					
 					<Button
 						icon={ 'add' }
 						value={ 'Add Item' }
@@ -40,12 +52,15 @@ class NewProjectDetails extends Component {
 						size="small"
 					/>
 				</form>
+
 				<br/> {/* REPLACE WITH STYLING LATER */}
 
-				{/* ITEMS GO HERE ONCE RETURNED FROM STATE */}
+				{ this.renderItems() }
+
+				<br/> {/* REPLACE WITH STYLING LATER */}
 
 				<Button
-					handleClick={ () => { this.props.handleAddMilestones(this.state.______); }}
+					handleClick={ () => { this.props.handleAddMilestones(this.props.createProjectItems); }}
 					icon={ 'navigate_next' }
 					value={ 'Next' }
 					/* btnFloat={ 'right' } */ // COME BACK TO THIS
@@ -60,8 +75,8 @@ class NewProjectDetails extends Component {
 const validate = (values) => {
 	const errors = {};
 	for (var prop in values) {
-		if (values[prop].length > 75) {
-			errors[prop] = 'Please limit milestone titles to 75 characters or less.';
+		if (values[prop].length > 40) {
+			errors[prop] = 'Please limit milestone titles to 40 characters or less.';
 		}
 	}
 	return errors;
@@ -69,7 +84,8 @@ const validate = (values) => {
 
 const mapStateToProps = (state) => {
   return {
-    newProjectDetails: state.newProjectDetails,
+		newProjectDetails: state.newProjectDetails,
+		createProjectItems: state.createProjectItems,
   };
 };
 
@@ -78,7 +94,8 @@ NewProjectDetails = connect(mapStateToProps, null)(NewProjectDetails);
 export default reduxForm({
 	validate,
 	form: 'NewProjectDetails',
+	initialValues: { label: 'Action' },
 	milestoneField: [
-		{ label: 'Action-item or objective that must completed', name: 'milestone1', type: 'text', value: '', placeholder: '' }
+		{ label: 'Action-item or objective that must completed', name: 'item', type: 'text', value: '', placeholder: '' }
 	],
 })(NewProjectDetails);

@@ -38,8 +38,8 @@ const validate = (values) => {
 };
 
 const validateProjectName = title => {
-	if (title.length > 50) {
-		return 'Please limit your project title to 50 characters or less.';
+	if (title.length > 40) {
+		return 'Please limit your project title to 40 characters or less.';
 	}
 	return;
 };
@@ -48,7 +48,7 @@ export default reduxForm({
 	validate,
 	form: 'NewProjectTitle',
 	newProjectField: [{
-		label: 'Enter project title here (50 characters or less)',
+		label: 'Enter project title here (40 characters or less)',
 		name: 'projectName',
 		type: 'text',
 		value: '',

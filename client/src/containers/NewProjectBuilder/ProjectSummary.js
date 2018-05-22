@@ -4,12 +4,10 @@ import _ from 'lodash';
 import Button from '../../components/UI/Button';
 
 class ProjectSummary extends Component {
-
-  renderProject() {
-    let values = Object.values(this.props.milestones);
-    return _.map(values, (item, i) => (
-			<li key={i}>{ item }</li>
-		));
+  renderItems() {
+    return _.map(this.props.createProjectMilestones, (item, i) => (
+      <li key={i}>Item: { item.item }  --  Category: { item.label }</li>
+    ));
 	}
 
 	render() {
@@ -18,9 +16,9 @@ class ProjectSummary extends Component {
 				<h2>Project Summary: </h2>
         <h4>Project Title:</h4>
         { this.props.title }
-        <h4>Project Milestones:</h4>
+        <h4>Action Items and Objectives:</h4>
         <ul>
-          { this.renderProject() }
+          { this.renderItems() }
         </ul>
         <Button
           icon={ 'navigate_next' }
@@ -36,7 +34,7 @@ class ProjectSummary extends Component {
 const mapStateToProps = (state) => {
   return {
     title: state.createProjectTitle,
-    milestones: state.createProjectMilestones,
+    createProjectMilestones: state.createProjectMilestones,
     user: state.userStatus,
   };
 };

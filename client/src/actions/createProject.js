@@ -5,7 +5,8 @@ import {
   CREATE_PROJECT_ADD_MILESTONES,
   CREATE_PROJECT_SAVE_PROJECT,
   CREATE_PROJECT_HAS_ERRORED,
-  DATA_WITHIN_CREATE_PROJECT_IS_LOADING
+  DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
+  CREATE_PROJECT_HANDLE_NEW_ITEM,
 } from '../actions/types';
 
 import { closeModal } from './modal';
@@ -51,8 +52,8 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
 };
 
 export const handleAddItem = item => ({
-  type: 'TO_BE_DETERMINED',
-  payload: 'TO_BE_DETERMINED',
+  type: CREATE_PROJECT_HANDLE_NEW_ITEM,
+  payload: item,
 });
 
 export const createProjectIsLoading = boolean => ({

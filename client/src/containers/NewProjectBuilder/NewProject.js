@@ -18,7 +18,6 @@ class NewProjectBody extends Component {
   handleProjectNaming = (projectName) => { this.props.handleProjectNaming(projectName); };
 
   handleAddItem = (values) => {
-    console.log({ values });
     this.props.handleAddItem(values);
   };
 
