@@ -6,6 +6,9 @@ import Button from '../../components/UI/Button';
 import styles from '../../assets/sass/AddMilestone.module.scss';
 import Input from '../../components/UI/Input';
 
+// TBD:
+import { deleteItem } from '../../actions/createProject';
+
 class NewProjectDetails extends Component {
 	renderInputs() {
 		let { milestoneField } = this.props;
@@ -21,9 +24,16 @@ class NewProjectDetails extends Component {
 		));
 	}
 
+	handleClick(idx) {
+		this.props.deleteItem(idx);
+	}
+
 	renderItems() {
-    return _.map(this.props.createProjectItems, (item, i) => (
-      <li key={i}>Item: { item.item }  --  Category: { item.label }</li>
+    return _.map(this.props.createProjectItems, (item, idx) => (
+      <li key={ idx }>
+				Item: { item.item }  --  Category: { item.label } -- {/*update styling later*/}
+				<i><a onClick={ () => this.handleClick(idx) } href="#">Delete</a></i> {/*update styling later*/}
+			</li>
     ));
 	}
 
@@ -31,8 +41,10 @@ class NewProjectDetails extends Component {
 		return (
 			<div>
 				<h2>Steps required to complete this project: </h2>
-				<p>Sequentially enter project actions or objectives that must be completed prior to the completion of the project</p>
-				<br/>
+				{/* <p>Sequentially enter project actions or objectives that must be completed prior to the completion of the project</p> */}
+				
+				{/* <br/> */}{/* REPLACE WITH STYLING LATER */}
+
 				<form onSubmit={ this.props.handleSubmit((values) => {
 					this.props.handleAddItem(values);
 					this.props.reset();
@@ -60,7 +72,7 @@ class NewProjectDetails extends Component {
 					handleClick={ () => { this.props.handleAddMilestones(this.props.createProjectItems); }}
 					icon={ 'navigate_next' }
 					value={ 'Next' }
-					/* btnFloat={ 'right' } */ // COME BACK TO THIS
+					/* btnFloat={ 'right' } */ // COME BACK TO STYLE AND PLACE THE BUTTON
 					type="submit"
 					size="small"
 				/>
@@ -71,12 +83,14 @@ class NewProjectDetails extends Component {
 
 const validate = (values) => {
 	const errors = {};
-	for (var prop in values) {
-		if (values[prop].length > 40) {
-			errors[prop] = 'Please limit milestone titles to 40 characters or less.';
-		}
-	}
-	return errors;
+	if (!values.item) errors.item = 'Description required in order to add a step';
+	if (values.item) errors.item = validateLength40(values.item);
+  return errors;
+};
+
+const validateLength40 = item => {
+	if (item.length > 40) return 'Please limit your project title to 40 characters or less.';
+	return;
 };
 
 const mapStateToProps = (state) => {

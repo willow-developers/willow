@@ -7,6 +7,7 @@ import {
   CREATE_PROJECT_HAS_ERRORED,
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
   CREATE_PROJECT_HANDLE_NEW_ITEM,
+  CREATE_PROJECT_DELETE_ITEM,
 } from '../actions/types';
 
 import { closeModal } from './modal';
@@ -39,6 +40,7 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
     .then(data => {
       dispatch(createProjectIsLoading(false));
       dispatch(closeModal(modal));
+      dispatch(resetProjectBuilder());
       
       // redirect to newly create project
       let projectID = data.data.project_id;
@@ -54,6 +56,17 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
 export const handleAddItem = item => ({
   type: CREATE_PROJECT_HANDLE_NEW_ITEM,
   payload: item,
+});
+
+export const deleteItem = (idx, modal) => dispatch => {
+  // in order to prevent multiple modals opening and the screen getting darker
+  dispatch(closeModal(modal));
+  dispatch(executeDelete(idx));
+};
+
+export const executeDelete = idx => ({
+  type: CREATE_PROJECT_DELETE_ITEM,
+  payload: idx,
 });
 
 export const createProjectIsLoading = boolean => ({

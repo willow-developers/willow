@@ -26,11 +26,11 @@ class NewProjectTitle extends Component {
 const validate = (values) => {
 	const errors = {};
 	if (!values.projectName) errors.projectName = 'You forgot to add a project name!';
-	if (values.projectName) errors.projectName = validateProjectName(values.projectName);
+	if (values.projectName) errors.projectName = validateLength40(values.projectName);
   return errors;
 };
 
-const validateProjectName = title => {
+const validateLength40 = title => {
 	if (title.length > 40) return 'Please limit your project title to 40 characters or less.';
 	return;
 };
