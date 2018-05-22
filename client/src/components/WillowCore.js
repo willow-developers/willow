@@ -804,10 +804,10 @@ class WillowCore extends Component {
     const onClose = (obj) => {
       this.props.modalClose(obj);
     }
-
+    
     return (
       <div id="chart">
-        <svg id="willowCore" width={1100} height={640} />
+        <svg id="willowCore" width={ this.props.width } height={ (this.props.height - 55) } />
         <Modals onClose={ onClose } />
       </div>
     );

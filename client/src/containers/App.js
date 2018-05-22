@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userCheckStatus } from '../actions/auth';
-import { screenResize } from '../actions/windowSize';
+import { screenResizeWidth, screenResizeHeight } from '../actions/windowSize';
 
 import Header from '../components/Header';
 import Main from './Main';
@@ -11,11 +11,13 @@ import Loading from '../components/UI/Loading';
 class App extends Component {
   componentDidMount() {
     this.props.userCheckStatus('/api/userData');
-    window.addEventListener('resize', this.props.screenResize);
+    window.addEventListener('resize', this.props.screenResizeWidth);
+    window.addEventListener('resize', this.props.screenResizeHeight);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.props.screenResize);
+    window.removeEventListener('resize', this.props.screenResizeWidth);
+    window.removeEventListener('resize', this.props.screenResizeHeight);
   }
 
   renderApp = () => {
@@ -46,12 +48,13 @@ const mapStateToProps = (state) => ({
   hasErrored: state.userHasErrored,
   isLoading: state.userIsLoading,
   userInfo: state.userStatus,
-  screenWidth: state.uiReducer,
+  screenSize: state.uiReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   userCheckStatus: (url) => dispatch(userCheckStatus(url)),
-  screenResize: () => dispatch(screenResize(window.innerWidth)),
+  screenResizeWidth: () => dispatch(screenResizeWidth(window.innerWidth)),
+  screenResizeHeight: () => dispatch(screenResizeHeight(window.innerHeight)),
 });
 
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import styles from '../assets/sass/Dashboard.module.scss';
@@ -21,12 +21,12 @@ class ProjectView extends Component {
 		}
 
 		return (
-			<div className={styles.col_12_of_12}>
-				<h4>{projectName}</h4>
-				<WillowCore />
-				<Modals />
-
-			</div>
+			<Fragment>
+				<div className={ styles.filler }>
+					<WillowCore height={ this.props.screenSize.screenHeight } width={ this.props.screenSize.screenWidth } />
+					<Modals />
+				</div>
+			</Fragment>
 		);
 	}
 }
@@ -34,6 +34,7 @@ class ProjectView extends Component {
 const mapStateToProps = (state) => ({
 	projectData: state.projectData,
 	userStatus: state.userStatus,
+	screenSize: state.uiReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
