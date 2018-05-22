@@ -13,6 +13,7 @@ class BookmarkMetaEdit extends Component {
 	componentDidMount() {
 		const { loadFormData, formData } = this.props;
 		loadFormData(formData);
+		this.props.getActionHeight(this.refs.actionContainer.clientHeight);
 	}
 
 	renderInputs() {
@@ -26,7 +27,7 @@ class BookmarkMetaEdit extends Component {
 		const { pristine, reset, submitting, valid } = this.props;
 
 		return (
-			<div className={ styles.row }>
+			<div className={ styles.row } ref="actionContainer">
 				<div className={ styles.col_12_of_12 }>
 					<h2>Edit Your Bookmark</h2>
 					<form onSubmit={ this.props.handleSubmit((values) => this.props.handleBookmarkInfoUpdate(values)) } className={ styles.editForm }>

@@ -6,10 +6,13 @@ import BookmarkForm from './BookmarkForm';
 import BookmarkMetaPreview from './BookmarkMetaPreview';
 import Loading from '../../components/UI/Loading';
 import BookmarkMetaEdit from './BookmarkMetaEdit';
+import BookmarkList from './BookmarkList';
 
 import styles from '../../assets/sass/BookmarkBody.module.scss';
 
 class BookmarkBody extends Component {
+  state = { paddingBottom: 0, headerHeight: 0 }
+
 	handleBookmarkSubmit = (url) => {
 		this.props.bookmarkGetInfo(url.bookmark);
 	}
@@ -24,26 +27,42 @@ class BookmarkBody extends Component {
   }
 
   handleBookmarkSave = (data) => {
-    // console.log(data)
     this.props.saveBookmark(data);
+  }
+
+  getActionHeight = (num) => {
+    const minHeight = num === 0 ? 103 : num;
+    this.setState({ paddingBottom: `${minHeight}px` });
+  }
+
+  componentDidMount() {
+    // console.log(this.refs.listContainer.clientHeight)
+    this.props.getListHeight(this.refs.listContainer.clientHeight)
+  }
+
+  componentDidUpdate() {
+    // console.log(this.refs.listContainer.clientHeight)
+    this.props.getListHeight(this.refs.listContainer.clientHeight)
   }
 
 	renderBookmarkView = () => {
     const { bookmarkHasErrored, bookmarkIsLoading, bookmarkShowAdd, bookmarkShowPreview, bookmarkShowEdit } = this.props;
 
     if (bookmarkHasErrored) return <p>Sorry! There was an error with your request :(</p>;
-    if (bookmarkIsLoading) return <Loading />;
+    if (bookmarkIsLoading) return <div className={ styles.loadHolder }><Loading /></div>;
     return (
       <Fragment>
       	{ bookmarkShowAdd
           ? (<BookmarkForm
               handleBookmarkSubmit={ this.handleBookmarkSubmit }
+              getActionHeight={ this.getActionHeight }
             />)
           : ('')
         }
 				{ bookmarkShowPreview
           ? (<BookmarkMetaPreview
               handleBookmarkSave={ this.handleBookmarkSave }
+              getActionHeight={ this.getActionHeight }
             />)
           : ('')
         }
@@ -51,21 +70,29 @@ class BookmarkBody extends Component {
           ? (<BookmarkMetaEdit
               handleBackToPreview={ this.handleBackToPreview }
               handleBookmarkInfoUpdate={ this.handleBookmarkInfoUpdate }
+              getActionHeight={ this.getActionHeight }
             />)
           : ('')
         }
       </Fragment>
     );
   }
-
 	render() {
+    // console.log(this.state.headerHeight)
 		return (
-      <div className={ styles.forLoader }>
-        { this.renderBookmarkView() }
-      </div>
+      <Fragment>
+        <div className={ styles.listHolder } style={{ paddingBottom: this.state.paddingBottom }} ref="listContainer">
+          <BookmarkList />
+        </div>
+        <div className={ styles.populate }>
+          { this.props.shadowHeight > 530 ? <Fragment><hr/><hr/></Fragment> : '' }
+          { this.renderBookmarkView() }
+        </div>
+      </Fragment>
 		);
 	}
 }
+// style={{ paddingBottom: this.state.paddingBottom }}
 
 const mapStateToProps = (state) => ({
   bookmarkHasErrored: state.bookmarkHasErrored,

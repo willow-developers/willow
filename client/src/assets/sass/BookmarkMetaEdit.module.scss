@@ -6,3 +6,8 @@
 		margin-right: 15px;
 	}
 }
+
+.btnBar {
+	margin-bottom: 20px;
+	@include cf;
+}

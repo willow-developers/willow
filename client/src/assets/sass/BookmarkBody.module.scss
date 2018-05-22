@@ -1,9 +1,51 @@
 @import 'variables';
 @import 'waffleGrid';
 
-.forLoader {
-	min-height: 160px;
-	position: relative;
-	padding: 20px;
-	padding-top: 0;
+.bookmarkHeader {
+	margin-top: 0;
+	padding-bottom: 0.415em;
+	border-bottom: 1px solid #999;
+	text-align: left;
+}
+
+.populate {
+	background-color: #fff;
+	position: absolute;
+	width: calc(41.66667% - 20px);
+	bottom: 0;
+	min-height: 105px;
+
+	hr {
+		box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.75);
+		margin-bottom: 0;
+		margin: 0;
+		margin-left: 10px;
+		border: none;
+		height: 1px;
+		background: transparent;
+		width: calc(100% - 28px);
+
+		&:last-of-type {
+			box-shadow: none;
+			background: #fff;
+			height: 4px;
+			width: 102%;
+			position: relative;
+			left: -1%;
+			top: -1px;
+			margin: 0;
+		}
+	}
+}
+
+.listHolder {
+	max-height: 556px;
+	overflow-y: scroll;
+}
+
+.loadHolder {
+	// height: 105px;
+	width: 100%;
+	position: absolute;
+	bottom: 65%;
 }
