@@ -36,8 +36,8 @@ export default combineReducers({
 	createProjectTitle,
 	createProjectItems,
 	createProjectMilestones,
-	createProjectHasErrored, // consider deleting later
-	createProjectDataIsLoading, // consider deleting later
+	createProjectHasErrored,
+	createProjectDataIsLoading,
 	shouldRedirect,
 	shouldRedirectTo,
 	projectsList,

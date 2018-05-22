@@ -66,7 +66,6 @@ const mapStateToProps = (state) => {
     createProjectModalToShow: state.createProjectModalToShow,
     createProjectHasErrored: state.createProjectHasErrored,
     createProjectDataIsLoading: state.createProjectDataIsLoading,
-    createProjectMilestones: state.createProjectMilestones,
     modal: state.isModalOpen.modals,
   };
 };

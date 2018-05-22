@@ -39,6 +39,7 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
     .then(data => {
       dispatch(createProjectIsLoading(false));
       dispatch(closeModal(modal));
+      dispatch(resetProjectBuilder());
       
       // redirect to newly create project
       let projectID = data.data.project_id;
