@@ -1,11 +1,11 @@
 export const createNewNode = (newNodeMode, projectData, userStatus) => {
     let labelID = (label) => {
         switch(label) {
-            case 'explorative': return 1;
-            case 'event':       return 2;
-            case 'action':      return 3;
-            case 'start':       return 4;
-            default:   return 5;
+            case 'explorative':     return 1;
+            case 'startAction':     return 2;
+            case 'nextAction':      return 3;
+            case 'oneTimeObjective':return 4;
+            default:                return 5;
         }
     };
 
