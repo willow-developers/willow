@@ -6,6 +6,7 @@ import {
 	DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
 	RESET_REDIRECTS,
 	CREATE_PROJECT_HANDLE_NEW_ITEM,
+	CREATE_PROJECT_DELETE_ITEM,
 } from '../actions/types';
 
 export function createProjectModalToShow(state = 'NewProjectTitle', action) {
@@ -38,6 +39,8 @@ export function createProjectItems(state = [], action) {
 			return [...state, { item: action.payload.item, label: action.payload.label } ];
 		case CREATE_PROJECT_SAVE_PROJECT:
 			return [];
+		case CREATE_PROJECT_DELETE_ITEM:
+			return [ ...state.slice(0, action.payload) , ...state.slice(action.payload + 1) ];
 		default:
 			return state;
 	}
