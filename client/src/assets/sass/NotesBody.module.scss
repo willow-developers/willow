@@ -5,9 +5,16 @@
 .pusher {
 	padding: 20px;
 	padding-top: 0;
+	position: relative;
 }
 
 .btnBar {
 	padding-top: 15px;
 	@include cf;
+}
+
+.empty {
+	color: #ccc;
+	position: absolute;
+	width: 100%;
 }

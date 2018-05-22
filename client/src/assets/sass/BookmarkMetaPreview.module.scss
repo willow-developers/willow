@@ -6,6 +6,7 @@
 	text-align: left;
 	margin-bottom: 20px;
 	top: 100%;
+	// overflow: hidden;
 
 	.btnBar {
 		margin-top: 30px;
@@ -21,6 +22,7 @@
 		font-size: 14px;
 		margin: 0;
 		font-style: italic;
+		white-space: nowrap;
 	}
 
 	.bookmark_icon {
@@ -47,9 +49,9 @@
 
 .bookmarkList {
 	text-align: left;
-	max-height: 400px;
-	overflow-y: scroll;
-	overflow-x: hidden;
+	// max-height: 400px;
+	// overflow-y: scroll;
+	// overflow-x: hidden;
 
 	h2 {
 		margin-top: 0;
