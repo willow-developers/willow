@@ -24,7 +24,6 @@ export function createProjectModalToShow(state = 'NewProjectTitle', action) {
 export function createProjectMilestones(state = [], action) {
 	switch (action.type) {
 		case CREATE_PROJECT_ADD_MILESTONES:
-			console.log('action.payload: ', action.payload);
 			return action.payload;
 		case CREATE_PROJECT_SAVE_PROJECT:
 			return '';

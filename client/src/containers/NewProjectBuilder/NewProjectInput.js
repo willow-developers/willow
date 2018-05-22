@@ -4,7 +4,7 @@ import styles from '../../assets/sass/Input.module.scss';
 import Button from '../../components/UI/Button';
 
 class NewProjectInput extends Component {
-	state = { isActive: false }
+	state = { isActive: false };
 
 	// render button only if this NewProjectInput is being inserted into the NewProjectTitle.js file
 	conditionallyRenderButton = () => {
