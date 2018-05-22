@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // ACTIONS:
-import { handleProjectNaming, handleAddMilestones, handleSaveProject, handleAddItem } from '../../actions/createProject';
 import { closeModal } from '../../actions/modal';
+import {
+  handleProjectNaming,
+  handleAddMilestones,
+  handleSaveProject,
+  handleAddItem,
+  deleteItem,
+} from '../../actions/createProject';
 
 // COMPONENTS:
 import Loading from '../../components/UI/Loading';
@@ -19,9 +25,9 @@ class NewProjectBody extends Component {
 
   handleAddItem = (values) => { this.props.handleAddItem(values); };
 
-  handleAddMilestones = (milestones) => {
-    this.props.handleAddMilestones(milestones);
-  }
+  handleAddMilestones = (milestones) => { this.props.handleAddMilestones(milestones); }
+
+  deleteItem = (idx) => { this.props.deleteItem(idx, this.props.modal[0]); }
 
   handleSaveProject = (projectDetails) => {
     this.props.handleSaveProject(projectDetails, this.props.modal[0]);
@@ -40,7 +46,11 @@ class NewProjectBody extends Component {
     if (this.props.createProjectModalToShow === 'NewProjectTitle') {
       modalToShow = <NewProjectTitle handleProjectNaming={ this.handleProjectNaming } />;
     } else if (this.props.createProjectModalToShow === 'AddProjectDetails') {
-      modalToShow = <NewProjectDetails handleAddItem={ this.handleAddItem } handleAddMilestones={ this.handleAddMilestones } />;
+      modalToShow = <NewProjectDetails
+                      handleAddItem={ this.handleAddItem }
+                      handleAddMilestones={ this.handleAddMilestones }
+                      deleteItem ={ this.deleteItem }
+                    />;
     } else if (this.props.createProjectModalToShow === 'ProjectSummary') {
       modalToShow = <ProjectSummary handleSaveProject={ this.handleSaveProject } />
     }
@@ -66,7 +76,6 @@ const mapStateToProps = (state) => {
     createProjectModalToShow: state.createProjectModalToShow,
     createProjectHasErrored: state.createProjectHasErrored,
     createProjectDataIsLoading: state.createProjectDataIsLoading,
-    createProjectMilestones: state.createProjectMilestones,
     modal: state.isModalOpen.modals,
   };
 };
@@ -75,6 +84,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleProjectNaming: (projectName) => { dispatch(handleProjectNaming(projectName)); },
     handleAddItem: (item) => { dispatch(handleAddItem(item)); },
+    deleteItem: (idx, modal) => { dispatch(deleteItem(idx, modal)); },
     handleAddMilestones: (milestones) => { dispatch(handleAddMilestones(milestones)); },
     handleSaveProject: (projectDetails, modal) => { dispatch(handleSaveProject(projectDetails, modal)); }
   };
