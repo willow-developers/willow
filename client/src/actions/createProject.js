@@ -34,19 +34,15 @@ export const redirectTo = projectID => ({
 
 export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
-
-  console.log({ projectDetails, modal });
   
   axios
     .post('/api/newProject', { data: projectDetails, })
     .then(data => {
       dispatch(createProjectIsLoading(false));
       dispatch(closeModal(modal));
-      dispatch(resetProjectBuilder());
       
       // redirect to newly create project
       let projectID = data.data.project_id;
-      console.log({ projectID });
       dispatch(redirectTo(projectID));
     })
     .catch(err => {
@@ -61,13 +57,7 @@ export const handleAddItem = item => ({
   payload: item,
 });
 
-export const deleteItem = (idx, modal) => dispatch => {
-  // in order to prevent multiple modals opening and the screen getting darker
-  dispatch(closeModal(modal));
-  dispatch(executeDelete(idx));
-};
-
-export const executeDelete = idx => ({
+export const deleteItem = idx => ({
   type: CREATE_PROJECT_DELETE_ITEM,
   payload: idx,
 });

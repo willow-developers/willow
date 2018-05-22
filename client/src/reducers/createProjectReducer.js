@@ -75,23 +75,23 @@ export function createProjectDataIsLoading(state = false, action) {
 	}
 }
 
-export function shouldRedirect(state = false, action) {
-	switch (action.type) {
-		case CREATE_PROJECT_SAVE_PROJECT:
-			return true;
-		case RESET_REDIRECTS:
-			return false;
-		default:
-			return state;
-	}
-}
-
 export function shouldRedirectTo(state = null, action) {
 	switch (action.type) {
 		case CREATE_PROJECT_SAVE_PROJECT:
 			return action.payload;
 		case RESET_REDIRECTS:
 			return null;
+		default:
+			return state;
+	}
+}
+
+export function shouldRedirect(state = false, action) {
+	switch (action.type) {
+		case CREATE_PROJECT_SAVE_PROJECT:
+			return true;
+		case RESET_REDIRECTS:
+			return false;
 		default:
 			return state;
 	}
