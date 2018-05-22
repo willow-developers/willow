@@ -7,6 +7,13 @@ import Button from '../../components/UI/Button';
 import ModalRender from '../../modalRoot';
 
 class Modals extends Component {
+  componentDidUpdate() {
+    const modalHeight = this.modalHeight.clientHeight;
+    const topBtnBar = this.topBtnBar.clientHeight;
+    console.log('modalHeight: ', modalHeight);
+    console.log('topBtnBar: ', topBtnBar);
+    // this.setState({ height });
+  }
   render() {
     const modals = this.props.modals.map((item, i) => {
       const onClose = () => {
@@ -28,9 +35,9 @@ class Modals extends Component {
       return (
         <ModalRender key={ i } >
           <div className={ styles.modal_overlay }>
-            <div className={ styles.modal }>
+            <div className={ styles.modal } ref={ (modalHeight) => this.modalHeight = modalHeight}>
               <div className={ styles.row }>
-                <div className={`${ styles.col_12_of_12 } ${ styles.btn_bar }`}>
+                <div className={`${ styles.col_12_of_12 } ${ styles.btn_bar }`} ref={ (topBtnBar) => this.topBtnBar = topBtnBar}>
                   <Button
                     icon={ 'close' }
                     type={ 'round' }
@@ -39,7 +46,7 @@ class Modals extends Component {
                     handleClick={ () => onClose() }
                   />
                 </div>
-                <div className={`${ styles.col_12_of_12 } ${ styles.modal_content } ${ styles.custom }`}>
+                <div className={`${ styles.col_12_of_12 } ${ styles.modal_content }`}>
                   { item.content }
                 </div>
               </div>
@@ -58,15 +65,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Modals);
-
-// <Button
-//   value={ 'Confirm' }
-//   handleClick={ () => onConfirm() }
-//   icon={ 'check' }
-//   iconSide={ 'left' }
-// />
-
-// <ModalActions
-//   item={ item }
-//   onClose={ (item) => this.props.onClose(item) }
-// />

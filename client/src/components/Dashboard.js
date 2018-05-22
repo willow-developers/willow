@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { projectGetData, resetRedirects } from '../actions/project';
 import { projectsGetList } from '../actions/projects';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styles from '../assets/sass/Dashboard.module.scss';
 

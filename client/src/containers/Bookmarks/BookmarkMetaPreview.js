@@ -7,11 +7,15 @@ import styles from '../../assets/sass/BookmarkMetaPreview.module.scss';
 import bookmark_icon from '../../assets/images/bookmarkIcon.svg';
 
 class BookmarkMetaPreview extends Component {
+
+	componentDidMount() {
+    this.props.getActionHeight(this.refs.actionContainer.clientHeight);
+  }
+
 	render() {
-		console.log(this.props)
 		const { formData: { url, title } } = this.props;
 		return (
-			<div className={ styles.row }>
+			<div className={ styles.row } ref="actionContainer">
 				<div className={ styles.col_12_of_12 }>
 					<h2>Review Your Bookmark</h2>
 					<div className={`${ styles.row } ${ styles.previewMode }`}>
