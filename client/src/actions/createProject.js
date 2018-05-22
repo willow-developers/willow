@@ -8,6 +8,7 @@ import {
   DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
   CREATE_PROJECT_HANDLE_NEW_ITEM,
   CREATE_PROJECT_DELETE_ITEM,
+  RESET_PROJECT_BUILDER,
 } from '../actions/types';
 
 import { closeModal } from './modal';
@@ -23,7 +24,7 @@ export const handleAddMilestones = milestones => ({
 });
 
 export const resetProjectBuilder = () => ({
-  type: CREATE_PROJECT_SAVE_PROJECT,
+  type: RESET_PROJECT_BUILDER,
   payload: null,
 });
 

@@ -54,6 +54,7 @@ class Header extends Component {
 							id={ 4 }
 							content={<NewProject />}
 							size={ 'small' }
+							modalType={ 'CreateProject' }
 						/>
 					</li>
 					<li>

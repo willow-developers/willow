@@ -11,6 +11,7 @@ const Home = () => (
 			value={ 'Open Explorative' }
 			id={ 1 }
 			content={ <ExplorativeNode /> }
+			modalType={ 'Explorative' }
 		/>
 	</div>
 );
