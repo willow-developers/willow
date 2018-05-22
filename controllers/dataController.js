@@ -12,19 +12,17 @@ const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatB
 const { saveNodes, saveLinks } = require('./helper_functions/saveNodesAndLinks');
 
 exports.createNewProject = (req, res) => {
-    let { user, title, milestones } = req.body.data;
+    let { user, title, createProjectMilestones } = req.body.data;
  
-
-    let projectData = {
-        project_name: title,
-        owner_id: user.google_id,
-    };
+    let projectData = { project_name: title, owner_id: user.google_id };
 
     knex('projects')
         .insert(projectData, 'id')
         .then(project_id => {
             // project_id is a single-value array containing the project_id, thus ->
-            let { nodes, links } = formatNewProjectData(project_id[0], user.google_id, title, milestones);
+            let { nodes, links } = formatNewProjectData(project_id[0], user.google_id, title, createProjectMilestones);
+
+            console.log({ nodes, links });
 
             saveNodes(nodes)
                 .then(() => {
@@ -45,10 +43,10 @@ exports.createNewProject = (req, res) => {
 exports.fetchProjects = (req, res) => {
     
     // // update as needed!!
-    // let owner_id = req.query.userID;
+    let owner_id = req.query.userID;
 
     // to go to Jun's google account:
-    owner_id = '110227128753222443119';
+    // owner_id = '110227128753222443119';
 
     knex('projects')
         .where('owner_id', owner_id)

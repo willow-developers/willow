@@ -5,6 +5,7 @@ import {
   CREATE_PROJECT_HAS_ERRORED,
 	DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
 	RESET_REDIRECTS,
+	CREATE_PROJECT_HANDLE_NEW_ITEM,
 } from '../actions/types';
 
 export function createProjectModalToShow(state = 'NewProjectTitle', action) {
@@ -23,9 +24,19 @@ export function createProjectModalToShow(state = 'NewProjectTitle', action) {
 export function createProjectMilestones(state = [], action) {
 	switch (action.type) {
 		case CREATE_PROJECT_ADD_MILESTONES:
+			console.log('action.payload: ', action.payload);
 			return action.payload;
 		case CREATE_PROJECT_SAVE_PROJECT:
 			return '';
+		default:
+			return state;
+	}
+}
+
+export function createProjectItems(state = [], action) {
+	switch (action.type) {
+		case CREATE_PROJECT_HANDLE_NEW_ITEM:
+			return [...state, { item: action.payload.item, label: action.payload.label } ];
 		default:
 			return state;
 	}

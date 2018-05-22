@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // ACTIONS:
-import { handleProjectNaming, handleAddMilestones, handleSaveProject } from '../../actions/createProject';
+import { handleProjectNaming, handleAddMilestones, handleSaveProject, handleAddItem } from '../../actions/createProject';
 import { closeModal } from '../../actions/modal';
 
 // COMPONENTS:
@@ -17,7 +17,14 @@ import styles from '../../assets/sass/BookmarkBody.module.scss';
 class NewProjectBody extends Component {
   handleProjectNaming = (projectName) => { this.props.handleProjectNaming(projectName); };
 
-  handleAddMilestones = (milestones) => { this.props.handleAddMilestones(milestones); };
+  handleAddItem = (values) => {
+    this.props.handleAddItem(values);
+  };
+
+  handleAddMilestones = (milestones) => {
+    console.log({ milestones });
+    this.props.handleAddMilestones(milestones);
+  }
 
   handleSaveProject = (projectDetails) => {
     this.props.handleSaveProject(projectDetails, this.props.modal[0]);
@@ -37,7 +44,7 @@ class NewProjectBody extends Component {
     if (this.props.createProjectModalToShow === 'NewProjectTitle') {
       modalToShow = <NewProjectTitle handleProjectNaming={ this.handleProjectNaming } />;
     } else if (this.props.createProjectModalToShow === 'AddProjectDetails') {
-      modalToShow = <NewProjectDetails handleAddMilestones={ this.handleAddMilestones } />;
+      modalToShow = <NewProjectDetails handleAddItem={ this.handleAddItem } handleAddMilestones={ this.handleAddMilestones } />;
     } else if (this.props.createProjectModalToShow === 'ProjectSummary') {
       modalToShow = <ProjectSummary handleSaveProject={ this.handleSaveProject } />
     }
@@ -71,6 +78,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleProjectNaming: (projectName) => { dispatch(handleProjectNaming(projectName)); },
+    handleAddItem: (item) => { dispatch(handleAddItem(item)); },
     handleAddMilestones: (milestones) => { dispatch(handleAddMilestones(milestones)); },
     handleSaveProject: (projectDetails, modal) => { dispatch(handleSaveProject(projectDetails, modal)); }
   };
