@@ -193,8 +193,11 @@ class WillowCore extends Component {
         let y = (d3.event.offsetY - zoomTrans.y)/zoomTrans.scale;
         d3.select('svg').on('click', null);
 
-        dataObject.x = x;
-        dataObject.y = y;
+        if (((x | 0) % 30) < 15) dataObject.x = (x | 0) - ((x | 0) % 30);
+        if (((x | 0) % 30) >= 15) dataObject.x = (x | 0) + (30 - ((x | 0) % 30));
+        if (((y | 0) % 30) < 15) dataObject.y = (y | 0) - ((y | 0) % 30);
+        if (((y | 0) % 30) >= 15) dataObject.y = (y | 0) + (30 - ((y | 0) % 30));
+
         dataObject.status = 'new';
 
         this.simulation.stop();
@@ -297,6 +300,11 @@ class WillowCore extends Component {
             .append('path')
             .attr('d', function(d) { 
                 return 'M -10 -15 l 0 30 l 20 -15 z';
+
+
+                // return `M-673.3-1106.7h44.2v13.4h-44.2v44.2h-13.4v-44.2h-44.2v-13.4h44.2v-44.2h13.4V-1106.7z M-540-1100c0,77.2-62.8,140-140,140
+                // s-140-62.8-140-140c0-77.2,62.8-140,140-140S-540-1177.2-540-1100z M-558.8-1100c0-66.8-54.4-121.2-121.2-121.2
+	            // s-121.2,54.4-121.2,121.2s54.4,121.2,121.2,121.2S-558.8-1033.2-558.8-1100z`;
             })
             .attr('class', 'face')
             .attr('width', 20)
@@ -795,6 +803,10 @@ class WillowCore extends Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     d.fx = null;
     d.fy = null;
+    if (((d3.event.x | 0) % 30) < 15) d.x = (d3.event.x | 0) - ((d3.event.x | 0) % 30);
+    if (((d3.event.x | 0) % 30) >= 15) d.x = (d3.event.x | 0) + (30 - ((d3.event.x | 0) % 30));
+    if (((d3.event.y | 0) % 30) < 15) d.y = (d3.event.y | 0) - ((d3.event.y | 0) % 30);
+    if (((d3.event.y | 0) % 30) >= 15) d.y = (d3.event.y | 0) + (30 - ((d3.event.y | 0) % 30));
   }
 
 //--------------------------------------------------- DELETE MENU BUTTON
