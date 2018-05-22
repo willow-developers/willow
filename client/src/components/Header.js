@@ -49,14 +49,6 @@ class Header extends Component {
 			return (
 				<ul>
 					<li>
-						{/* <NavLink exact to='/create'>
-							<Button
-								value={'Create Project'}
-								icon={'create'}
-								iconSide={'left'}
-								type={'small'}
-							/>
-						</NavLink> */}
 						<DisplayModal
 							value={'Create New Project'}
 							id={ 4 }
