@@ -7,7 +7,6 @@ import * as d3 from 'd3';
 import {getNodeColor} from './Willow_helper_functions/getNodeColor';
 import {getLinkColor} from './Willow_helper_functions/getLinkColor';
 import {getLinkLabelID} from './Willow_helper_functions/getLinkLabelID';
-// import {zoomSetup, zoomTrans} from './WillowCoreComponents/Zoom';
 import {createNewNode} from './Willow_helper_functions/createNewNode';
 
 import { modalClose, modalOpen } from '../actions/modal';
@@ -21,6 +20,8 @@ let d3State = {
     newLinkMode: false,
     newNodeMode: '',
 }
+
+let tempBool = false;
 
 const zoomTrans = {x:0, y:0, scale:1};
 
@@ -56,7 +57,77 @@ class WillowCore extends Component {
         const nodesGroup = zoomLayer.append('g')
           .attr('class', 'nodes');
 
-        
+        svg.append('rect')
+            .attr('class','testing')
+            .attr('width', 0)
+            .attr('height', 0)
+            .style('fill', 'black')
+            .attr('x', 0)
+            .attr('y', 0)
+
+        svg.on('contextmenu', () => {
+            d3.event.preventDefault();
+            if (tempBool) {
+                d3.select('.testing')
+                .transition()
+                .duration(200)
+                .attr('height', 0)
+                .attr('width', 0)
+            } else {
+                let x = (d3.event.offsetX - zoomTrans.x)/zoomTrans.scale;
+                let y = (d3.event.offsetY - zoomTrans.y)/zoomTrans.scale;
+    
+                d3.select('.testing')
+                    .transition()
+                    .duration(200)
+                    .attr('height', 100)
+                    .attr('width', 100)
+            }
+            tempBool = !tempBool;
+            // let x = (d3.event.offsetX - zoomTrans.x)/zoomTrans.scale;
+            // let y = (d3.event.offsetY - zoomTrans.y)/zoomTrans.scale;
+        })
+
+        svg.on('mousemove', () => {
+            let x = (d3.event.offsetX - zoomTrans.x)/zoomTrans.scale;
+            let y = (d3.event.offsetY - zoomTrans.y)/zoomTrans.scale;
+
+            if (!tempBool) {
+                d3.select('.testing')
+                .attr('x', x)
+                .attr('y', y)
+            }
+        })
+            // svg
+            //     .append('g')
+            //     .attr('transform', `translate(${x}, ${y})`)
+            //     .attr('class', 'newNodeMenu')
+
+            //     .append('rect')
+            //     .attr('class', 'newNodeRect newNodeExplorative')
+            //     .style('fill', 'white')
+            //     .attr('width', 10)
+            //     .attr('height', 10)
+
+            //     .append('rect')
+            //     .attr('class', 'newNodeRect newNodeObjective')
+            //     .style('fill', 'white')
+            //     .attr('width', 10)
+            //     .attr('height', 10)
+
+            //     .append('rect')
+            //     .attr('class', 'newNodeRect newNodeAction')
+            //     .style('fill', 'white')
+            //     .attr('width', 10)
+            //     .attr('height', 10)
+
+            //     .append('rect')
+            //     .attr('class', 'newNodeRect blank')
+            //     .style('fill', 'white')
+            //     .attr('width', 10)
+            //     .attr('height', 10)
+        // })
+
         backgroundColor.on('click', () => {
             this.reset();
         })
@@ -76,7 +147,13 @@ class WillowCore extends Component {
         .text('DELETE LINK')
         .attr('transform', 'translate(0, 20)')
         .style('font-size', 10)
-        .style('fill', 'white');
+        .style('fill', 'white')
+        .on('click', () => {
+            d3State.selectedLink.status = 'delete';
+            console.log(d3State.selectedLink);
+            this.d3Restart();
+            // d3.select('.links').selectAll('line').filter((d) => d.stat)
+        })
     }
 //--------------------------------------------------- TICKED
     ticked() {
@@ -118,6 +195,7 @@ class WillowCore extends Component {
 
         dataObject.x = x;
         dataObject.y = y;
+        dataObject.status = 'new';
 
         this.simulation.stop();
         this.props.projectData.nodes.push(dataObject);
@@ -147,7 +225,7 @@ class WillowCore extends Component {
         this.createSeeProjectDataButton();
         
         this.createSaveButton();
-        const devButtons = ['explorative', 'event', 'action', 'start', 'objective'];
+        const devButtons = ['explorative', 'startAction', 'nextAction', 'oneTimeObjective', 'recurringObjective'];
         devButtons.forEach((type, i) => {
             this.createNewCreateButton(type, i)
         })
@@ -171,7 +249,7 @@ class WillowCore extends Component {
     createLinks(linksData) {
         const link = d3.select('.links')
             .selectAll("line")
-            .data(linksData)
+            .data(linksData, (d) => d.hash_id)
             .enter().append("line")
 
         link
@@ -180,15 +258,20 @@ class WillowCore extends Component {
             .on('click', (d) => {
                 link.selectAll('line').filter(data => data.hash_id === d.hash_id)
                 d3State.selectedLink = d;
-                this.openBottomMenu(d);
+                this.openBottomLinkMenu(d);
             })
+
+        //testing hide all links set to "delete"
+        link.filter((d) => d.status === 'delete')
+            .style('visibility', 'hidden');
     }
 
-    openBottomMenu(d) {
+    openBottomLinkMenu(d) {
         d3.select('.deleteLinkButton')
             .transition()
             .duration(500)
             .attr('transform', 'translate(500, 600)')
+
         console.log('open link for: ', d3State.selectedLink);
 
     }
@@ -209,28 +292,8 @@ class WillowCore extends Component {
                 .attr("fill", (d) => getNodeColor(d))
                     .on('click', (d) => this.clickOpenNodeMenu(d))
         
-        //EVENT NODE
+        //START ACTION NODE
         node.filter((d) => d.label_id === 2)
-        .append('rect')
-            .attr('class', 'face')
-            .attr('width', 30)
-            .attr('height', 30)
-            .attr('transform', 'translate(-15, -15)')
-            .attr("fill", (d) => getNodeColor(d))
-                .on('click', (d) => this.clickOpenNodeMenu(d))
-            
-        //ACTION NODE
-        node.filter((d) => d.label_id === 3)
-            .append('rect')
-            .attr('class', 'face')
-            .attr('width', 20)
-            .attr('height', 20)
-            .attr('transform', 'rotate(45) translate(-10, -10)')
-            .attr("fill", (d) => getNodeColor(d))
-            .on('click', (d) => this.clickOpenNodeMenu(d))
-                
-        //START NODE
-        node.filter((d) => d.label_id === 4)
             .append('path')
             .attr('d', function(d) { 
                 return 'M -10 -15 l 0 30 l 20 -15 z';
@@ -240,8 +303,42 @@ class WillowCore extends Component {
             .attr('height', 20)
             .attr("fill", (d) => getNodeColor(d))
             .on('click', (d) => this.clickOpenNodeMenu(d))
+            
+        //NEXT ACTION NODE
+        node.filter((d) => d.label_id === 3)
+            .append('path')
+            .attr('d', function(d) { 
+                return 'M -10 -15 l 0 30 l 20 -15 z';
+            })
+            .attr('class', 'face')
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr("fill", (d) => getNodeColor(d))
+            .on('click', (d) => this.clickOpenNodeMenu(d))
+                
+        // ONE TIME OBJECTIVE NODE
+        node.filter((d) => d.label_id === 4)
+            .append('path')
+            .attr('d', function(d) { 
+                return `M 0 0 
+                        l 11 -11 
+                        l 11 0 
+                        l 11 11 
+                        l 0 11 
+                        l -11 11 
+                        l -11 0
+                        l -11 -11
+                        l 0 -11
+                        z`;
+            })
+            .attr('class', 'face')
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr('transform', 'translate(-17, -6)')
+            .attr("fill", (d) => getNodeColor(d))
+            .on('click', (d) => this.clickOpenNodeMenu(d))
 
-        // OBJECTIVE NODE
+        // RECURRING OBJECTIVE NODE
         node.filter((d) => d.label_id === 5)
             .append('path')
             .attr('d', function(d) { 
@@ -272,6 +369,9 @@ class WillowCore extends Component {
                 .style('text-anchor', 'middle')
                 .style('fill', 'white');
     }
+
+
+
 //--------------------------------------------------- CREATE NODE MENU
     createMenu(node) {
         node
@@ -409,7 +509,7 @@ class WillowCore extends Component {
             .on('click', () => {
                 d3.select(`.${type}Button`).select('.button')
                     .style('fill', 'red')
-                d3State.newNodeMode = 'action';
+                // d3State.newNodeMode = 'action';
             })
                 
         button
@@ -423,24 +523,6 @@ class WillowCore extends Component {
                 const dataObject = createNewNode(type, this.props.projectData, this.props.userStatus);
                 setTimeout(() => d3.select('svg').on('click', () => this.placeNewNode(dataObject)), 0)
             })
-    }
-//--------------------------------------------------- DRAG NODE
-    drag_start(d, simulation) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-            d.status = 'updated';
-    }
-
-    drag_drag(d, simulation) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
-        
-    drag_end(d, simulation) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
     }
 //--------------------------------------------------- RESET
     reset() {
@@ -701,7 +783,7 @@ class WillowCore extends Component {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
-    d.status = 'updated';
+    if (d.status !== 'new') d.status = 'updated';
   }
   //make sure you can't drag the circle outside the box
   drag_drag(d, simulation) {
