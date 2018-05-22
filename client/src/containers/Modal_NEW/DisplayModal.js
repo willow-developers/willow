@@ -9,7 +9,7 @@ import Button from '../../components/UI/Button';
 class DisplayModal extends Component {
   render() {
 
-    const { content, id, name, value } = this.props;
+    const { content, id, name, value, size } = this.props;
 
     const onOpen = (obj) => {
       this.props.modalOpen(obj);
@@ -25,6 +25,7 @@ class DisplayModal extends Component {
 	        value={ value }
 	        icon={ 'create' }
 	        iconSide={ 'left' }
+          type={ size }
 	        handleClick={() => onOpen({
 	          id,
 	          onClose: () => this.props.closeBookmark(),

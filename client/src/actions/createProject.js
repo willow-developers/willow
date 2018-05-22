@@ -34,6 +34,8 @@ export const redirectTo = projectID => ({
 
 export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
+
+  console.log({ projectDetails, modal });
   
   axios
     .post('/api/newProject', { data: projectDetails, })
@@ -44,6 +46,7 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
       
       // redirect to newly create project
       let projectID = data.data.project_id;
+      console.log({ projectID });
       dispatch(redirectTo(projectID));
     })
     .catch(err => {

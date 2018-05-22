@@ -9,7 +9,7 @@ import logo from '../assets/images/logo.svg';
 import styles from '../assets/sass/Header.module.scss';
 import '../assets/sass/Header.scss';
 
-import DisplayModal from '../containers/Modal/DisplayModal';
+import DisplayModal from '../containers/Modal_NEW/DisplayModal';
 import NewProject from '../containers/NewProjectBuilder/NewProject';
 
 class Header extends Component {
@@ -49,14 +49,20 @@ class Header extends Component {
 			return (
 				<ul>
 					<li>
-						<NavLink exact to='/create'>
+						{/* <NavLink exact to='/create'>
 							<Button
 								value={'Create Project'}
 								icon={'create'}
 								iconSide={'left'}
 								type={'small'}
 							/>
-						</NavLink>
+						</NavLink> */}
+						<DisplayModal
+							value={'Create New Project'}
+							id={ 4 }
+							content={<NewProject />}
+							size={ 'small' }
+						/>
 					</li>
 					<li>
 						<NavLink exact to='/dashboard'>
