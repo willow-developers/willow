@@ -7,9 +7,13 @@ import styles from '../../assets/sass/BookmarkForm.module.scss';
 
 import validateUrl from '../../utils/validateUrl';
 import Input from '../../components/UI/Input';
-import BookmarkList from './BookmarkList';
 
 class BookmarkForm extends Component {
+
+	componentDidMount() {
+    this.props.getActionHeight(this.refs.actionContainer.clientHeight);
+  }
+
 	renderInputs() {
 		let { addBookmarkField } = this.props;
 		return _.map(addBookmarkField, (field, i) => (
@@ -18,13 +22,11 @@ class BookmarkForm extends Component {
 	}
 
 	render() {
-		const { bookmarkListAdd } = this.props;
 		return (
-			<div>
+			<div ref="actionContainer">
 				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleBookmarkSubmit(values)) } className={ styles.addInput }>
 					{ this.renderInputs() }
 				</form>
-				{ bookmarkListAdd.length > 0 ? <BookmarkList /> : '' }
 			</div>
 		);
 	}

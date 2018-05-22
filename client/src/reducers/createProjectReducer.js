@@ -6,6 +6,7 @@ import {
 	DATA_WITHIN_CREATE_PROJECT_IS_LOADING,
 	RESET_REDIRECTS,
 	CREATE_PROJECT_HANDLE_NEW_ITEM,
+	CREATE_PROJECT_DELETE_ITEM,
 } from '../actions/types';
 
 export function createProjectModalToShow(state = 'NewProjectTitle', action) {
@@ -26,7 +27,7 @@ export function createProjectMilestones(state = [], action) {
 		case CREATE_PROJECT_ADD_MILESTONES:
 			return action.payload;
 		case CREATE_PROJECT_SAVE_PROJECT:
-			return '';
+			return [];
 		default:
 			return state;
 	}
@@ -36,6 +37,10 @@ export function createProjectItems(state = [], action) {
 	switch (action.type) {
 		case CREATE_PROJECT_HANDLE_NEW_ITEM:
 			return [...state, { item: action.payload.item, label: action.payload.label } ];
+		case CREATE_PROJECT_SAVE_PROJECT:
+			return [];
+		case CREATE_PROJECT_DELETE_ITEM:
+			return [ ...state.slice(0, action.payload) , ...state.slice(action.payload + 1) ];
 		default:
 			return state;
 	}
@@ -46,7 +51,7 @@ export function createProjectTitle(state = '', action) {
 		case CREATE_PROJECT_ADD_PROJECT_TITLE:
       return action.payload.projectName;
 		case CREATE_PROJECT_SAVE_PROJECT:
-			return [];
+			return '';
 		default:
 			return state;
 	}
