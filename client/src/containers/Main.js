@@ -9,7 +9,6 @@ import Login from './Login';
 import Signup from './Signup';
 
 import styles from '../assets/sass/Main.module.scss';
-import NewProjectContainer from '../components/NewProjectContainer';
 
 class Main extends Component {
 	render() {
@@ -36,7 +35,6 @@ class Main extends Component {
 					<Switch>
 						<PrivateRoute path='/dashboard' component={ Dashboard } />
 						<PrivateRoute path='/project' component={ Project } />
-						<PrivateRoute path='/create' component={ NewProjectContainer } />
 						<MainRoute exact path='/' component={ Home } />
 						<MainRoute path='/login' component={ Login } />
 						<MainRoute path='/signup' component={ Signup } />
