@@ -17,12 +17,9 @@ import styles from '../../assets/sass/BookmarkBody.module.scss';
 class NewProjectBody extends Component {
   handleProjectNaming = (projectName) => { this.props.handleProjectNaming(projectName); };
 
-  handleAddItem = (values) => {
-    this.props.handleAddItem(values);
-  };
+  handleAddItem = (values) => { this.props.handleAddItem(values); };
 
   handleAddMilestones = (milestones) => {
-    console.log({ milestones });
     this.props.handleAddMilestones(milestones);
   }
 
@@ -40,7 +37,6 @@ class NewProjectBody extends Component {
     }
 
     let modalToShow;
-
     if (this.props.createProjectModalToShow === 'NewProjectTitle') {
       modalToShow = <NewProjectTitle handleProjectNaming={ this.handleProjectNaming } />;
     } else if (this.props.createProjectModalToShow === 'AddProjectDetails') {

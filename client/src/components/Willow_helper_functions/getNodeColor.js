@@ -1,10 +1,10 @@
 const getNodeColor = (d) => {
     switch (d.label_id) {
-        case 1: return '#8EA4D2'; // EXPLORATIVE
-        case 2: return '#8CB369'; // OBJECTIVE
-        case 3: return '#F2C078'; // ACTION
-        case 4: return '#75485E'; // START
-        default: return '#504746'; // OBJECTIVE
+        case 1: return '#5BC0EB'; // EXPLORATIVE
+        case 2: return '#D1462F'; // START ACTION
+        case 3: return '#D1462F'; // NEXT ACTION
+        case 4: return '#404E4D'; // ONE TIME OBJECTIVE
+        default: return '#404E4D'; // RECURRING OBJECTIVE
     }
 };
 
