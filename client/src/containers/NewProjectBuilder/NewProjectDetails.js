@@ -30,7 +30,6 @@ class NewProjectDetails extends Component {
 	}
 
 	render() {
-		console.log('t.p: ', this.props.createProjectMilestones);
 		return (
 			<div>
 				<h2>Milestones required to complete this project: </h2>
