@@ -12,7 +12,7 @@ class Project extends Component {
 					!!this.props.userStatus
 					? (<Component { ...info } />)
 					: (<Redirect to={{
-							pathname: '/login',
+							pathname: '/',
 							state: { from: info.location }
 						}}/>)
 					}

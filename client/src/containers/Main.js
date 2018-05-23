@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 import Dashboard from '../components/Dashboard';
 import Project from './Project';
-import Login from './Login';
-import Signup from './Signup';
 
 import styles from '../assets/sass/Main.module.scss';
 
@@ -18,7 +16,7 @@ class Main extends Component {
 					!!this.props.userStatus
 					? (<Component { ...info } />)
 					: (<Redirect to={{
-							pathname: '/login',
+							pathname: '/',
 							state: { from: info.location }
 						}}/>)
 					}
@@ -36,8 +34,6 @@ class Main extends Component {
 						<PrivateRoute path='/dashboard' component={ Dashboard } />
 						<PrivateRoute path='/project' component={ Project } />
 						<MainRoute exact path='/' component={ Home } />
-						<MainRoute path='/login' component={ Login } />
-						<MainRoute path='/signup' component={ Signup } />
 					</Switch>
 				</div>
 			</main>
