@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import uuid from "node-uuid";
 import { modalClose, modalOpen } from '../../actions/modal';
 import { closeBookmark } from '../../actions/bookmarks';
+import { closeNoteView } from '../../actions/notes';
 import { resetProjectBuilder } from '../../actions/createProject';
+import { projectSave } from '../../actions/project';
 
 import Modals from './Modals';
 import Button from '../../components/UI/Button';
@@ -22,6 +25,18 @@ class DisplayModal extends Component {
 
     if (modalType === 'Explorative') {
 
+      const closeSaveExplorative = () => {
+        const { bookmarkListAdd, notes } = this.props;
+        const saveExplorative = {};
+        saveExplorative.bookmarks = bookmarkListAdd;
+        saveExplorative.notes = notes;
+
+        this.props.closeBookmark();
+        this.props.closeNoteView();
+        console.log(saveExplorative)
+        // this.props.projectSave(saveExplorative);
+      }
+
       return (
         <div>
           <Button
@@ -30,13 +45,13 @@ class DisplayModal extends Component {
             iconSide={ 'left' }
             type={ size }
             handleClick={() => onOpen({
-              id,
-              onClose: () => this.props.closeBookmark(),
-              // onConfirm: () => console.log("fire at confirming event on custom"),
+              id: uuid.v4(),
+              onClose: () => closeSaveExplorative(),
               content,
+              modalType
             })}
           />
-          <Modals onClose={ onClose } name={ name } />
+          <Modals onClose={ onClose } />
         </div>
       );
     } else if (modalType === 'CreateProject') {
@@ -63,14 +78,18 @@ class DisplayModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  modals: state.isModalOpen.modals
+  modals: state.isModalOpen.modals,
+  bookmarkListAdd: state.bookmarkListAdd,
+  notes: state.notes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   modalClose: (obj) => dispatch(modalClose(obj)),
   modalOpen: (obj) => dispatch(modalOpen(obj)),
   closeBookmark: () => dispatch(closeBookmark()),
+  closeNoteView: () => dispatch(closeNoteView()),
   resetProjectBuilder: () => dispatch(resetProjectBuilder()),
+  projectSave: (obj) => dispatch(projectSave(obj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisplayModal);

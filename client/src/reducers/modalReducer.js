@@ -1,10 +1,8 @@
 import { OPEN_MODAL, CLOSE_MODAL } from '../actions/types';
 
-const initialState = {
-	modals: [],
-}
+const initialState = { modals: [] }
 
-export function isModalOpen(state = initialState, action) {
+export const isModalOpen = (state = initialState, action) => {
 	switch (action.type) {
 		case OPEN_MODAL:
 			return {
