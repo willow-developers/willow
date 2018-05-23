@@ -7,7 +7,7 @@ import styles from '../assets/sass/Dashboard.module.scss';
 import { projectGetData, resetRedirects } from '../actions/project';
 
 import WillowCore from '../components/WillowCore';
-import Modals from './Modal/Modals';
+import Modals from './Modal_NEW/Modals';
 
 class ProjectView extends Component {
 
