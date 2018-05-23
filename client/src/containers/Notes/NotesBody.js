@@ -12,7 +12,7 @@ class NotesBody extends Component {
 		const { notes, previewToggleNote, addNote, noteShowForm, noteShowList, createNoteView, closeNoteView, editNote, noteEdit, updateNote } = this.props;
 		return (
 			<div className={ styles.row }>
-				<div className={` ${styles.col_12_of_12} ${styles.pusher}`}>
+				<div className={` ${styles.col_12_of_12} ${styles.listHolder} `}>
 					{ noteShowList
 						? (<CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } />)
 						: '' }

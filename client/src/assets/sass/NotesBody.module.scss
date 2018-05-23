@@ -1,20 +1,20 @@
 @import 'variables';
 @import 'waffleGrid';
 
-
-.pusher {
-	padding: 20px;
-	padding-top: 0;
-	position: relative;
-}
-
 .btnBar {
-	padding-top: 15px;
 	@include cf;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
 .empty {
 	color: #ccc;
 	position: absolute;
 	width: 100%;
+}
+
+.listHolder {
+	max-height: 556px;
+	overflow-y: scroll;
 }

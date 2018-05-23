@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bookmarkGetInfo } from '../actions/bookmarks';
+// import { bookmarkGetInfo } from '../actions/bookmarks';
 
 // import Loading from '../../components/UI/Loading';
 import Notes from './Notes/NotesBody';
@@ -13,14 +13,13 @@ class ExplorativeNode extends Component {
 
   getListHeight = (num) => {
     const listHeight = num;
-    console.log(listHeight)
     this.setState({ listHeight });
   }
 
 	render() {
 		return (
       <div className={ styles.row }>
-        <div className={ styles.col_7_of_12 }>
+        <div className={` ${styles.col_7_of_12} ${styles.holder} `}>
           <Notes />
         </div>
         <div className={ styles.col_5_of_12 }>
