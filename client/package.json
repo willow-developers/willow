@@ -17,6 +17,7 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "node-sass": "^4.9.0",
+    "node-uuid": "^1.4.8",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",
     "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules",

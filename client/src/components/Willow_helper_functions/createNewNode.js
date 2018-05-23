@@ -14,13 +14,12 @@ export const createNewNode = (newNodeMode, projectData, userStatus) => {
         project_id: projectData.project.id, 
         label_id: labelID(newNodeMode), 
         node_description: 'New Node',
-        isNew: 'new',
         status: 'new',
         hash_id: `${userStatus.google_id}-${projectData.project.id}-${Date.now()}`,
         x: 0,
         y: 0,
     }
 
-    console.log('New Node Data: ', dataObject);
+    // console.log('New Node Data: ', dataObject);
     return dataObject;
 }
