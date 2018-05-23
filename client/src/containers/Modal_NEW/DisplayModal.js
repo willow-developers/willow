@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uuid from "node-uuid";
+import v4 from 'uuid/v4';
 import { modalClose, modalOpen } from '../../actions/modal';
 import { closeBookmark } from '../../actions/bookmarks';
 import { closeNoteView } from '../../actions/notes';
@@ -45,7 +45,7 @@ class DisplayModal extends Component {
             iconSide={ 'left' }
             type={ size }
             handleClick={() => onOpen({
-              id: uuid.v4(),
+              id: v4(),
               onClose: () => closeSaveExplorative(),
               content,
               modalType
