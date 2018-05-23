@@ -1,13 +1,76 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { projectGetData, resetRedirects } from '../actions/project';
+import { projectsGetList } from '../actions/projects';
+import { Link, Redirect } from 'react-router-dom';
 
 import styles from '../assets/sass/Dashboard.module.scss';
 
-const Dashboard = () => (
-	<div className={ styles.col_12_of_12 }>
-		<h1>Dashboard</h1>
-		<Link to='/project/1'>Project 1</Link>
-	</div>
-);
+class Dashboard extends Component {
+	componentDidMount() {
+		this.props.projectsGetList(this.props.userStatus.google_id)
+	}
 
-export default Dashboard;
+	clickHandler(projectID) {
+		this.props.projectGetData(projectID);
+	}
+
+	renderProjectList() {
+		// redirect if a new project was just created
+		if (this.props.shouldRedirect) {
+      // make sure data is available as we redirect to the project
+			let projectID = this.props.shouldRedirectTo;
+			this.props.projectGetData(projectID);
+			// reset redirects in store to ensure user can navigate back to dashboard
+			this.props.resetRedirects();
+			return (
+				<Redirect to={{ pathname:`/project/${this.props.shouldRedirectTo}`}}/>
+			);
+		} else {
+			return (
+				<div className={ styles.col_12_of_12 }>
+					<h1>Dashboard</h1>
+					{this.props.projectsList.map((project, i) => {
+						return (
+							<div key={project.id}>
+								<Link
+									to={`/project/${project.id}`}
+									key={project.id}
+									onClick={() => {this.clickHandler(project.id)}}>{`${project.id}.`} {project.project_name}</Link>
+								{/* temporary styling fix, fix later */}
+								<br/>
+								<br/>
+							</div>
+						);
+					})}
+	
+					{/* removed DisplayModals below because they were causing conflicts with DisplayModal in
+					the header. add back later if needed ----> SEE GITHUB FOR CODE */}
+				</div>
+			);
+		}
+	}
+
+	render() {
+		return (
+			<div>
+				{ this.renderProjectList() }
+			</div>
+		)
+	}
+}
+
+const mapStateToProps = (state) => ({
+	userStatus: state.userStatus,
+	projectsList: state.projectsList,
+	shouldRedirect: state.shouldRedirect,
+	shouldRedirectTo: state.shouldRedirectTo,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	projectsGetList: (userID) => dispatch(projectsGetList(userID)),
+	projectGetData: (projectID) => dispatch(projectGetData(projectID)),
+	resetRedirects: () => dispatch(resetRedirects()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

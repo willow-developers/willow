@@ -28,11 +28,11 @@ class BookmarkInput extends Component {
 						value={ 'Preview' }
 						iconSide={ 'right' }
 						type="submit"
+						styleClass={ 'noShadow' }
 					/>
 				);
 			}
 			return;
-			// if (this.props.inlineBtn === 'edit')
 		}
 
 		return (

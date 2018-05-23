@@ -1,0 +1,13 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.editForm {
+	button:last-of-type {
+		margin-right: 15px;
+	}
+}
+
+.btnBar {
+	margin-bottom: 20px;
+	@include cf;
+}

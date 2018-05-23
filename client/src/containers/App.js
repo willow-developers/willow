@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userCheckStatus } from '../actions/auth';
+import { screenResizeWidth, screenResizeHeight } from '../actions/windowSize';
 
 import Header from '../components/Header';
 import Main from './Main';
@@ -10,6 +11,13 @@ import Loading from '../components/UI/Loading';
 class App extends Component {
   componentDidMount() {
     this.props.userCheckStatus('/api/userData');
+    window.addEventListener('resize', this.props.screenResizeWidth);
+    window.addEventListener('resize', this.props.screenResizeHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.props.screenResizeWidth);
+    window.removeEventListener('resize', this.props.screenResizeHeight);
   }
 
   renderApp = () => {
@@ -36,21 +44,18 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    hasErrored: state.userHasErrored,
-    isLoading: state.userIsLoading,
-    userInfo: state.userStatus,
-  };
-};
+const mapStateToProps = (state) => ({
+  hasErrored: state.userHasErrored,
+  isLoading: state.userIsLoading,
+  userInfo: state.userStatus,
+  screenSize: state.uiReducer,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userCheckStatus: (url) => {
-      console.log('firing user check status in App.js to: ', url);
-      dispatch(userCheckStatus(url))
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  userCheckStatus: (url) => dispatch(userCheckStatus(url)),
+  screenResizeWidth: () => dispatch(screenResizeWidth(window.innerWidth)),
+  screenResizeHeight: () => dispatch(screenResizeHeight(window.innerHeight)),
+});
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

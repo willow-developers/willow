@@ -12,8 +12,6 @@ passport.use(new GoogleStrategy({
     proxy: true,
   }, async (accessToken, refreshToken, profile, done) => {
 
-    console.log('Google profile: ', profile);
-
     let existingUser = await knex('users').where('google_id', profile.id);
     existingUser = existingUser[0];
 

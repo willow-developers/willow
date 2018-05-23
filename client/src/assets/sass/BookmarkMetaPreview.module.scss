@@ -2,15 +2,18 @@
 @import 'waffleGrid';
 
 .previewMode {
+	transition: all .2s ease;
 	text-align: left;
 	margin-bottom: 20px;
+	top: 100%;
+	// overflow: hidden;
 
 	.btnBar {
 		margin-top: 30px;
 		@include cf;
 	}
 
-	h3 {
+	h3, h4 {
 		margin: 0;
 		margin-bottom: 5px;
 	}
@@ -19,6 +22,7 @@
 		font-size: 14px;
 		margin: 0;
 		font-style: italic;
+		white-space: nowrap;
 	}
 
 	.bookmark_icon {
@@ -34,4 +38,24 @@
 	}
 }
 
+.displayLink {
+	border-bottom: 1px dotted #666;
+	display: block;
+	margin-bottom: 20px;
+	@include cf;
+	text-decoration: none;
+	color: #000;
+}
 
+.bookmarkList {
+	text-align: left;
+	// max-height: 400px;
+	// overflow-y: scroll;
+	// overflow-x: hidden;
+
+	h2 {
+		margin-top: 0;
+		padding-bottom: 0.415em;
+		border-bottom: 1px solid #999;
+	}
+}

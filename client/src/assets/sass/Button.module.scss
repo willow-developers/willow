@@ -68,10 +68,17 @@
 	}
 
 	&.closeModal {
-		background-color: #ef5350;
+		// background-color: #ef5350;
+		background-color: transparent;
+		box-shadow: none;
+		color: #000;
+		transition: all .2s ease-out;
 
 		&:hover {
-			background-color: #e57373;
+			// background-color: #e57373;
+			background-color: transparent;
+			box-shadow: none;
+			color: #e57373;
 		}
 	}
 
@@ -84,6 +91,26 @@
 			background-color: transparent;
 			box-shadow: none;
 			opacity: .75;
+		}
+	}
+
+	&.noShadow {
+		box-shadow: none;
+
+		&:hover {
+			box-shadow: none;
+		}
+	}
+
+	&.skinnyIcon {
+		box-shadow: none;
+		margin-left: 5px;
+
+		&:hover {
+			box-shadow: none;
+		}
+		.btn__icon {
+			margin: 0;
 		}
 	}
 }

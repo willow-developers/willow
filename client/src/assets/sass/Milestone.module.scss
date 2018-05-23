@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.num {
+	padding-right: 5px;
+
+	&:after {
+		content: ": ";
+	}
+}
+
+

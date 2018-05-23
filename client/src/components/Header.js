@@ -9,6 +9,9 @@ import logo from '../assets/images/logo.svg';
 import styles from '../assets/sass/Header.module.scss';
 import '../assets/sass/Header.scss';
 
+import DisplayModal from '../containers/Modal_NEW/DisplayModal';
+import NewProject from '../containers/NewProjectBuilder/NewProject';
+
 class Header extends Component {
 	renderHeader() {
 		const AuthButton = withRouter(({ history }) =>
@@ -23,12 +26,14 @@ class Header extends Component {
 							history.push("/");
 						}}
 					/>)
-				: (<NavLink exact to='/login'><Button
-						value={ 'Login' }
-						icon={ 'account_circle' }
-						type={ 'small' }
-						iconSide={ 'left' }
-					/></NavLink>)
+				: (<a href="/auth/google">
+						<Button
+							value={ 'Login With Google' }
+							icon={ 'account_circle' }
+							type={ 'small' }
+							iconSide={ 'left' }
+						/>
+					</a>)
 		);
 		if (this.props.userStatus === null) {
 			return;
@@ -38,31 +43,19 @@ class Header extends Component {
 					<li>
 						<AuthButton />
 					</li>
-					{/* NO LONGER USING AFTER GOOGLE OAUTH REFACTOR */}
-					{/* <li>
-						<NavLink exact to='/signup'>
-							<Button
-								value={ 'Sign Up' }
-								icon={ 'create' }
-								type={ 'small' }
-								iconSide={ 'left' }
-							/>
-						</NavLink>
-					</li> */}
 				</ul>
 			);
 		} else {
 			return (
 				<ul>
 					<li>
-						<Link to='/'>
-							<Button
-								value={ 'New Project' }
-								icon={ 'add' }
-								type={ 'small' }
-								iconSide={ 'left' }
-							/>
-						</Link>
+						<DisplayModal
+							value={'Create New Project'}
+							id={ 4 }
+							content={<NewProject />}
+							size={ 'small' }
+							modalType={ 'CreateProject' }
+						/>
 					</li>
 					<li>
 						<NavLink exact to='/dashboard'>
@@ -97,17 +90,18 @@ class Header extends Component {
 						</div>
 					</div>
 				</div>
+
 			</nav>
 		);
 	}
 };
 
-const mapStateToProps = (state) => {
-  return { userStatus: state.userStatus };
-};
+const mapStateToProps = (state) => ({
+	userStatus: state.userStatus
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return { userCheckStatus: (url) => dispatch(userCheckStatus(url)) };
-};
+const mapDispatchToProps = (dispatch) => ({
+	userCheckStatus: (url) => dispatch(userCheckStatus(url))
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
