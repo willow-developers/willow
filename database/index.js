@@ -1,4 +1,4 @@
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } from '../config/keys';
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } = require('../config/keys');
 var connectionDetails;
 
 process.env.NODE_ENV === 'production'?
