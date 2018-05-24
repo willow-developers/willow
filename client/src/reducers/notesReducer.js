@@ -1,4 +1,4 @@
-import { ADD_NOTE, TOGGLE_PREVIEW_NOTE, NOTE_SHOW_FORM, NOTE_SHOW_LIST, EDIT_NOTE, UPDATE_NOTE } from '../actions/types';
+import { ADD_NOTE, TOGGLE_PREVIEW_NOTE, NOTE_SHOW_FORM, NOTE_SHOW_LIST, EDIT_NOTE, UPDATE_NOTE, RESET_NOTE } from '../actions/types';
 
 const initalState = {
   counter: 1,
@@ -81,6 +81,8 @@ export const notes = (state = [], action) => {
       return state.map(n => noteUpdate(n, action));
     case UPDATE_NOTE:
       return state.map(n => noteUpdate(n, action));
+    case RESET_NOTE:
+      return [];
     default:
       return state;
   }

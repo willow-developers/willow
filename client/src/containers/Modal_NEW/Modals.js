@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { modalClose } from '../../actions/modal';
 
 import styles from '../../assets/sass/Modal.module.scss';
 import Button from '../../components/UI/Button';
@@ -12,18 +13,11 @@ class Modals extends Component {
       const onClose = () => {
         if(item.onClose){
           item.onClose();
-          this.props.onClose(item);
+          this.props.modalClose(item);
         } else {
-          this.props.onClose(item);
+          this.props.modalClose(item);
         }
       }
-
-      // const onConfirm = () => {
-      //   if(item.onConfirm){
-      //     item.onConfirm();
-      //     this.props.onClose(item);
-      //   }
-      // }
 
       return (
         <ModalRender key={ i } >
@@ -57,4 +51,8 @@ const mapStateToProps = (state) => ({
   modals: state.isModalOpen.modals
 });
 
-export default connect(mapStateToProps)(Modals);
+const mapDispatchToProps = (dispatch) => ({
+  modalClose: (obj) => dispatch(modalClose(obj)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modals);
