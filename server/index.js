@@ -3,22 +3,20 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 // google OAuth and express session:
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 const passport = require('passport');
 const db = require('../database/index');
 
-const { EXPRESS_SESSION_SECRET } = require('../config/keys');
+const { COOKIE_SESSION_SECRET } = require('../config/keys');
 const routes = require('../routes/index');
 const app = express();
 
 app.use(bodyParser.json());
 
-// google OAuth
-app.use(session({
-	secret: EXPRESS_SESSION_SECRET,
-	resave: true,
-	saveUninitialized: true,
-	cookie: { secure: false },
+// google OAuth and CookieSession
+app.use(cookieSession({
+	maxAge: 1000 * 60 * 60 * 24,
+	keys: [COOKIE_SESSION_SECRET],
 }));
 app.use(passport.initialize());
 app.use(passport.session());
