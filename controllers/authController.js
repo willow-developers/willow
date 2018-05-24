@@ -20,15 +20,10 @@ exports.postUser = (req, res) => {
   });
 };
 
+// UPDATE:
 exports.logoutUser = (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      res.status(500).send('failure!!');
-    } else {
-      console.log('req.session after delete: ', req.session);
-      res.status(200).send();
-    }
-  })
+  req.logout();
+  res.status(200).send();
 };
 
 exports.getUserData = (req, res) => {
