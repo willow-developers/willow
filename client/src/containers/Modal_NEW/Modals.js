@@ -19,13 +19,6 @@ class Modals extends Component {
         }
       }
 
-      // const onConfirm = () => {
-      //   if(item.onConfirm){
-      //     item.onConfirm();
-      //     this.props.onClose(item);
-      //   }
-      // }
-
       return (
         <ModalRender key={ i } >
           <div className={ styles.modal_overlay }>

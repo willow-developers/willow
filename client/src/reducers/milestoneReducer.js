@@ -1,4 +1,4 @@
-import { ADD_MILESTONE, POPULATE_MILESTONE, TOGGLE_MILESTONE, EDIT_MILESTONE, UPDATE_MILESTONE, SET_VISIBILITY_FILTER, LOAD, SET_VISIBILITY_FILTER_COLUMN } from "../actions/types";
+import { ADD_MILESTONE, POPULATE_MILESTONE, TOGGLE_MILESTONE, EDIT_MILESTONE, UPDATE_MILESTONE, SET_VISIBILITY_FILTER, LOAD, SET_VISIBILITY_FILTER_COLUMN, RESET_MILESTONE } from "../actions/types";
 
 const initalState = {
   data: [],
@@ -73,6 +73,8 @@ export const milestones = (state = [], action) => {
       return state.map(t => milestoneUpdate(t, action));
     case UPDATE_MILESTONE:
       return state.map(t => milestoneUpdate(t, action));
+    case RESET_MILESTONE:
+      return [];
     default:
       return state;
   }

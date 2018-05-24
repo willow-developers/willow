@@ -7,6 +7,7 @@ import {
   SET_VISIBILITY_FILTER,
   SET_VISIBILITY_FILTER_COLUMN,
   LOAD,
+  RESET_MILESTONE,
 } from './types';
 
 export const milestoneAdd = (text) => ({ type: ADD_MILESTONE, text });
@@ -42,3 +43,5 @@ export const filterMilestone = (filter) => (dispatch) => {
   dispatch(milestoneFilter(filter[0]));
   dispatch(milestoneFilterColumn(filter[1]));
 };
+
+export const resetMilestones = () => ({ type: RESET_MILESTONE, payload: [] });

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import styles from '../assets/sass/Home.module.scss';
 
 import DisplayModal from '../containers/Modal_NEW/DisplayModal';
-import ExplorativeNode from '../containers/ExplorativeNode';
+import Milestones from '../containers/Milestones/MilestoneColumn';
 
 
 class Home extends Component {
@@ -22,10 +22,9 @@ class Home extends Component {
 				<div className={ styles.col_12_of_12 }>
 					<h1>Welcome to the Willow!</h1>
 					<DisplayModal
-						value={ 'Open Explorative' }
-						id={ 1 }
-						content={ <ExplorativeNode /> }
-						modalType={ 'Explorative' }
+						value={ 'Open Milestone' }
+						content={ <Milestones column="L" /> }
+						modalType={ 'Milestones' }
 					/>
 				</div>
 			);
