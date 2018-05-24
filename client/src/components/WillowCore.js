@@ -5,10 +5,11 @@ import uuid from "node-uuid";
 import { modalClose, modalOpen } from '../actions/modal';
 import { closeBookmark, saveBookmark, resetBookmarks } from '../actions/bookmarks';
 import { closeNoteView, addNote, resetNotes } from '../actions/notes';
+import { populateMilestone, resetMilestones } from '../actions/milestone';
 
 import Modals from '../containers/Modal_NEW/Modals';
 import ExplorativeNode from '../containers/ExplorativeNode';
-// import Milestones from '../containers/Milestones/MilestoneColumn';
+import Milestones from '../containers/Milestones/MilestoneColumn';
 
 import { projectSave, projectGetData } from '../actions/project';
 
@@ -978,6 +979,9 @@ class WillowCore extends Component {
         const displayInfoButton = node.append('g')
             .attr('class', 'displayInfoButton menu')
             .attr('transform', 'translate(0,0)')
+            .on('click', (d) => {
+                this.clickDisplayMenuMode(d)
+            })
             
         displayInfoButton
             .append('circle')
@@ -1109,31 +1113,24 @@ class WillowCore extends Component {
     const selectedNode = d3State.selectedNode;
     let content;
 
-    const closeSaveExplorative = () => {
+    const closeNode = () => {
         if (selectedNode.label_id === 1) {
             selectedNode.node_data = {
                 bookmarks: this.props.bookmarkListAdd,
                 notes: this.props.notes
             };
-
             this.props.closeBookmark();
             this.props.closeNoteView();
-            console.log(selectedNode)
             this.props.saveProject(this.props.projectData);
             this.props.resetBookmarks();
             this.props.resetNotes();
+
         } else {
             selectedNode.node_data = {
-                bookmarks: this.props.bookmarkListAdd,
-                notes: this.props.notes
+                milestones: this.props.milestones,
             };
-
-            this.props.closeBookmark();
-            this.props.closeNoteView();
-            console.log(selectedNode)
             this.props.saveProject(this.props.projectData);
-            this.props.resetBookmarks();
-            this.props.resetNotes();
+            this.props.resetMilestones();
         }
     }
 
@@ -1144,22 +1141,17 @@ class WillowCore extends Component {
             selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
         }
     } else {
-        content = <ExplorativeNode />;
+        content = <Milestones column="L" />;
         if (!!selectedNode.node_data) {
-            selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
-            selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
+            selectedNode.node_data.milestones.forEach((ms) => this.props.populateMilestone(ms));
         }
     }
 
-
-
     this.onOpen({
         id: uuid.v4(),
-        onClose: () => closeSaveExplorative(),
+        onClose: () => closeNode(),
         content
     })
-
-    console.log(selectedNode);
   }
   
 //--------------------------------------------------- UNLOCK MENU BUTTON
@@ -1213,6 +1205,7 @@ const mapStateToProps = (state) => {
         modals: state.isModalOpen.modals,
         bookmarkListAdd: state.bookmarkListAdd,
         notes: state.notes,
+        milestones: state.milestones,
     };
 };
 
@@ -1228,6 +1221,8 @@ const mapDispatchToProps = (dispatch) => {
         addNote: (data) => dispatch(addNote(data)),
         resetBookmarks: () => dispatch(resetBookmarks()),
         resetNotes: () => dispatch(resetNotes()),
+        populateMilestone: (data) => dispatch(populateMilestone(data)),
+        resetMilestones: () => dispatch(resetMilestones()),
     }
 };
 

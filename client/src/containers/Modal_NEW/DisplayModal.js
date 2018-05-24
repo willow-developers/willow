@@ -1,41 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import v4 from 'uuid/v4';
-import { modalClose, modalOpen } from '../../actions/modal';
-import { closeBookmark } from '../../actions/bookmarks';
-import { closeNoteView } from '../../actions/notes';
+import { modalOpen } from '../../actions/modal';
 import { resetProjectBuilder } from '../../actions/createProject';
-import { projectSave } from '../../actions/project';
 
 import Modals from './Modals';
 import Button from '../../components/UI/Button';
 
 class DisplayModal extends Component {
   render() {
-
     const { content, id, value, size, modalType } = this.props;
-
     const onOpen = (obj) => {
       this.props.modalOpen(obj);
     }
 
-    const onClose = (obj) => {
-      this.props.modalClose(obj);
-    }
-
-    if (modalType === 'Explorative') {
-
-      const closeSaveExplorative = () => {
-        const saveExplorative = {};
-        saveExplorative.bookmarks = this.props.bookmarkListAdd;
-        saveExplorative.notes = this.props.notes;
-
-        this.props.closeBookmark();
-        this.props.closeNoteView();
-        console.log(saveExplorative)
-        // this.props.projectSave(saveExplorative);
-      }
-
+    if (modalType === 'Milestones') {
       return (
         <div>
           <Button
@@ -45,12 +24,11 @@ class DisplayModal extends Component {
             type={ size }
             handleClick={() => onOpen({
               id: v4(),
-              onClose: () => closeSaveExplorative(),
+              onClose: () => console.log('fire on close!'),
               content,
-              modalType
             })}
           />
-          <Modals onClose={ onClose } />
+          <Modals />
         </div>
       );
     } else if (modalType === 'CreateProject') {
@@ -64,11 +42,10 @@ class DisplayModal extends Component {
             handleClick={() => onOpen({
               id,
               onClose: () => this.props.resetProjectBuilder(),
-              // onConfirm: () => console.log("fire at confirming event on custom"),
               content,
             })}
           />
-          <Modals onClose={ onClose } />
+          <Modals />
         </div>
       );
     }
@@ -78,17 +55,11 @@ class DisplayModal extends Component {
 
 const mapStateToProps = (state) => ({
   modals: state.isModalOpen.modals,
-  bookmarkListAdd: state.bookmarkListAdd,
-  notes: state.notes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  modalClose: (obj) => dispatch(modalClose(obj)),
   modalOpen: (obj) => dispatch(modalOpen(obj)),
-  closeBookmark: () => dispatch(closeBookmark()),
-  closeNoteView: () => dispatch(closeNoteView()),
   resetProjectBuilder: () => dispatch(resetProjectBuilder()),
-  projectSave: (obj) => dispatch(projectSave(obj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisplayModal);
