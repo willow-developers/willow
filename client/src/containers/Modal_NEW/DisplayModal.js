@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import v4 from 'uuid/v4';
+// import v4 from 'uuid/v4';
 import { modalOpen } from '../../actions/modal';
 import { resetProjectBuilder } from '../../actions/createProject';
 
@@ -14,24 +14,7 @@ class DisplayModal extends Component {
       this.props.modalOpen(obj);
     }
 
-    if (modalType === 'Milestones') {
-      return (
-        <div>
-          <Button
-            value={ value }
-            icon={ 'create' }
-            iconSide={ 'left' }
-            type={ size }
-            handleClick={() => onOpen({
-              id: v4(),
-              onClose: () => console.log('fire on close!'),
-              content,
-            })}
-          />
-          <Modals />
-        </div>
-      );
-    } else if (modalType === 'CreateProject') {
+    if (modalType === 'CreateProject') {
       return (
         <div>
           <Button
@@ -43,6 +26,7 @@ class DisplayModal extends Component {
               id,
               onClose: () => this.props.resetProjectBuilder(),
               content,
+              modalType,
             })}
           />
           <Modals />

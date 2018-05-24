@@ -22,6 +22,10 @@
   overflow: hidden;
   max-height: 90vh;
   overflow-y: scroll;
+
+  &.skinny {
+    max-width: 800px;
+  }
 }
 
 .modal_content {
