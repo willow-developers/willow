@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {projectSave, projectGetData} from '../actions/project';
+import uuid from "node-uuid";
+import { modalClose, modalOpen } from '../actions/modal';
+import { closeBookmark, saveBookmark, resetBookmarks } from '../actions/bookmarks';
+import { closeNoteView, addNote, resetNotes } from '../actions/notes';
+
+import Modals from '../containers/Modal_NEW/Modals';
+import ExplorativeNode from '../containers/ExplorativeNode';
+// import Milestones from '../containers/Milestones/MilestoneColumn';
+
+import { projectSave, projectGetData } from '../actions/project';
 
 import * as d3 from 'd3';
 import {getNodeColor} from './Willow_helper_functions/getNodeColor';
@@ -9,10 +18,6 @@ import {getLinkColor} from './Willow_helper_functions/getLinkColor';
 import {getLinkLabelID} from './Willow_helper_functions/getLinkLabelID';
 import {createNewNode} from './Willow_helper_functions/createNewNode';
 import {createNewLink} from './Willow_helper_functions/createNewLink';
-
-import { modalClose, modalOpen } from '../actions/modal';
-import MilestoneContainer from '../containers/Milestones/MilestoneContainer';
-import Modals from '../containers/Modal_NEW/Modals';
 
 let d3State = {
     selectedNode: {},
@@ -40,9 +45,15 @@ class WillowCore extends Component {
     componentDidUpdate() {
         this.d3Restart();
     }
-    onClose(obj) {
-      this.props.modalClose(obj);
+
+    onOpen = (obj) => {
+        this.props.modalOpen(obj);
     }
+
+    onClose = (obj) => {
+        this.props.modalClose(obj);
+    }
+
 //--------------------------------------------------------------------------------- SETUP SETTINGS
 //--------------------------------------------------- D3 SETUP
     d3Setup() {
@@ -1095,41 +1106,64 @@ class WillowCore extends Component {
     }
 //--------------------------------------------------- DISPLAY MENU BUTTON
   clickDisplayMenuMode(d) {
-    //   const leftLinks = this.props.projectData.links.filter((link) => link.label_id === 7 && link.target_id === d.hash_id);
-        // if (!d.milestone) return console.log('not a milestone');
-        const leftSideNodes = [];
-        const rightSideNodes = [];
+    const selectedNode = d3State.selectedNode;
+    let content;
 
-    // leftLinks.forEach((link) => {
-    //   this.props.projectData.nodes.forEach((node) => {
-    //     if (link.source_id === node.hash_id) leftSideNodes.push(node);
-    //   })
-    // })
+    const closeSaveExplorative = () => {
+        if (selectedNode.label_id === 1) {
+            selectedNode.node_data = {
+                bookmarks: this.props.bookmarkListAdd,
+                notes: this.props.notes
+            };
 
-    // const nextMilestone = this.props.projectData.nodes.filter((node) =>
-    //   node.hash_id === this.props.projectData.links.filter((link) =>
-    //     link.label_id === 8 && link.source_id === d.hash_id)[0].target_id)[0];
+            this.props.closeBookmark();
+            this.props.closeNoteView();
+            console.log(selectedNode)
+            this.props.saveProject(this.props.projectData);
+            this.props.resetBookmarks();
+            this.props.resetNotes();
+        } else {
+            selectedNode.node_data = {
+                bookmarks: this.props.bookmarkListAdd,
+                notes: this.props.notes
+            };
 
-    // const nextLinks = this.props.projectData.links.filter((link) => link.label_id === 7 && link.target_id === nextMilestone.hash_id);
-
-    // nextLinks.forEach((link) => {
-    //   this.props.projectData.nodes.forEach((node) => {
-    //     if (link.source_id === node.hash_id) rightSideNodes.push(node);
-    //   })
-    // })
-
-    // console.log('leftSideNodes: ', leftSideNodes);
-    // console.log('rightSideNodes: ', rightSideNodes);
-      //  leftSideNodes={ leftSideNodes } rightSideNodes={ rightSideNodes }
-      const content = <MilestoneContainer leftSideNodes={ leftSideNodes } rightSideNodes={ rightSideNodes } />;
-
-      this.props.modalOpen({
-        id: 99,
-        onClose: () => console.log("closed"),
-        // onConfirm: () => console.log("fire at confirming event on custom"),
-        content
-      })
+            this.props.closeBookmark();
+            this.props.closeNoteView();
+            console.log(selectedNode)
+            this.props.saveProject(this.props.projectData);
+            this.props.resetBookmarks();
+            this.props.resetNotes();
+        }
     }
+
+    if (selectedNode.label_id === 1) {
+        content = <ExplorativeNode />;
+        if (!!selectedNode.node_data) {
+            selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
+            selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
+        }
+    } else {
+        content = <ExplorativeNode />;
+        if (!!selectedNode.node_data) {
+            selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
+            selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
+        }
+    }
+
+
+
+    this.onOpen({
+        id: uuid.v4(),
+        onClose: () => closeSaveExplorative(),
+        content
+    })
+
+    console.log(selectedNode);
+  }
+  
+//--------------------------------------------------- UNLOCK MENU BUTTON
+//--------------------------------------------------- DELETE MENU BUTTON
 //--------------------------------------------------- TICKED
   ticked() {
     d3.select('.nodes').selectAll('.node').attr('transform', d => `translate(${d.x}, ${d.y})`);
@@ -1164,15 +1198,10 @@ class WillowCore extends Component {
   }
 //--------------------------------------------------- RENDER
   render() {
-
-    const onClose = (obj) => {
-      this.props.modalClose(obj);
-    }
-    
     return (
       <div id="chart">
         <svg  data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" id="willowCore" width={ this.props.width } height={ (this.props.height - 55) } />
-        <Modals onClose={ onClose } />
+        <Modals />
       </div>
     );
   }
@@ -1180,9 +1209,12 @@ class WillowCore extends Component {
 const mapStateToProps = (state) => {
     return { 
         projectData: state.projectData,
-        userStatus: state.userStatus
+        userStatus: state.userStatus,
+        modals: state.isModalOpen.modals,
+        bookmarkListAdd: state.bookmarkListAdd,
+        notes: state.notes,
     };
-    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return { 
@@ -1190,7 +1222,13 @@ const mapDispatchToProps = (dispatch) => {
         projectGetData: (projectID) => dispatch(projectGetData(projectID)),
         modalClose: (obj) => dispatch(modalClose(obj)),
         modalOpen: (obj) => dispatch(modalOpen(obj)),
+        closeBookmark: () => dispatch(closeBookmark()),
+        closeNoteView: () => dispatch(closeNoteView()),
+        saveBookmark: (data) => dispatch(saveBookmark(data)),
+        addNote: (data) => dispatch(addNote(data)),
+        resetBookmarks: () => dispatch(resetBookmarks()),
+        resetNotes: () => dispatch(resetNotes()),
     }
-    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WillowCore);

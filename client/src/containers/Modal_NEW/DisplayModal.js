@@ -13,7 +13,7 @@ import Button from '../../components/UI/Button';
 class DisplayModal extends Component {
   render() {
 
-    const { content, id, name, value, size, modalType } = this.props;
+    const { content, id, value, size, modalType } = this.props;
 
     const onOpen = (obj) => {
       this.props.modalOpen(obj);
@@ -26,10 +26,9 @@ class DisplayModal extends Component {
     if (modalType === 'Explorative') {
 
       const closeSaveExplorative = () => {
-        const { bookmarkListAdd, notes } = this.props;
         const saveExplorative = {};
-        saveExplorative.bookmarks = bookmarkListAdd;
-        saveExplorative.notes = notes;
+        saveExplorative.bookmarks = this.props.bookmarkListAdd;
+        saveExplorative.notes = this.props.notes;
 
         this.props.closeBookmark();
         this.props.closeNoteView();
@@ -69,7 +68,7 @@ class DisplayModal extends Component {
               content,
             })}
           />
-          <Modals onClose={ onClose } name={ name } />
+          <Modals onClose={ onClose } />
         </div>
       );
     }
