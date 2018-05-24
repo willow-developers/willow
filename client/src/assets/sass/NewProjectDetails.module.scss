@@ -1,0 +1,56 @@
+@import 'variables';
+@import 'waffleGrid';
+@import 'material_icon';
+
+.align {
+	margin-top: 29px;
+
+	button[class^="btn___"] {
+		width: 100%;
+
+		 > div {
+			float: none;
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		 > i {
+			float: none;
+			display: inline-block;
+		}
+	}
+}
+
+.Header {
+	border-bottom: 1px solid #666;
+	font-weight: 700;
+	text-align: left;
+	padding-bottom: 8px;
+}
+
+.item {
+	text-align: left;
+	padding: 8px 0 5px;
+	line-height: 28px;
+	border-bottom: 1px dotted #999;
+
+	&:nth-child(odd) {
+		background: #f2f2f2;
+	}
+
+	div {
+		vertical-align: middle;
+
+		&:nth-child(3) {
+			text-align: center;
+		}
+
+		a {
+			color: #999;
+
+			&:hover {
+				color: #333;
+			}
+		}
+	}
+}

@@ -21,26 +21,29 @@ import ProjectSummary from './ProjectSummary';
 import styles from '../../assets/sass/BookmarkBody.module.scss';
 
 class NewProjectBody extends Component {
-  handleProjectNaming = (projectName) => { this.props.handleProjectNaming(projectName); };
+  handleProjectNaming = (projectName) => {
+    this.props.handleProjectNaming(projectName);
+  };
 
-  handleAddItem = (values) => { this.props.handleAddItem(values); };
+  handleAddItem = (values) => {
+    this.props.handleAddItem(values);
+  };
 
-  handleAddMilestones = (milestones) => { this.props.handleAddMilestones(milestones); }
+  handleAddMilestones = (milestones) => {
+    this.props.handleAddMilestones(milestones);
+  }
 
-  deleteItem = (idx) => { this.props.deleteItem(idx, this.props.modal[0]); }
+  deleteItem = (idx) => {
+    this.props.deleteItem(idx, this.props.modal[0]);
+  }
 
   handleSaveProject = (projectDetails) => {
     this.props.handleSaveProject(projectDetails, this.props.modal[0]);
   };
 
   renderCreateProjectView = () => {
-    if (this.props.createProjectHasErrored) {
-      return <p>Sorry! There was an error with your request. Please try again later.</p>;
-    }
-
-    if (this.props.createProjectDataIsLoading) {
-      return <Loading />;
-    }
+    if (this.props.createProjectHasErrored) return <p>Sorry! There was an error with your request. Please try again later.</p>;
+    if (this.props.createProjectDataIsLoading) return <Loading />;
 
     let modalToShow;
     if (this.props.createProjectModalToShow === 'NewProjectTitle') {
@@ -56,9 +59,7 @@ class NewProjectBody extends Component {
     }
 
     return (
-      <div>
-        { modalToShow }
-      </div>
+      <div>{ modalToShow }</div>
     );
   };
   
@@ -71,23 +72,19 @@ class NewProjectBody extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    createProjectModalToShow: state.createProjectModalToShow,
-    createProjectHasErrored: state.createProjectHasErrored,
-    createProjectDataIsLoading: state.createProjectDataIsLoading,
-    modal: state.isModalOpen.modals,
-  };
-};
+const mapStateToProps = (state) => ({
+  createProjectModalToShow: state.createProjectModalToShow,
+  createProjectHasErrored: state.createProjectHasErrored,
+  createProjectDataIsLoading: state.createProjectDataIsLoading,
+  modal: state.isModalOpen.modals,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleProjectNaming: (projectName) => { dispatch(handleProjectNaming(projectName)); },
-    handleAddItem: (item) => { dispatch(handleAddItem(item)); },
-    deleteItem: (idx, modal) => { dispatch(deleteItem(idx, modal)); },
-    handleAddMilestones: (milestones) => { dispatch(handleAddMilestones(milestones)); },
-    handleSaveProject: (projectDetails, modal) => { dispatch(handleSaveProject(projectDetails, modal)); }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  handleProjectNaming: (projectName) => { dispatch(handleProjectNaming(projectName)); },
+  handleAddItem: (item) => { dispatch(handleAddItem(item)); },
+  deleteItem: (idx, modal) => { dispatch(deleteItem(idx, modal)); },
+  handleAddMilestones: (milestones) => { dispatch(handleAddMilestones(milestones)); },
+  handleSaveProject: (projectDetails, modal) => { dispatch(handleSaveProject(projectDetails, modal)); }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProjectBody);

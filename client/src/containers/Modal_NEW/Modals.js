@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { modalClose } from '../../actions/modal';
+import classNames from 'classnames';
 
 import styles from '../../assets/sass/Modal.module.scss';
 import Button from '../../components/UI/Button';
@@ -10,6 +11,13 @@ import ModalRender from '../../modalRoot';
 class Modals extends Component {
   render() {
     const modals = this.props.modals.map((item, i) => {
+
+      const _setModalWidth = (styles) => (
+        classNames(styles.modal, {
+          [styles.skinny]: this.props.modals[i].modalType === 'CreateProject',
+        })
+      );
+
       const onClose = () => {
         if(item.onClose){
           item.onClose();
@@ -22,7 +30,7 @@ class Modals extends Component {
       return (
         <ModalRender key={ i } >
           <div className={ styles.modal_overlay }>
-            <div className={ styles.modal }>
+            <div className={ _setModalWidth(styles) }>
               <div className={ styles.row }>
                 <div className={`${ styles.col_12_of_12 } ${ styles.btn_bar }`}>
                   <Button

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import uuid from "node-uuid";
+import v4 from 'uuid/v4';
 import { modalClose, modalOpen } from '../actions/modal';
 import { closeBookmark, saveBookmark, resetBookmarks } from '../actions/bookmarks';
 import { closeNoteView, addNote, resetNotes } from '../actions/notes';
@@ -1148,7 +1148,7 @@ class WillowCore extends Component {
     }
 
     this.onOpen({
-        id: uuid.v4(),
+        id: v4(),
         onClose: () => closeNode(),
         content
     })
