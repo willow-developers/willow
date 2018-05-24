@@ -5,6 +5,7 @@ import {
   NOTE_SHOW_LIST,
   EDIT_NOTE,
   UPDATE_NOTE,
+  RESET_NOTE,
 } from "./types";
 
 export const noteAdd = (data) => ({ type: ADD_NOTE, data });
@@ -45,3 +46,5 @@ export const editNote = (data) => (dispatch) => {
 export const updateNote = (data) => (dispatch) => {
   dispatch(noteUpdate(data));
 };
+
+export const resetNotes = () => ({ type: RESET_NOTE, payload: [] });
