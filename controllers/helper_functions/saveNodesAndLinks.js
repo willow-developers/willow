@@ -27,3 +27,7 @@ exports.saveLinks = (links) => {
     }
   })).catch(err => console.log('err: ', err))
 };
+
+exports.saveProject = (project) => {
+  return knex('projects').where('id', '=', project.id).update(project).catch(err => console.log('err: ', err))
+};
