@@ -6,6 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Button from '../components/UI/Button';
 
 import styles from '../assets/sass/Dashboard.module.scss';
+import '../assets/sass/Dashboard.scss';
 
 class Dashboard extends Component {
 	componentDidMount() {
@@ -33,28 +34,18 @@ class Dashboard extends Component {
 					<h1>Dashboard</h1>
 					{this.props.projectsList.map((project, idx) => {
 						return (
-							<div key={project.id}>
-								{/* temporary styling fix, fix later */}
-								<br/>
-								
+							<div key={project.id} className={ styles.projects }>
 								<Link
 									to={`/project/${project.id}`}
 									key={project.id}
 									onClick={() => {this.clickHandler(project.id)}}>{`${ idx + 1 }.`} {project.project_name}</Link>
-								{/* temporary styling fix, fix later */}
-
-								<br/>
-								<br/>
-
-								<Button
-									icon={'delete'}
-									type={'smallRound'}
-									handleClick={() => this.props.deleteProject(project.id, idx)}
-								/>
-
-								{/* temporary styling fix, fix later */}
-								<br/>
-
+								<span>
+									<Button
+										icon={'delete'}
+										type={'smallRound'}
+										handleClick={() => this.props.deleteProject(project.id, idx)}
+									/>
+								</span>
 							</div>
 						);
 					})}
