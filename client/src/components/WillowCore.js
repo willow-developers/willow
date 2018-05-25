@@ -46,6 +46,7 @@ class WillowCore extends Component {
         this.d3Setup();
     }
     componentDidUpdate() {
+        console.log(this.props.projectData);
         this.d3Restart();
     }
 
@@ -125,15 +126,38 @@ class WillowCore extends Component {
         contextMenuArray.forEach( item => this.setupContextMenuButton(contextMenu, item))
     }
     setupContextMenuButton(contextMenu, type) {
+
         const newButton = contextMenu.append('g')
             .attr('class', `new${type}NodeButton`)
             .on('mouseover', () => {
                 d3.select(`.new${type}NodeButton`).select('circle')
                     .attr('fill', 'red')
+                
+                d3.select('.ADDNODEMODE').remove()
+                
+                d3.select('svg')
+                    .append('text')
+                    .attr('class', 'ADDNODEMODE')
+                    .text(`ADD NODE MODE: Select Node Type - Add ${type.split('_').join(' ')} Node`)
+                    .attr('transform', 'translate(10, 70)')
+                    .style('font-size', 20)
+                    .style('fill', 'white');
+
+
             })
             .on('mouseout', () => {
                 d3.select(`.new${type}NodeButton`).select('circle')
                     .attr('fill', 'white')
+
+                d3.select('.ADDNODEMODE').remove()
+                
+                d3.select('svg')
+                    .append('text')
+                    .attr('class', 'ADDNODEMODE')
+                    .text(`ADD NODE MODE: Select Node Type -`)
+                    .attr('transform', 'translate(10, 70)')
+                    .style('font-size', 20)
+                    .style('fill', 'white');
             })
             .on('click', () => {
                 this.closeContextMenu();
@@ -166,7 +190,7 @@ class WillowCore extends Component {
         d3.select('svg')
             .append('text')
             .attr('class', 'ADDNODEMODE')
-            .text(`ADD NODE MODE: Select Node Type`)
+            .text(`ADD NODE MODE: Select Node Type -`)
             .attr('transform', 'translate(10, 70)')
             .style('font-size', 20)
             .style('fill', 'white');
@@ -328,7 +352,7 @@ class WillowCore extends Component {
 
             button
                 .append('text')
-                .text(item)
+                .text(item.split('_').join(' '))
                 .attr('transform', 'translate(0, 15)')
                 .style('fill','black')
                 .style('font-size', 15)
@@ -475,7 +499,6 @@ class WillowCore extends Component {
                 if (d3State.addNodeButtonPressed || d3State.newLinkMode || d3State.newLinkMode2) return this.reset();
                 if (JSON.stringify(d3State.selectedLink) !== JSON.stringify({})) return this.reset();
                 if (d3State.deleteMode) {
-                    console.log('hello');
                     d.status = 'delete';
                     this.d3Restart();
                     return;
