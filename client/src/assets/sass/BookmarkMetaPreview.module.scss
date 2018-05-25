@@ -38,13 +38,26 @@
 	}
 }
 
-.displayLink {
+.displayRow {
 	border-bottom: 1px dotted #666;
-	display: block;
 	margin-bottom: 20px;
+}
+
+.displayLink {
+	// border-bottom: 1px dotted #666;
+	display: block;
+	// margin-bottom: 20px;
 	@include cf;
 	text-decoration: none;
 	color: #000;
+}
+
+.deleteLink {
+	text-align: center;
+	button {
+		@include vert_align;
+		top: 40%; 
+	}
 }
 
 .bookmarkList {
