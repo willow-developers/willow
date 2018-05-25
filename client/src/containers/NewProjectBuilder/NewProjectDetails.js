@@ -7,10 +7,6 @@ import styles from '../../assets/sass/NewProjectDetails.module.scss';
 import Input from '../../components/UI/Input';
 import Dropdown from '../../components/UI/Dropdown';
 
-
-// TBD:
-import { deleteItem } from '../../actions/createProject';
-
 class NewProjectDetails extends Component {
 	renderInputs() {
 		let { milestoneField } = this.props;
@@ -20,7 +16,7 @@ class NewProjectDetails extends Component {
 		];
 
 		return _.map(milestoneField, (field, i) => {
-			const { valid, pristine, submitting,reset } = this.props;
+			const { valid, pristine, submitting } = this.props;
 			return (
 				<div key={ field.name }>
 					<div className={ styles.row }>

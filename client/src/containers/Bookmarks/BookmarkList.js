@@ -10,8 +10,8 @@ class BookmarkList extends Component {
 	renderList() {
 		let { bookmarkListAdd, deleteBookmark } = this.props;
 		return _.map(bookmarkListAdd, ({ title, url}, idx) => (
-			<div key={ idx }>
-				<a key={ idx } href={ url } target="_blank" className={ styles.displayLink }>
+			<div key={ idx } className={` ${styles.row} ${styles.displayRow} `}>
+				<a key={ idx } href={ url } target="_blank" className={`${ styles.displayLink } ${ styles.col_10_of_12 }`}>
 					<div className={`${ styles.row } ${ styles.previewMode }`}>
 						<div className={ styles.col_3_of_12 }>
 							<div className={ styles.bookmark_icon }>
@@ -24,14 +24,13 @@ class BookmarkList extends Component {
 						</div>
 					</div>
 				</a>
-				{/* DELETE BUTTON BELOW WORKING AS DESIGNED -- BILLY TO MOVE AND REDESIGN AS NEEDED */}
-				{/* ALSO THE DIV WRAPPER MAY HAVE HAD AN INDIRECT, UNWANTED EFFECT ON STYLING */}
-				{/* BILLY, PLZ FIX 🙏🙏🙏🙏🙏🙏 */}
-				<Button
-					icon={ 'delete' }
-					type={ 'smallRound' }
-					handleClick={ () => deleteBookmark(idx) }
-				/>
+				<div className={`${ styles.deleteLink } ${ styles.col_2_of_12 }`}>
+					<Button
+						icon={ 'delete' }
+						type={ 'smallRound' }
+						handleClick={ () => deleteBookmark(idx) }
+					/>
+				</div>
 			</div>
 		));
 	}
