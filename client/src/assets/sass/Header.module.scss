@@ -8,6 +8,14 @@ $logoHeight: 35px;
 	background-color: #222;
 	padding: 10px 0;
 	@include cf;
+
+	&.hero {
+		background-color:transparent;
+
+		.logo_block {
+			opacity: 0;
+		}
+	}
 }
 
 .logo_block {
