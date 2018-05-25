@@ -2,7 +2,7 @@
 
 -- 1) brew install postgresql
 -- 2) brew services start postgresql
--- 3) psql < database/schema.v3.sql (in root folder)
+-- 3) psql < database/schema.v4.sql (in root folder)
 
 -- TO ACCESS THE DATABASE IN THE TERMINAL:
 -- 1) psql --> 'psql' opens the postgreSQL command line
