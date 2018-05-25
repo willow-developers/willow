@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { reset } from 'redux-form';
 
 import { 
   CREATE_PROJECT_ADD_PROJECT_TITLE,
@@ -25,9 +26,14 @@ export const handleAddMilestones = milestones => ({
   payload: milestones,
 });
 
-export const resetProjectBuilder = () => ({
+export const resetPB = () => ({
   type: RESET_PROJECT_BUILDER,
   payload: null,
+});
+
+export const resetProjectBuilder = () => ((dispatch) => {
+  dispatch(reset('NewProjectTitle'));
+  dispatch(resetPB());
 });
 
 export const redirectTo = projectID => ({
@@ -43,6 +49,7 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
     .then(data => {
       dispatch(createProjectIsLoading(false));
       dispatch(closeModal(modal));
+      dispatch(reset('NewProjectTitle'));
       
       // redirect to newly create project
       let projectID = data.data.project_id;
