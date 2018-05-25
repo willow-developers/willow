@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import Card from './Card';
 
-const CardList = ({ notes, previewToggleNote, editNote }) => (
+const CardList = ({ notes, previewToggleNote, editNote, deleteNote }) => (
   <Fragment>
-    { notes.map((card) => <Card key={ card.id } previewToggleNote={ previewToggleNote } editNote={ editNote } { ...card } />) }
+    { notes.map((card, idx) => <Card idx={ idx } key={ card.id } previewToggleNote={ previewToggleNote } editNote={ editNote } deleteNote={ deleteNote } { ...card } />) }
   </Fragment>
 );
 
