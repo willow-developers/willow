@@ -1,6 +1,16 @@
-import { BOOKMARK_HAS_ERRORED, BOOKMARK_IS_LOADING } from '../actions/types';
-import { BOOKMARK_SHOW_ADD, BOOKMARK_SHOW_PREVIEW, BOOKMARK_SHOW_EDIT } from '../actions/types';
-import { BOOKMARK_STATUS_SUCCESS, BOOKMARK_FIELDS_SUCCESS, LOAD_BOOKMARK_SCRAPE, SAVE_BOOKMARK, RESET_BOOKMARK } from '../actions/types';
+import {
+	BOOKMARK_IS_LOADING,
+	BOOKMARK_HAS_ERRORED,
+	BOOKMARK_SHOW_ADD,
+	BOOKMARK_SHOW_PREVIEW,
+	BOOKMARK_SHOW_EDIT,
+	BOOKMARK_STATUS_SUCCESS,
+	BOOKMARK_FIELDS_SUCCESS,
+	LOAD_BOOKMARK_SCRAPE,
+	SAVE_BOOKMARK,
+	RESET_BOOKMARK,
+	DELETE_BOOKMARK
+} from '../actions/types';
 
 export function bookmarkHasErrored(state = false, action) {
 	switch (action.type) {
@@ -79,7 +89,9 @@ export const bookmarkListAdd = (state = [], action) => {
     case SAVE_BOOKMARK:
       return [...state, action.data];
     case RESET_BOOKMARK:
-      return [];
+			return [];
+		case DELETE_BOOKMARK:
+			return [ ...state.slice(0, action.payload) , ...state.slice(action.payload + 1) ];
     default:
       return state;
   }

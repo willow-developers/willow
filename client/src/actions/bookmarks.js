@@ -12,6 +12,7 @@ import {
 	LOAD_BOOKMARK_SCRAPE,
 	SAVE_BOOKMARK,
 	RESET_BOOKMARK,
+	DELETE_BOOKMARK,
 } from './types';
 
 export const bookmarkHasErrored = (bool) => ({ type: BOOKMARK_HAS_ERRORED, hasErrored: bool });
@@ -92,3 +93,8 @@ export const saveBookmark = (data) => ((dispatch) => {
 );
 
 export const resetBookmarks = () => ({ type: RESET_BOOKMARK, payload: [] });
+
+export const deleteBookmark = (idx) => ({
+	type: DELETE_BOOKMARK,
+	payload: idx,
+})
