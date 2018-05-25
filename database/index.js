@@ -9,10 +9,10 @@ process.env.NODE_ENV === 'production' ?
     database: process.env.DB_DATABASE,
   } :
   connectionDetails = {
-    host: '127.0.0.1',
-    user: 'willow_admin',
-    password: 'qwerty',
-    database: 'willow',    
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_DATABASE,    
   };
 
 const knex = require('knex')({
