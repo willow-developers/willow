@@ -50,7 +50,7 @@ class WillowCore extends Component {
         this.d3Setup();
     }
     componentDidUpdate() {
-        console.log('updated: ',this.props.projectData);
+        // console.log('updated: ',this.props.projectData);
         this.d3Restart();
     }
 
@@ -271,7 +271,6 @@ class WillowCore extends Component {
 //--------------------------------------------------- D3 RESTART
     d3Restart() {
         if (!projectLoad) {
-            // console.log('hello');
             d3.select('svg')
                 .append('g')
                 .attr('class', 'saveScreen')
@@ -283,7 +282,8 @@ class WillowCore extends Component {
             d3.select('.saveScreen')
                 .append('text')
                 .text('PROJECT IS LOADING')
-                .attr('transform', 'translate(250, 250)')
+                .attr('transform', `translate(${this.props.width / 2}, 250)`)
+                .attr('text-anchor', 'middle')
                 .style('fill','white')
                 .style('font-size', 50)
             
@@ -419,16 +419,21 @@ class WillowCore extends Component {
             d3.select(`.SAVEButton`).select('rect')
             .attr('fill', '#317669')
             
-            d3.select('.background')
-                .attr('fill', 'green')
+            // d3.select('.background')
+            //     .append('rect')
+            //     .attr('class', 'saveScreen')
+            //     .attr('fill', 'black')
+            //     .attr('height', '100%')
+            //     .attr('width', '100%')
 
-            setTimeout(() => {
-                d3.select('.background')
-                    .transition()
-                    .duration(1000)
-                    .attr('fill', '#dadada')
-            }, 0)
+            // setTimeout(() => {
+            //     d3.select('.background')
+            //         .transition()
+            //         .duration(1000)
+            //         .attr('fill', '#dadada')
+            // }, 0)
             projectLoad = false;
+            this.d3Restart();
             this.props.saveProject(this.props.projectData);
         }
 
@@ -742,7 +747,7 @@ class WillowCore extends Component {
 
             const newLinkObject = createNewLink(this.props.projectData, this.props.userStatus, d3State.selectedNode, d);
             if (newLinkObject === 'fail') {
-                console.log('node cannot link to itself')
+                // console.log('node cannot link to itself')
                 d3.select('svg')
                     .append('text')
                     .attr('class', 'LINKFAIL')
@@ -835,7 +840,7 @@ class WillowCore extends Component {
     let content;
     let modalType;
 
-    console.log(selectedNode)
+    // console.log(selectedNode)
 
     const closeNode = () => {
         this.reset();
