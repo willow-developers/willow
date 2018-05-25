@@ -2,3 +2,39 @@
 @import 'waffleGrid';
 
 
+.homePage {
+	background: url('../images/background.png');
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	overflow: hidden;
+
+	&:before {
+		content: "";
+		display: block;
+		background: url('../images/shape.svg');
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 50vw;
+		background-size: 100%;
+		z-index: -1;
+	}
+
+	.hero {
+		background: url('../images/homepageBG2.png');
+		background-repeat: no-repeat;
+		width: 110vw;
+		height: 100vh;
+		background-size: 98%;
+		background-position: -600% 80%;
+	}
+}
+
+.nope {
+	display: none;
+}

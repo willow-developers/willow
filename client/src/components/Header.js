@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userCheckStatus } from '../actions/auth';
 import { NavLink, Link, withRouter } from 'react-router-dom';
+import classNames from 'classnames';
 
 import Button from './UI/Button';
 
@@ -75,8 +76,14 @@ class Header extends Component {
 	}
 	
 	render() {
+		const _headerType = (styles) => (
+			classNames(styles.App_header, {
+				[styles.hero]: !!this.props.userStatus === false,
+			})
+		);
+
 		return (
-			<nav className={ styles.App_header }>
+			<nav className={ _headerType(styles) }>
 				<div className={ styles.grid }>
 					<div className={ styles.row }>
 						<div className={`${ styles.logo_block } ${ styles.col_2_of_8 }`}>
