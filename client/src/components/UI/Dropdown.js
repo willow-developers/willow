@@ -21,7 +21,7 @@ class Dropdown extends Component {
 			<Fragment>
 			  <Select
 			  	{ ...this.props.input }
-			  	className={ styles.Dropdown }
+			  	classNamePrefix={ styles.Dropdown }
 			  	options={ this.props.options }
 			  	components={ Animated }
 			  	value={ this.props.input.value || '' }

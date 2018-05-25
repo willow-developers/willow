@@ -3,6 +3,8 @@ import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 import NewProjectInput from './NewProjectInput';
 
+import styles from '../../assets/sass/NewProjectTitle.module.scss';
+
 class NewProjectTitle extends Component {
 	renderInputs() {
 		let { newProjectField } = this.props;
@@ -13,7 +15,7 @@ class NewProjectTitle extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={ styles.padder }>
 				<h2>Project Name: </h2>
 				<form onSubmit={ this.props.handleSubmit((values) => this.props.handleProjectNaming(values)) }>
 					{ this.renderInputs() }

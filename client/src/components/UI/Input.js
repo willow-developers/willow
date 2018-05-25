@@ -31,7 +31,7 @@ class BookmarkInput extends Component {
 	}
 
 	render() {
-		const { input, label, type, placeholder, meta: { error, touched, valid, pristine, submitting, reset }, editMilestone } = this.props;
+		const { input, label, type, placeholder, meta: { error, touched, valid, pristine, submitting, reset }, editMilestone, showDisplayTitle } = this.props;
 		const { isActive } = this.state;
 
 		const _setDisplayClass = () => (
@@ -39,6 +39,7 @@ class BookmarkInput extends Component {
 				[styles.inlinePreviewBtn]: this.props.inlineBtn === 'preview',
 				[styles.inlineAddMilestoneBtn]: this.props.inlineBtn === 'addMilestone',
 				[styles.inlineEditMilestoneBtn]: this.props.inlineBtn === 'editMilestone',
+				[styles.inlineEditMilestoneBtn]: this.props.inlineBtn === 'editTitle',
 			})
 		);
 
@@ -94,6 +95,33 @@ class BookmarkInput extends Component {
 							btnFloat={ 'none' }
 							styleClass={ 'skinnyIcon' }
 							handleClick={ editMilestone }
+						/>
+					</div>
+				);
+			}
+			if (this.props.inlineBtn === 'editTitle') {
+				return (
+					<div className={ styles.btnBox }>
+						<Button
+							value={ 'Update' }
+							iconSide={ 'right' }
+							type="submit"
+							styleClass={ 'noShadow' }
+							disabledStyle={ pristine || submitting ? true : false	}
+						/>
+						<Button
+							icon={ 'undo' }
+							iconSide={ 'center' }
+							handleClick={ reset }
+							styleClass={ 'skinnyIcon' }
+							disabledStyle={ pristine || submitting ? true : false	}
+						/>
+						<Button
+							icon={ 'cancel' }
+							iconSide={ 'center' }
+							btnFloat={ 'none' }
+							styleClass={ 'skinnyIcon' }
+							handleClick={ () => showDisplayTitle() }
 						/>
 					</div>
 				);

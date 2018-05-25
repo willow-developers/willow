@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import v4 from 'uuid/v4';
 import { modalClose, modalOpen } from '../actions/modal';
+import { resetNodeTitle } from '../actions/projects';
 import { closeBookmark, saveBookmark, resetBookmarks } from '../actions/bookmarks';
 import { closeNoteView, addNote, resetNotes } from '../actions/notes';
 import { populateMilestone, resetMilestones } from '../actions/milestone';
@@ -36,17 +37,20 @@ let d3State = {
 
 let zoomState = false;
 
+let projectLoad = false;
 
 
 class WillowCore extends Component {
     componentDidMount() {
+        this.reset = this.reset.bind(this);
+        projectLoad = false;
         this.placeNewNode = this.placeNewNode.bind(this);
         this.closeContextMenu = this.closeContextMenu.bind(this);
         this.reset = this.reset.bind(this);
         this.d3Setup();
     }
     componentDidUpdate() {
-        console.log(this.props.projectData);
+        // console.log('updated: ',this.props.projectData);
         this.d3Restart();
     }
 
@@ -266,6 +270,29 @@ class WillowCore extends Component {
 
 //--------------------------------------------------- D3 RESTART
     d3Restart() {
+        if (!projectLoad) {
+            d3.select('svg')
+                .append('g')
+                .attr('class', 'saveScreen')
+                .append('rect')
+                .attr('fill', 'black')
+                .attr('width', '100%')
+                .attr('height', '100%')
+
+            d3.select('.saveScreen')
+                .append('text')
+                .text('PROJECT IS LOADING')
+                .attr('transform', `translate(${this.props.width / 2}, 250)`)
+                .attr('text-anchor', 'middle')
+                .style('fill','white')
+                .style('font-size', 50)
+            
+            setTimeout(() => {
+                projectLoad = true;
+                this.d3Restart();
+            }, 1000)
+            return;
+        }
         this.clearScreen();
 
         const svg = d3.select('svg')
@@ -384,7 +411,7 @@ class WillowCore extends Component {
                     .duration(1000)
                     .attr('fill', '#dadada')
             }, 0)
-
+            projectLoad = false;
             this.props.projectGetData(this.props.projectData.project.id);
         }
 
@@ -392,16 +419,21 @@ class WillowCore extends Component {
             d3.select(`.SAVEButton`).select('rect')
             .attr('fill', '#317669')
             
-            d3.select('.background')
-                .attr('fill', 'green')
+            // d3.select('.background')
+            //     .append('rect')
+            //     .attr('class', 'saveScreen')
+            //     .attr('fill', 'black')
+            //     .attr('height', '100%')
+            //     .attr('width', '100%')
 
-            setTimeout(() => {
-                d3.select('.background')
-                    .transition()
-                    .duration(1000)
-                    .attr('fill', '#dadada')
-            }, 0)
-
+            // setTimeout(() => {
+            //     d3.select('.background')
+            //         .transition()
+            //         .duration(1000)
+            //         .attr('fill', '#dadada')
+            // }, 0)
+            projectLoad = false;
+            this.d3Restart();
             this.props.saveProject(this.props.projectData);
         }
 
@@ -476,11 +508,13 @@ class WillowCore extends Component {
             .text(this.props.projectData.project.project_name)
                 .attr('transform', 'translate(10, 50)')
                 .style('font-size', 40)
-                .style('fill', 'white');
+                .style('fill', 'black');
     }
 //--------------------------------------------------- CLEAR SCREEN
     clearScreen() {
         this.reset();
+
+        d3.selectAll('.saveScreen').remove();
         d3.selectAll('.menuBar').remove();
         d3.selectAll('line').remove();
         d3.selectAll('.node').remove();
@@ -528,6 +562,7 @@ class WillowCore extends Component {
                 .attr('class', `${item}Node`)
                 .on('click', (d) => {
                     if (d3State.addNodeButtonPressed) return this.reset();
+                    if (d3State.contextMenuOpen) return this.reset();
                     this.clickOpenNodeMenu(d)
                 })
 
@@ -712,7 +747,7 @@ class WillowCore extends Component {
 
             const newLinkObject = createNewLink(this.props.projectData, this.props.userStatus, d3State.selectedNode, d);
             if (newLinkObject === 'fail') {
-                console.log('node cannot link to itself')
+                // console.log('node cannot link to itself')
                 d3.select('svg')
                     .append('text')
                     .attr('class', 'LINKFAIL')
@@ -803,36 +838,48 @@ class WillowCore extends Component {
   clickDisplayMenuMode(d) {
     const selectedNode = d3State.selectedNode;
     let content;
+    let modalType;
+
+    // console.log(selectedNode)
 
     const closeNode = () => {
+        this.reset();
         if (selectedNode.label_id === 1) {
             selectedNode.node_data = {
                 bookmarks: this.props.bookmarkListAdd,
                 notes: this.props.notes
             };
+            selectedNode.node_description = this.props.setNodeTitle;
+
             this.props.closeBookmark();
             this.props.closeNoteView();
+            projectLoad = false;
             this.props.saveProject(this.props.projectData);
             this.props.resetBookmarks();
             this.props.resetNotes();
+            this.props.resetNodeTitle();
 
         } else {
-            selectedNode.node_data = {
-                milestones: this.props.milestones,
-            };
+            selectedNode.node_data = { milestones: this.props.milestones };
+            selectedNode.node_description = this.props.setNodeTitle;
+
+            projectLoad = false;
             this.props.saveProject(this.props.projectData);
             this.props.resetMilestones();
+            this.props.resetNodeTitle();
         }
     }
 
     if (selectedNode.label_id === 1) {
-        content = <ExplorativeNode />;
+        content = <ExplorativeNode nodeTitle={ selectedNode.node_description } />;
+        modalType = '';
         if (!!selectedNode.node_data) {
             selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
             selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
         }
     } else {
-        content = <Milestones column="L" />;
+        content = <Milestones column="L" nodeTitle={ selectedNode.node_description } />;
+        modalType = 'CreateProject';
         if (!!selectedNode.node_data) {
             selectedNode.node_data.milestones.forEach((ms) => this.props.populateMilestone(ms));
         }
@@ -841,7 +888,8 @@ class WillowCore extends Component {
     this.onOpen({
         id: v4(),
         onClose: () => closeNode(),
-        content
+        content,
+        modalType
     })
   }
 //--------------------------------------------------- DRAG NODE
@@ -888,6 +936,7 @@ const mapStateToProps = (state) => {
         bookmarkListAdd: state.bookmarkListAdd,
         notes: state.notes,
         milestones: state.milestones,
+        setNodeTitle: state.setNodeTitle,
     };
 };
 
@@ -905,6 +954,7 @@ const mapDispatchToProps = (dispatch) => {
         resetNotes: () => dispatch(resetNotes()),
         populateMilestone: (data) => dispatch(populateMilestone(data)),
         resetMilestones: () => dispatch(resetMilestones()),
+        resetNodeTitle: () => dispatch(resetNodeTitle()),
     }
 };
 

@@ -7,10 +7,6 @@ import styles from '../../assets/sass/NewProjectDetails.module.scss';
 import Input from '../../components/UI/Input';
 import Dropdown from '../../components/UI/Dropdown';
 
-
-// TBD:
-import { deleteItem } from '../../actions/createProject';
-
 class NewProjectDetails extends Component {
 	renderInputs() {
 		let { milestoneField } = this.props;
@@ -20,7 +16,7 @@ class NewProjectDetails extends Component {
 		];
 
 		return _.map(milestoneField, (field, i) => {
-			const { valid, pristine, submitting,reset } = this.props;
+			const { valid, pristine, submitting } = this.props;
 			return (
 				<div key={ field.name }>
 					<div className={ styles.row }>
@@ -69,7 +65,7 @@ class NewProjectDetails extends Component {
 	render() {
 		console.log('t.p: ', this.props);
 		return (
-			<div>
+			<div className={ styles.padder }>
 				<h2>Steps required to complete "{this.props.createProjectTitle}": </h2>
 				<form onSubmit={ this.props.handleSubmit((values) => {
 					this.props.handleAddItem(values);
@@ -77,37 +73,34 @@ class NewProjectDetails extends Component {
 				})}>
 					{ this.renderInputs() }
 				</form>
-
-				<div className={` ${styles.row} ${styles.Header} `}>
-					<div className={ styles.col_6_of_12 }>Step Name</div>
-					<div className={ styles.col_4_of_12 }>Category</div>
-					<div className={ styles.col_2_of_12 }></div>
-				</div>
-
+				{ this.props.createProjectItems.length > 0
+					? (<div className={` ${styles.row} ${styles.Header} `}>
+							<div className={ styles.col_6_of_12 }>Step Name</div>
+							<div className={ styles.col_4_of_12 }>Category</div>
+							<div className={ styles.col_2_of_12 }></div>
+						</div>)
+					: null
+				}
 				{ this.renderItems() }
 
-				<br/> {/* REPLACE WITH STYLING LATER */}
-
-				<Button
-					handleClick={ () => { this.props.navigateBack('NewProjectTitle'); }}
-					icon={ 'navigate_before' }
-					value={ 'Back' }
-					/* btnFloat={ 'right' } */ // COME BACK TO STYLE AND PLACE THE BUTTON
-					type="submit"
-					size="small"
-				/>
-
-				<br/> {/* REPLACE WITH STYLING LATER */}
-				<br/> {/* REPLACE WITH STYLING LATER */}
-
-				<Button 
-					handleClick={ () => { this.props.handleAddMilestones(this.props.createProjectItems); }}
-					icon={ 'navigate_next' }
-					value={ 'Next' }
-					/* btnFloat={ 'right' } */ // COME BACK TO STYLE AND PLACE THE BUTTON
-					type="submit"
-					size="small"
-				/>
+				<div className={ styles.btnBar }>
+					<Button
+						handleClick={ () => { this.props.navigateBack('NewProjectTitle'); }}
+						icon={ 'navigate_before' }
+						value={ 'Back' }
+						btnFloat={ 'left' }
+						type="submit"
+						size="small"
+					/>
+					<Button 
+						handleClick={ () => { this.props.handleAddMilestones(this.props.createProjectItems); }}
+						icon={ 'navigate_next' }
+						value={ 'Next' }
+						btnFloat={ 'right' }
+						type="submit"
+						size="small"
+					/>
+				</div>
 
 			</div>
 		);

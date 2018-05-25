@@ -5,7 +5,8 @@ import {
     PROJECT_IS_LOADING,
     PROJECT_SUCCESS,
     CLEAR_PROJECT_DATA,
-    RESET_REDIRECTS
+    RESET_REDIRECTS,
+    DELETE_PROJECT_FROM_STATE
 } from './types';
 
 export const projectHasErrored = (bool) => ({ type: PROJECT_HAS_ERRORED, projectHasErrored: bool });
@@ -48,4 +49,24 @@ export const projectSave = (projectData) => {
 export const resetRedirects = () => ({
     type: RESET_REDIRECTS,
     payload: null,
+});
+
+export const deleteProject = (projectID, idx) => {
+    return (dispatch) => {
+        console.log({ projectID });
+
+        axios
+            .post('/api/deleteProject', { projectID })
+            .then(response => {
+                dispatch(deleteProjectFromState(idx));
+            })
+            .catch(err => {
+
+            });
+    };
+};
+
+export const deleteProjectFromState = (projectID) => ({
+    type: DELETE_PROJECT_FROM_STATE,
+    payload: projectID,
 });
