@@ -14,7 +14,7 @@ const { saveNodes, saveLinks, saveProject } = require('./helper_functions/saveNo
 exports.createNewProject = (req, res) => {
     let { user, title, createProjectMilestones } = req.body.data;
  
-    let projectData = { project_name: title, owner_id: user.google_id };
+    let projectData = { project_name: title, owner_id: user.google_id, zoomx: 0, zoomy: 0, zoomscale: 1 };
 
     knex('projects')
         .insert(projectData, 'id')
@@ -43,10 +43,10 @@ exports.createNewProject = (req, res) => {
 exports.fetchProjects = (req, res) => {
     
     // // update as needed!!
-    // let owner_id = req.query.userID;
+    let owner_id = req.query.userID;
 
     // to go to Jun's google account:
-    owner_id = '110227128753222443119';
+    // owner_id = '110227128753222443119';
 
     knex('projects')
         .where('owner_id', owner_id)
