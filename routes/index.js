@@ -7,7 +7,8 @@ const {
   getProjectData,
   createNewProject,
   saveProject,
-  getBookmarkMetadata
+  getBookmarkMetadata,
+  deleteProject
 } = require('../controllers/dataController.js');
 
 const {
@@ -24,6 +25,7 @@ router.get('/api/projects', fetchProjects);
 router.get('/api/projectData', getProjectData);
 router.post('/api/newProject', createNewProject);
 router.post('/api/updateProject', saveProject);
+router.post('/api/deleteProject', deleteProject);
 
 // USER CREATION:
 router.post('/api/user', postUser);

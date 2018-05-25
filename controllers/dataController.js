@@ -105,3 +105,8 @@ exports.getBookmarkMetadata = async (req, res) => {
     const metadata = await metascraper({html, url});
     res.send(metadata);
 };
+
+exports.deleteProject = (req, res) => {
+    console.log('RBD: ', req.body.data);
+    res.status(200).send('success!');
+};
