@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addNote, previewToggleNote, createNoteView, closeNoteView, editNote, updateNote } from '../../actions/notes';
+import { addNote, previewToggleNote, createNoteView, closeNoteView, editNote, updateNote, deleteNote } from '../../actions/notes';
 
 import CardList from './CardList';
 import NotesForm from './NotesForm';
@@ -9,12 +9,25 @@ import styles from '../../assets/sass/NotesBody.module.scss';
 
 class NotesBody extends Component {
 	render() {
-		const { notes, previewToggleNote, addNote, noteShowForm, noteShowList, createNoteView, closeNoteView, editNote, noteEdit, updateNote } = this.props;
+		const {
+			notes,
+			previewToggleNote,
+			addNote,
+			noteShowForm,
+			noteShowList,
+			createNoteView,
+			closeNoteView,
+			editNote,
+			noteEdit,
+			updateNote,
+			deleteNote
+		} = this.props;
+
 		return (
 			<div className={ styles.row }>
 				<div className={` ${styles.col_12_of_12} ${styles.listHolder} `}>
 					{ noteShowList
-						? (<CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } />)
+						? (<CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } deleteNote={ deleteNote } />)
 						: '' }
 					{ noteShowForm ? <NotesForm closeNoteView={ closeNoteView } addNote={ addNote } noteEdit={ noteEdit } updateNote={ updateNote } /> : '' }
 					{ noteShowForm ? '' : <div className={ styles.btnBar }><Button type={ 'bigRound' } icon={ 'add' } btnFloat={ 'right' } handleClick={ () => createNoteView() } /></div> }
@@ -37,7 +50,8 @@ const mapDispatchToProps = (dispatch) => ({
   createNoteView: () => dispatch(createNoteView()),
   closeNoteView: () => dispatch(closeNoteView()),
   editNote: (data) => dispatch(editNote(data)),
-  updateNote: (data) => dispatch(updateNote(data)),
+	updateNote: (data) => dispatch(updateNote(data)),
+	deleteNote: (idx) => dispatch(deleteNote(idx))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotesBody);
