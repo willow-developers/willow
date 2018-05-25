@@ -8,14 +8,14 @@ const {
   createNewProject,
   saveProject,
   getBookmarkMetadata,
-  deleteProject
+  deleteProject,
 } = require('../controllers/dataController.js');
 
 const {
   postUser,
   logoutUser,
   getUserData,
-  googleRedirect
+  googleRedirect,
 } = require('../controllers/authController.js');
 
 const passportGoogle = require('../controllers/googleOAuth.js');

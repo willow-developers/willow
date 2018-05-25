@@ -107,6 +107,9 @@ exports.getBookmarkMetadata = async (req, res) => {
 };
 
 exports.deleteProject = (req, res) => {
-    console.log('RBD: ', req.body.data);
-    res.status(200).send('success!');
+    knex('projects')
+        .where({ 'id': req.body.projectID, 'owner_id': req.user[0].google_id })
+        .del()
+        .then(result => res.status(200).send('success!'))
+        .catch(err => res.status(500).send({ err }));
 };
