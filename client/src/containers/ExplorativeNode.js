@@ -19,6 +19,9 @@ class ExplorativeNode extends Component {
 	render() {
 		return (
       <div className={ styles.row }>
+        <div className={ styles.col_12_of_12 }>
+          im the title!
+        </div>
         <div className={` ${styles.col_7_of_12} ${styles.holder} `}>
           <Notes />
         </div>

@@ -40,6 +40,7 @@ let zoomState = false;
 
 class WillowCore extends Component {
     componentDidMount() {
+        this.reset = this.reset.bind(this);
         this.placeNewNode = this.placeNewNode.bind(this);
         this.closeContextMenu = this.closeContextMenu.bind(this);
         this.reset = this.reset.bind(this);
@@ -803,8 +804,12 @@ class WillowCore extends Component {
   clickDisplayMenuMode(d) {
     const selectedNode = d3State.selectedNode;
     let content;
+    let modalType;
+
+    console.log(selectedNode)
 
     const closeNode = () => {
+        this.reset();
         if (selectedNode.label_id === 1) {
             selectedNode.node_data = {
                 bookmarks: this.props.bookmarkListAdd,
@@ -827,12 +832,14 @@ class WillowCore extends Component {
 
     if (selectedNode.label_id === 1) {
         content = <ExplorativeNode />;
+        modalType = '';
         if (!!selectedNode.node_data) {
             selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
             selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
         }
     } else {
         content = <Milestones column="L" />;
+        modalType = 'CreateProject';
         if (!!selectedNode.node_data) {
             selectedNode.node_data.milestones.forEach((ms) => this.props.populateMilestone(ms));
         }
@@ -841,7 +848,8 @@ class WillowCore extends Component {
     this.onOpen({
         id: v4(),
         onClose: () => closeNode(),
-        content
+        content,
+        modalType
     })
   }
 //--------------------------------------------------- DRAG NODE
