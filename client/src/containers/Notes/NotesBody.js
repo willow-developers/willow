@@ -25,9 +25,6 @@ class NotesBody extends Component {
 
 		return (
 			<div className={ styles.row }>
-				<div className={ styles.col_12_of_12 }>
-          im the title!
-        </div>
 				<div className={` ${styles.col_12_of_12} ${styles.listHolder} `}>
 					{ noteShowList
 						? (<CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } deleteNote={ deleteNote } />)

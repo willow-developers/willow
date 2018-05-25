@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import v4 from 'uuid/v4';
 import { modalClose, modalOpen } from '../actions/modal';
+import { resetNodeTitle } from '../actions/projects';
 import { closeBookmark, saveBookmark, resetBookmarks } from '../actions/bookmarks';
 import { closeNoteView, addNote, resetNotes } from '../actions/notes';
 import { populateMilestone, resetMilestones } from '../actions/milestone';
@@ -815,30 +816,34 @@ class WillowCore extends Component {
                 bookmarks: this.props.bookmarkListAdd,
                 notes: this.props.notes
             };
+            selectedNode.node_description = this.props.setNodeTitle;
+
             this.props.closeBookmark();
             this.props.closeNoteView();
             this.props.saveProject(this.props.projectData);
             this.props.resetBookmarks();
             this.props.resetNotes();
+            this.props.resetNodeTitle();
 
         } else {
-            selectedNode.node_data = {
-                milestones: this.props.milestones,
-            };
+            selectedNode.node_data = { milestones: this.props.milestones };
+            selectedNode.node_description = this.props.setNodeTitle;
+
             this.props.saveProject(this.props.projectData);
             this.props.resetMilestones();
+            this.props.resetNodeTitle();
         }
     }
 
     if (selectedNode.label_id === 1) {
-        content = <ExplorativeNode />;
+        content = <ExplorativeNode nodeTitle={ selectedNode.node_description } />;
         modalType = '';
         if (!!selectedNode.node_data) {
             selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
             selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
         }
     } else {
-        content = <Milestones column="L" />;
+        content = <Milestones column="L" nodeTitle={ selectedNode.node_description } />;
         modalType = 'CreateProject';
         if (!!selectedNode.node_data) {
             selectedNode.node_data.milestones.forEach((ms) => this.props.populateMilestone(ms));
@@ -896,6 +901,7 @@ const mapStateToProps = (state) => {
         bookmarkListAdd: state.bookmarkListAdd,
         notes: state.notes,
         milestones: state.milestones,
+        setNodeTitle: state.setNodeTitle,
     };
 };
 
@@ -913,6 +919,7 @@ const mapDispatchToProps = (dispatch) => {
         resetNotes: () => dispatch(resetNotes()),
         populateMilestone: (data) => dispatch(populateMilestone(data)),
         resetMilestones: () => dispatch(resetMilestones()),
+        resetNodeTitle: () => dispatch(resetNodeTitle()),
     }
 };
 
