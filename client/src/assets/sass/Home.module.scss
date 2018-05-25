@@ -2,3 +2,26 @@
 @import 'waffleGrid';
 
 
+.mainMessage {
+	text-align: center;
+	padding: 10px 20px 20px;
+	// border: 2px dashed #e9504b;
+	@include vert_align;
+	top: 51%;
+
+	.intro {
+		margin: 0;
+		font-size: 28px;
+		color: #f8d861;
+		font-style: italic;
+		text-shadow: 1px 1px 0px rgba(#d3a133, 1);
+	}
+
+	h1 {
+		font-size: 112px;
+		margin: 0;
+		line-height: 82px;
+		color: #317669;
+		text-shadow: 2px 2px 0px rgba(#40bdad, 1);
+	}
+}
