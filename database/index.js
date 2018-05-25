@@ -1,7 +1,7 @@
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } = require('../config/keys');
 var connectionDetails;
 
-process.env.NODE_ENV === 'production'?
+process.env.NODE_ENV === 'production' ?
   connectionDetails = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

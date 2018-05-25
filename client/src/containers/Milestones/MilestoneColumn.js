@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createMilestone, toggleMilestone, editMilestone, updateMilestone, filterMilestone, populateMilestone } from '../../actions/milestone';
+import { createMilestone, toggleMilestone, editMilestone, updateMilestone, filterMilestone } from '../../actions/milestone';
 
 import MilestoneList from './MilestoneList';
 import AddMilestone from './AddMilestone';
+import FilterNav from './FilterNav';
 
 class MilestoneColumn extends Component {
   createMilestone = (data) => {
@@ -30,35 +31,24 @@ class MilestoneColumn extends Component {
     this.props.updateMilestone(data);
   };
 
-  populateTasks = (tasks) => {
-    const current = {};
-    this.props.milestones.forEach((item) => {
-      current[item.id] = item.id;
-    });
-
-    tasks.forEach(({ hash_id, data }) => {
-      if (!current[hash_id]) {
-        const populateData = {};
-        populateData.id = hash_id;
-        populateData.text = data;
-        populateData.column = this.props.column;
-        this.props.populateMilestone(populateData);
-      }
-    });
-  }
-
-  componentDidMount() {
-    this.populateTasks(this.props.data);
-  }
-
   render() {
     const { milestones, visibilityFilter, column, visibilityFilterColumn } = this.props;
+    const filterOptions = ["SHOW_ALL", "SHOW_ACTIVE", "SHOW_COMPLETED"];
     return (
       <div>
         <AddMilestone
           createMilestone={ this.createMilestone }
           column={ column }
         />
+        { milestones.length > 0
+          ? (<FilterNav
+            filterOptions={ filterOptions }
+            filterMilestone={ this.filterMilestone }
+            currentFilter={ visibilityFilter }
+            column={ column }
+          />)
+          : null
+        }
         <MilestoneList
           milestones={ milestones }
           visibilityFilter={ visibilityFilter }
@@ -73,21 +63,6 @@ class MilestoneColumn extends Component {
   }
 }
 
-
-// For Filtering the list do not remove
-
-// import FilterNav from './FilterNav';
-// const filterOptions = ["SHOW_ALL", "SHOW_ACTIVE", "SHOW_COMPLETED"];
-// { milestones.length > 0
-//   ? (<FilterNav
-//     filterOptions={ filterOptions }
-//     filterMilestone={ this.filterMilestone }
-//     currentFilter={ visibilityFilter }
-//     column={ column }
-//   />)
-//   : ('')
-// }
-
 const mapStateToProps = (state) => ({
   milestones: state.milestones,
   visibilityFilter: state.visibilityFilter,
@@ -100,7 +75,6 @@ const mapDispatchToProps = (dispatch) => ({
   filterMilestone: (filter) => dispatch(filterMilestone(filter)),
   editMilestone: (id) => dispatch(editMilestone(id)),
   updateMilestone: (data) => dispatch(updateMilestone(data)),
-  populateMilestone: (data) => dispatch(populateMilestone(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MilestoneColumn);

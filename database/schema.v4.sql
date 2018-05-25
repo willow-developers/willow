@@ -2,7 +2,7 @@
 
 -- 1) brew install postgresql
 -- 2) brew services start postgresql
--- 3) psql < database/schema.v3.sql (in root folder)
+-- 3) psql < database/schema.v4.sql (in root folder)
 
 -- TO ACCESS THE DATABASE IN THE TERMINAL:
 -- 1) psql --> 'psql' opens the postgreSQL command line
@@ -47,6 +47,9 @@ CREATE TABLE projects (
   id SERIAL,
   owner_id varchar(100),
   project_name varchar(100),
+  zoomX double PRECISION,
+  zoomY double PRECISION,
+  zoomScale double PRECISION,
   date_created timestamp default current_timestamp,
   date_updated date,
   PRIMARY KEY (id),
@@ -109,8 +112,8 @@ INSERT INTO users (google_id, first_name, last_name, email, hashed_password)
 -- INSERT INTO projects (owner_id, project_name)
 --   VALUES ('107740050254369789353', 'Build SWP');
 
-INSERT INTO projects (owner_id, project_name)
-  VALUES ('110227128753222443119', 'Build SWP - Jun');
+INSERT INTO projects (owner_id, project_name, zoomX, zoomY, zoomScale)
+  VALUES ('110227128753222443119', 'Build SWP - Jun', 0, 0, 1);
 
 -- LABELS:
 -- 1

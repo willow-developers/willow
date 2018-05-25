@@ -47,19 +47,5 @@ const MilestoneList = ({ milestones, visibilityFilter, toggleMilestone, editMile
     </div>
   );
 };
-            // milestone.edit
-            // ? (<EditMilestone
-            //     key={ milestone.id }
-            //     editMilestone={ () => editMilestone(milestone.id) }
-            //     updateMilestone={ updateMilestone }
-            //     { ...milestone }
-            //   />)
-            // : (<Milestone
-            //     idx={ idx }
-            //     key={ milestone.id }
-            //     toggleMilestone={ () => toggleMilestone(milestone.id) }
-            //     editMilestone={ () => editMilestone(milestone.id) }
-            //     { ...milestone }
-            //   />)
 
 export default MilestoneList;

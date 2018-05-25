@@ -3,8 +3,10 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Button from '../../components/UI/Button';
-import styles from '../../assets/sass/AddMilestone.module.scss';
+import styles from '../../assets/sass/NewProjectDetails.module.scss';
 import Input from '../../components/UI/Input';
+import Dropdown from '../../components/UI/Dropdown';
+
 
 // TBD:
 import { deleteItem } from '../../actions/createProject';
@@ -12,16 +14,36 @@ import { deleteItem } from '../../actions/createProject';
 class NewProjectDetails extends Component {
 	renderInputs() {
 		let { milestoneField } = this.props;
+		const options = [
+			{ value: 'Action', label: 'Action Item/Task' },
+			{ value: 'Objective', label: 'Objective' },
+		];
 
-		return _.map(milestoneField, (field, i) => (
-			<div key={ field.name }>
-				<Field key={ field.name } { ...field } component={ Input }/>
-				Type: <Field component="select" name="label">
-					<option value="Action">Action Item/Task</option>
-					<option value="Objective">Objective</option>
-				</Field>
-			</div>
-		));
+		return _.map(milestoneField, (field, i) => {
+			const { valid, pristine, submitting,reset } = this.props;
+			return (
+				<div key={ field.name }>
+					<div className={ styles.row }>
+						<div className={ styles.col_7_of_12 }>
+							<Field key={ field.name } { ...field } component={ Input }/>
+						</div>
+						<div className={` ${styles.col_3_of_12} ${styles.align} `}>
+							<Field component={ Dropdown } name="label" options={ options } multi />
+						</div>
+						<div className={` ${styles.col_2_of_12} ${styles.align} `}>
+							<Button
+								icon={ 'add' }
+								value={ 'Add' }
+								iconSide={ 'center' }
+								type="submit"
+								size="small"
+								disabledStyle={ !valid || pristine || submitting ? true : false	}
+							/>
+						</div>
+					</div>
+				</div>
+			);
+		});
 	}
 
 	handleClick(idx) {
@@ -30,45 +52,55 @@ class NewProjectDetails extends Component {
 
 	renderItems() {
     return _.map(this.props.createProjectItems, (item, idx) => (
-      <li key={ idx }>
-				Item: { item.item }  --  Category: { item.label } -- {/*update styling later*/}
-				<i><a onClick={ () => this.handleClick(idx) } href="#">Delete</a></i> {/*update styling later*/}
-			</li>
+    	<div className={` ${styles.row} ${styles.item} `} key={ idx }>
+				<div className={ styles.col_6_of_12 }>
+					{ item.item }
+				</div>
+				<div className={ styles.col_4_of_12 }>
+					{ item.label }
+				</div>
+				<div className={ styles.col_2_of_12 }>
+					<a onClick={ () => this.handleClick(idx) } href="#"><i className= { styles.materialIcons }>delete</i></a>
+				</div>
+			</div>
     ));
 	}
 
 	render() {
+		console.log('t.p: ', this.props);
 		return (
 			<div>
-				<h2>Steps required to complete this project: </h2>
-				{/* <p>Sequentially enter project actions or objectives that must be completed prior to the completion of the project</p> */}
-				
-				{/* <br/> */}{/* REPLACE WITH STYLING LATER */}
-
+				<h2>Steps required to complete "{this.props.createProjectTitle}": </h2>
 				<form onSubmit={ this.props.handleSubmit((values) => {
 					this.props.handleAddItem(values);
 					this.props.reset();
 				})}>
 					{ this.renderInputs() }
-					
-					<br/> {/* REPLACE WITH STYLING LATER */}
-					
-					<Button
-						icon={ 'add' }
-						value={ 'Add Item' }
-						iconSide={ 'center' }
-						type="submit"
-						size="small"
-					/>
 				</form>
 
-				<br/> {/* REPLACE WITH STYLING LATER */}
+				<div className={` ${styles.row} ${styles.Header} `}>
+					<div className={ styles.col_6_of_12 }>Step Name</div>
+					<div className={ styles.col_4_of_12 }>Category</div>
+					<div className={ styles.col_2_of_12 }></div>
+				</div>
 
 				{ this.renderItems() }
 
 				<br/> {/* REPLACE WITH STYLING LATER */}
 
 				<Button
+					handleClick={ () => { this.props.navigateBack('NewProjectTitle'); }}
+					icon={ 'navigate_before' }
+					value={ 'Back' }
+					/* btnFloat={ 'right' } */ // COME BACK TO STYLE AND PLACE THE BUTTON
+					type="submit"
+					size="small"
+				/>
+
+				<br/> {/* REPLACE WITH STYLING LATER */}
+				<br/> {/* REPLACE WITH STYLING LATER */}
+
+				<Button 
 					handleClick={ () => { this.props.handleAddMilestones(this.props.createProjectItems); }}
 					icon={ 'navigate_next' }
 					value={ 'Next' }
@@ -76,6 +108,7 @@ class NewProjectDetails extends Component {
 					type="submit"
 					size="small"
 				/>
+
 			</div>
 		);
 	}
@@ -84,6 +117,7 @@ class NewProjectDetails extends Component {
 const validate = (values) => {
 	const errors = {};
 	if (!values.item) errors.item = 'Description required in order to add a step';
+	if (!values.label) errors.label = 'Please pick a step type';
 	if (values.item) errors.item = validateLength40(values.item);
   return errors;
 };
@@ -97,6 +131,7 @@ const mapStateToProps = (state) => {
   return {
 		newProjectDetails: state.newProjectDetails,
 		createProjectItems: state.createProjectItems,
+		createProjectTitle: state.createProjectTitle,
   };
 };
 

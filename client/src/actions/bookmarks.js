@@ -11,6 +11,7 @@ import {
 	BOOKMARK_FIELDS_SUCCESS,
 	LOAD_BOOKMARK_SCRAPE,
 	SAVE_BOOKMARK,
+	RESET_BOOKMARK,
 } from './types';
 
 export const bookmarkHasErrored = (bool) => ({ type: BOOKMARK_HAS_ERRORED, hasErrored: bool });
@@ -89,3 +90,5 @@ export const saveBookmark = (data) => ((dispatch) => {
 		dispatch(bookmarkStatusSuccess(null));
 	}
 );
+
+export const resetBookmarks = () => ({ type: RESET_BOOKMARK, payload: [] });

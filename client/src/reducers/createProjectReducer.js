@@ -8,12 +8,15 @@ import {
 	CREATE_PROJECT_HANDLE_NEW_ITEM,
 	CREATE_PROJECT_DELETE_ITEM,
 	RESET_PROJECT_BUILDER,
+	CREATE_PROJECT_NAVIGATE_BACK,
 } from '../actions/types';
 
 export function createProjectModalToShow(state = 'NewProjectTitle', action) {
 	switch (action.type) {
 		case CREATE_PROJECT_ADD_PROJECT_TITLE:
-      return 'AddProjectDetails';
+			return 'AddProjectDetails';
+		case CREATE_PROJECT_NAVIGATE_BACK:
+			return action.payload;
 		case CREATE_PROJECT_ADD_MILESTONES:
 			return 'ProjectSummary';
 		case CREATE_PROJECT_SAVE_PROJECT:
