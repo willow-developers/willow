@@ -9,6 +9,8 @@ import {
   CREATE_PROJECT_HANDLE_NEW_ITEM,
   CREATE_PROJECT_DELETE_ITEM,
   RESET_PROJECT_BUILDER,
+  CREATE_PROJECT_NAVIGATE_BACK,
+  CREATE_PROJECT_IS_LOADING
 } from '../actions/types';
 
 import { closeModal } from './modal';
@@ -64,6 +66,11 @@ export const deleteItem = idx => ({
 });
 
 export const createProjectIsLoading = boolean => ({
-  type: 'TYPE_GOES_HERE',
+  type: CREATE_PROJECT_IS_LOADING,
   payload: boolean,
+});
+
+export const navigateBack = modalTitle => ({
+  type: CREATE_PROJECT_NAVIGATE_BACK,
+  payload: modalTitle,
 });

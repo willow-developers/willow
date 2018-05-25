@@ -28,7 +28,7 @@ class NewProjectDetails extends Component {
 							<Field key={ field.name } { ...field } component={ Input }/>
 						</div>
 						<div className={` ${styles.col_3_of_12} ${styles.align} `}>
-							<Field component={ Dropdown } name="label" options={ options } />
+							<Field component={ Dropdown } name="label" options={ options } multi />
 						</div>
 						<div className={` ${styles.col_2_of_12} ${styles.align} `}>
 							<Button
@@ -67,9 +67,10 @@ class NewProjectDetails extends Component {
 	}
 
 	render() {
+		console.log('t.p: ', this.props);
 		return (
 			<div>
-				<h2>Steps required to complete this project: </h2>
+				<h2>Steps required to complete "{this.props.createProjectTitle}": </h2>
 				<form onSubmit={ this.props.handleSubmit((values) => {
 					this.props.handleAddItem(values);
 					this.props.reset();
@@ -88,6 +89,18 @@ class NewProjectDetails extends Component {
 				<br/> {/* REPLACE WITH STYLING LATER */}
 
 				<Button
+					handleClick={ () => { this.props.navigateBack('NewProjectTitle'); }}
+					icon={ 'navigate_before' }
+					value={ 'Back' }
+					/* btnFloat={ 'right' } */ // COME BACK TO STYLE AND PLACE THE BUTTON
+					type="submit"
+					size="small"
+				/>
+
+				<br/> {/* REPLACE WITH STYLING LATER */}
+				<br/> {/* REPLACE WITH STYLING LATER */}
+
+				<Button 
 					handleClick={ () => { this.props.handleAddMilestones(this.props.createProjectItems); }}
 					icon={ 'navigate_next' }
 					value={ 'Next' }
@@ -95,6 +108,7 @@ class NewProjectDetails extends Component {
 					type="submit"
 					size="small"
 				/>
+
 			</div>
 		);
 	}
@@ -117,6 +131,7 @@ const mapStateToProps = (state) => {
   return {
 		newProjectDetails: state.newProjectDetails,
 		createProjectItems: state.createProjectItems,
+		createProjectTitle: state.createProjectTitle,
   };
 };
 
