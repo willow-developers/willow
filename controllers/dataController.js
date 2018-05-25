@@ -105,3 +105,11 @@ exports.getBookmarkMetadata = async (req, res) => {
     const metadata = await metascraper({html, url});
     res.send(metadata);
 };
+
+exports.deleteProject = (req, res) => {
+    knex('projects')
+        .where({ 'id': req.body.projectID, 'owner_id': req.user[0].google_id })
+        .del()
+        .then(result => res.status(200).send('success!'))
+        .catch(err => res.status(500).send({ err }));
+};
