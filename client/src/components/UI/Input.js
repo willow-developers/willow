@@ -31,7 +31,7 @@ class BookmarkInput extends Component {
 	}
 
 	render() {
-		const { input, label, type, placeholder, meta: { error, touched, valid, pristine, submitting, reset }, editMilestone, editTitle, showDisplayTitle } = this.props;
+		const { input, label, type, placeholder, meta: { error, touched, valid, pristine, submitting, reset }, editMilestone, showDisplayTitle } = this.props;
 		const { isActive } = this.state;
 
 		const _setDisplayClass = () => (
