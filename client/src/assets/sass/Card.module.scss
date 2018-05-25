@@ -21,13 +21,17 @@
 
 		button {
 			position: absolute;
-			right: 15px;
+			right: 55px;
 			box-shadow: none;
 			background-color: #ccc;
 			@include vert_align;
 
 			&:hover {
 				background-color: #999;
+			}
+
+			&:last-of-type {
+				right: 15px;
 			}
 		}
 	}

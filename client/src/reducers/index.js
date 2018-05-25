@@ -7,7 +7,7 @@ import { bookmarkStatus, bookmarkHasErrored, bookmarkIsLoading, bookmarkShowAdd,
 import { createProjectModalToShow, createProjectMilestones, createProjectTitle, createProjectItems, createProjectHasErrored, createProjectDataIsLoading, shouldRedirect, shouldRedirectTo } from './createProjectReducer';
 
 import { projectsList, projectsListHasErrored, projectsListIsLoading } from './projectsReducer';
-import { projectData, projectHasErrored, projectIsLoading, clearProjectData } from './projectReducer';
+import { projectData, projectHasErrored, projectIsLoading, clearProjectData, setNodeTitle, showTitle, showTitleForm } from './projectReducer';
 import { newExplorativeNodeCreated } from './explorativeNodeReducer';
 
 import { uiReducer } from './windowSizeReducer';
@@ -56,4 +56,7 @@ export default combineReducers({
 	noteShowForm,
 	noteShowList,
 	noteEdit,
+	setNodeTitle,
+	showTitle,
+	showTitleForm,
 });

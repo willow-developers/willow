@@ -44,9 +44,7 @@
 }
 
 .displayLink {
-	// border-bottom: 1px dotted #666;
 	display: block;
-	// margin-bottom: 20px;
 	@include cf;
 	text-decoration: none;
 	color: #000;
@@ -54,9 +52,18 @@
 
 .deleteLink {
 	text-align: center;
+	position: relative;
+
 	button {
 		@include vert_align;
-		top: 40%; 
+		top: 20%;
+		background-color: #ccc;
+		box-shadow: none;
+
+		&:hover {
+			background-color: #999;
+			box-shadow: none;
+		}
 	}
 }
 
