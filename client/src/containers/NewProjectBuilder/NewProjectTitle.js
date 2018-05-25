@@ -37,6 +37,7 @@ const validateLength40 = title => {
 
 export default reduxForm({
 	validate,
+	destroyOnUnmount: false,
 	form: 'NewProjectTitle',
 	newProjectField: [{
 		label: 'Enter project title here (40 characters or less)',

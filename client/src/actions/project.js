@@ -37,7 +37,7 @@ export const projectSave = (projectData) => {
     let projectID = projectData.project.id;
     let copyObject = Object.assign({}, projectData);
     return (dispatch) => {
-        axios.post('/api/updateProject', { project: { nodes: copyObject.nodes, links: copyObject.links }})
+        axios.post('/api/updateProject', { project: { nodes: copyObject.nodes, links: copyObject.links ,project: copyObject.project}})
             .then(response => {
                 console.log('API response after saving updated project: ', response);
                 dispatch(projectGetData(projectID));
