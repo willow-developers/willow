@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmark } from '../../actions/bookmarks';
+import { bookmarkGetInfo, previewBookmarkView, updateBookmarkInfo, saveBookmark, deleteBookmark } from '../../actions/bookmarks';
 
 import BookmarkForm from './BookmarkForm';
 import BookmarkMetaPreview from './BookmarkMetaPreview';
@@ -82,7 +82,7 @@ class BookmarkBody extends Component {
 		return (
       <Fragment>
         <div className={ styles.listHolder } style={{ paddingBottom: this.state.paddingBottom }} ref="listContainer">
-          <BookmarkList />
+          <BookmarkList deleteBookmark= { this.props.deleteBookmark } />
         </div>
         <div className={ styles.populate }>
           { this.props.shadowHeight > 530 ? <Fragment><hr/><hr/></Fragment> : '' }
@@ -109,6 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
   previewBookmarkView: () => dispatch(previewBookmarkView()),
   updateBookmarkInfo: (info) => dispatch(updateBookmarkInfo(info)),
   saveBookmark: (data) => dispatch(saveBookmark(data)),
+  deleteBookmark: (idx) => dispatch(deleteBookmark(idx)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookmarkBody);

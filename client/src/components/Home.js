@@ -16,7 +16,10 @@ class Home extends Component {
 		} else {
 			return (
 				<div className={ styles.col_12_of_12 }>
-					<h1>Welcome to the Willow!</h1>
+					<div className={ styles.mainMessage }>
+						<p className={ styles.intro }>Welcome to</p>
+						<h1>Willow</h1>
+					</div>
 				</div>
 			);
 		}

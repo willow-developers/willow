@@ -1,5 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Gudea:400,400i,700|Squada+One');
+
 body {
+	font-family: 'Gudea', sans-serif;
 	margin: 0;
 	padding: 0;
-	font-family: sans-serif;
+	// font-family: sans-serif;
+	// background: url('../images/background.png');
+	// position:relative;
+
+	// &:before {
+	// 	content: "";
+	// 	display: block;
+	// 	background: url('../images/shape.svg');
+	// 	position: absolute;
+	// 	top: 0;
+	// 	left: 0;
+	// 	height: 100vh;
+	// 	width: 50vw;
+	// 	background-size: 100%;
+	// 	z-index: -1;
+	// }
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Squada One', cursive;
 }

@@ -36,6 +36,9 @@ class Main extends Component {
 						<MainRoute exact path='/' component={ Home } />
 					</Switch>
 				</div>
+				<div className={ this.props.location.pathname === '/' ? styles.homePage : styles.nope }>
+					<div className={ styles.hero }></div>
+				</div>
 			</main>
 		);
 	}
