@@ -27,7 +27,7 @@ class Header extends Component {
 							history.push("/");
 						}}
 					/>)
-				: (<a href="/auth/google">
+				: (<a href="http://ec2-184-72-196-152.compute-1.amazonaws.com/auth/google">
 						<Button
 							value={ 'Login With Google' }
 							icon={ 'account_circle' }

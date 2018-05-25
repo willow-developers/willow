@@ -593,7 +593,7 @@ class WillowCore extends Component {
         }
 
         const displayFunction = d => {
-            this.clickDisplayMenuMode(d)
+            this.clickDisplayMenuMode(d);
         }
     }
 //--------------------------------------------------- PLACE NEW NODE
