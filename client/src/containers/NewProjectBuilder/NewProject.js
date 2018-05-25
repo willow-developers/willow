@@ -9,6 +9,7 @@ import {
   handleSaveProject,
   handleAddItem,
   deleteItem,
+  navigateBack,
 } from '../../actions/createProject';
 
 // COMPONENTS:
@@ -41,6 +42,10 @@ class NewProjectBody extends Component {
     this.props.handleSaveProject(projectDetails, this.props.modal[0]);
   };
 
+  navigateBack = (modalTitle) => {
+    this.props.navigateBack(modalTitle);
+  };
+
   renderCreateProjectView = () => {
     if (this.props.createProjectHasErrored) return <p>Sorry! There was an error with your request. Please try again later.</p>;
     if (this.props.createProjectDataIsLoading) return <Loading />;
@@ -53,9 +58,13 @@ class NewProjectBody extends Component {
                       handleAddItem={ this.handleAddItem }
                       handleAddMilestones={ this.handleAddMilestones }
                       deleteItem ={ this.deleteItem }
+                      navigateBack={ this.navigateBack }
                     />;
     } else if (this.props.createProjectModalToShow === 'ProjectSummary') {
-      modalToShow = <ProjectSummary handleSaveProject={ this.handleSaveProject } />
+      modalToShow = <ProjectSummary
+                      handleSaveProject={ this.handleSaveProject }
+                      navigateBack={ this.navigateBack }  
+                    />
     }
 
     return (
@@ -84,7 +93,8 @@ const mapDispatchToProps = (dispatch) => ({
   handleAddItem: (item) => { dispatch(handleAddItem(item)); },
   deleteItem: (idx, modal) => { dispatch(deleteItem(idx, modal)); },
   handleAddMilestones: (milestones) => { dispatch(handleAddMilestones(milestones)); },
-  handleSaveProject: (projectDetails, modal) => { dispatch(handleSaveProject(projectDetails, modal)); }
+  handleSaveProject: (projectDetails, modal) => { dispatch(handleSaveProject(projectDetails, modal)); },
+  navigateBack: (modalTitle) => { dispatch(navigateBack(modalTitle)) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewProjectBody);

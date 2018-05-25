@@ -33,6 +33,16 @@ class ProjectSummary extends Component {
         <br/>
         <br/>
         <Button
+					handleClick={ () => { this.props.navigateBack('AddProjectDetails'); }}
+					icon={ 'navigate_before' }
+					value={ 'Back' }
+					/* btnFloat={ 'right' } */ // COME BACK TO STYLE AND PLACE THE BUTTON
+					type="submit"
+					size="small"
+				/>
+        <br/>
+        <br/>
+        <Button
           icon={ 'navigate_next' }
           value={ 'Create Project' }
           iconSide={ 'right' }
