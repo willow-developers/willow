@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // ACTIONS:
-import { closeModal } from '../../actions/modal';
 import {
   handleProjectNaming,
   handleAddMilestones,

@@ -1,0 +1,19 @@
+@import 'variables';
+@import 'waffleGrid';
+
+.nodeTitle {
+	padding: 0 10px 0.345em;
+	border-bottom: 1px solid #333;
+	margin-top: 0;
+	margin: 0 10px 0.67em;
+
+	button {
+		background-color: #ccc;
+		box-shadow: none;
+
+		&:hover {
+			background-color: #999;
+			box-shadow: none;
+		}
+	}
+}

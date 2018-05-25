@@ -15,15 +15,14 @@ const Card = ({ id, title, content, createdAt, togglePreview, previewToggleNote,
         type={ 'smallRound' }
         handleClick={ () => editNote({ id, title, content }) }
       />
-    </div>
-    <div className={ styles.content } onClick={ () => previewToggleNote(id) }>{ togglePreview ? content : createPreviewText(content) } {togglePreview ? <div className={ styles.expander }>- Show Less</div> : <div className={ styles.expander }>+ Read More</div> }</div>
-    <div className={ styles.footer }>
-      {/* DELETE BUTTON BELOW WORKING AS DESIGNED -- BILLY TO MOVE AND REDESIGN AS NEEDED */}
       <Button
         icon={ 'delete' }
         type={ 'smallRound' }
         handleClick={ () => deleteNote(idx) }
       />
+    </div>
+    <div className={ styles.content } onClick={ () => previewToggleNote(id) }>{ togglePreview ? content : createPreviewText(content) } {togglePreview ? <div className={ styles.expander }>- Show Less</div> : <div className={ styles.expander }>+ Read More</div> }</div>
+    <div className={ styles.footer }>
       <span className={ styles.createdAt }>{ currentTimestamp(createdAt) }</span>
     </div>
   </div>
