@@ -78,8 +78,6 @@ const validate = (values) => {
   return errors;
 };
 
-// styleClass={ 'noShadow' }
-
 AddNote = reduxForm({
   validate,
   enableReinitialize: true,

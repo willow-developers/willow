@@ -29,8 +29,12 @@ class NotesBody extends Component {
 					{ noteShowList
 						? (<CardList notes={ notes } previewToggleNote={ previewToggleNote } editNote={ editNote } deleteNote={ deleteNote } />)
 						: '' }
-					{ noteShowForm ? <NotesForm closeNoteView={ closeNoteView } addNote={ addNote } noteEdit={ noteEdit } updateNote={ updateNote } /> : '' }
-					{ noteShowForm ? '' : <div className={ styles.btnBar }><Button type={ 'bigRound' } icon={ 'add' } btnFloat={ 'right' } handleClick={ () => createNoteView() } /></div> }
+					{ noteShowForm
+						? <NotesForm closeNoteView={ closeNoteView } addNote={ addNote } noteEdit={ noteEdit } updateNote={ updateNote } />
+						: '' }
+					{ noteShowForm
+						? ''
+						: <div className={ styles.btnBar }><Button type={ 'bigRound' } icon={ 'add' } btnFloat={ 'right' } handleClick={ () => createNoteView() } /></div> }
 				</div>
 			</div>
 		);
