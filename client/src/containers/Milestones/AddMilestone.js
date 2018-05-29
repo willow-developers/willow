@@ -8,11 +8,12 @@ import Input from '../../components/UI/Input';
 
 const AddMilestone = (props) => {
   const { reset, handleSubmit, createMilestone, addMilestoneField } = props;
+  
   const renderInputs = () => {
     return _.map(addMilestoneField, (field, i) => (
       <Field key={ field.name } { ...field } component={ Input } inlineBtn={ 'addMilestone' } />
     ));
-  }
+  };
 
   return (
     <div className={ styles.addInput }>
