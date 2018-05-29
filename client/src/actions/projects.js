@@ -29,7 +29,6 @@ export const resetNodeTitle = () => ({ type: RESET_TITLE, payload: "" });
 export const editTitle = (bool) => ({ type: EDIT_TITLE, showTitle: bool });
 export const editTitleForm = (bool) => ({ type: EDIT_FORM_TITLE, showFormTitle: bool });
 
-
 export const titleNode = (str) => (dispatch) => {
   dispatch(nodeTitle(str));
 };
@@ -47,7 +46,8 @@ export const titleEdit = () => (dispatch) => {
 export const projectsGetList = (userID) => { 
     return (dispatch) => {
         dispatch(projectsListIsLoading(true));
-        axios.get('/api/projects', { params: {userID}})
+        axios
+            .get('/api/projects', { params: {userID}})
             .then(response => {
                 dispatch(projectsListIsLoading(false));
                 let projectsList = response.data;

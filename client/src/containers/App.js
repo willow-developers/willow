@@ -27,6 +27,7 @@ class App extends Component {
     if (this.props.isLoading) {
       return <Loading />;
     }
+    
     return (
       <div>
         <Header />
@@ -56,6 +57,5 @@ const mapDispatchToProps = (dispatch) => ({
   screenResizeWidth: () => dispatch(screenResizeWidth(window.innerWidth)),
   screenResizeHeight: () => dispatch(screenResizeHeight(window.innerHeight)),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

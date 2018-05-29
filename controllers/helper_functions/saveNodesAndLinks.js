@@ -11,7 +11,7 @@ exports.saveNodes = (nodes) => {
     } else if (entry.status === 'delete') {
       return knex('nodes').where('hash_id', '=', entry.hash_id).del();
     }
-  })).catch((err) => console.log('err: ', err))
+  }));
 };
 
 exports.saveLinks = (links) => {
@@ -25,9 +25,9 @@ exports.saveLinks = (links) => {
     } else if (entry.status === 'delete') {
       return knex('links').where('hash_id', '=', entry.hash_id).del();
     }
-  })).catch(err => console.log('err: ', err))
+  }));
 };
 
 exports.saveProject = (project) => {
-  return knex('projects').where('id', '=', project.id).update(project).catch(err => console.log('err: ', err))
+  return knex('projects').where('id', '=', project.id).update(project);
 };

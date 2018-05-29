@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
 import styles from '../assets/sass/Dashboard.module.scss';
 
 import { projectGetData, resetRedirects } from '../actions/project';
@@ -35,8 +34,6 @@ class ProjectView extends Component {
 				</Fragment>
 			);
 		}
-
-
 	}
 }
 

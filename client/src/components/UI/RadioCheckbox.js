@@ -19,7 +19,7 @@ const Radio = ({ styleName, data }) => {
 		})
 	);
 
-	const rednerRadioCheckbox = data.map((input) => {
+	const renderRadioCheckbox = data.map((input) => {
 		return (
 			<span key={ input.id } className={ _setInputStyle(styles) }>
 		    <input type={ input.type } name={ input.name } id={ input.id } />
@@ -30,7 +30,7 @@ const Radio = ({ styleName, data }) => {
 
 	return (
 		<div>
-			{ rednerRadioCheckbox }
+			{ renderRadioCheckbox }
 		</div>
 	);
 }

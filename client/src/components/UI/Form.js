@@ -36,8 +36,6 @@ class Form extends Component {
 			if (item.new && item.value.length > 0) { deliverable.toAdd.push(item); }
 			if (item.updated && !item.new) { deliverable.toUpdate.push(item); }
 		});
-		// console.log(`Incorporated: ${formInputs.length} formInputs`);
-		console.log(deliverable);
 
 		evt.preventDefault();
 	}
@@ -128,7 +126,7 @@ class Form extends Component {
 					<button>Incorporate</button>
 				</div>
 			</form>
-		)
+		);
 	}
 }
 

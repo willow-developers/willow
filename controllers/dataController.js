@@ -42,7 +42,7 @@ exports.createNewProject = (req, res) => {
 
 exports.fetchProjects = (req, res) => {
     
-    // // update as needed!!
+    // update as needed!!
     // let owner_id = req.query.userID;
 
     // to go to Jun's google account:
@@ -86,10 +86,6 @@ exports.getProjectData = (req, res) => {
 
 exports.saveProject = (req, res) => {
     var { nodes, links, project} = req.body.project;
-    console.log('project: ', project);
-
-    // /* The function below returns an object as follows:
-    // data = { nodes: [nodes that need updating], links: [links that need updating] }; */
     let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
     
     saveNodes(nodesToUpdate)

@@ -1,4 +1,3 @@
-// import React from 'react';
 import React from 'react';
 import MilestoneColumnLeft from './MilestoneColumn';
 import MilestoneColumnRight from './MilestoneColumn';

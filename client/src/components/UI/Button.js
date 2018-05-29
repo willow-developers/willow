@@ -44,7 +44,7 @@ const Button = ({ type, disabledStyle, value, icon, handleClick, iconSide, btnFl
 			{ icon && <i className={ styles.btn__icon }>{ icon }</i> }
 			<div className={ styles.btn__value }>{ value }</div>
 		</button>
-	)
+	);
 }; 
 
 export default Button;
