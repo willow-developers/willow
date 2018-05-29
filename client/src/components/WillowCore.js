@@ -62,7 +62,7 @@ class WillowCore extends Component {
         this.props.modalClose(obj);
     };
 
-    //--------------------------------------------------------------------------------- SETUP SETTINGS
+//--------------------------------------------------------------------------------- SETUP SETTINGS
     addNewNode(newObject) {
         newObject.x = d3State.newNodeX
         newObject.y = d3State.newNodeY
@@ -82,7 +82,7 @@ class WillowCore extends Component {
         return (d3.event.clientY - this.props.projectData.project.zoomy) / this.props.projectData.project.zoomscale;
     }
 
-    //--------------------------------------------------- D3 SETUP
+//--------------------------------------------------- D3 SETUP
     d3Setup() {
         const svg = d3.select('#willowCore');
         
@@ -142,23 +142,10 @@ class WillowCore extends Component {
                     .append('text')
                     .attr('class', 'ADDNODEMODE')
                     .text(`ADD NODE MODE: Select Node Type - Add ${type.split('_').join(' ')} Node`)
-                    .attr('transform', 'translate(10, 70)')
+                    .attr('transform', 'translate(10, 85)')
                     .style('font-size', 20)
-                    .style('fill', 'white');
-            })
-            .on('mouseout', () => {
-                d3.select(`.new${type}NodeButton`).select('circle')
-                    .attr('fill', 'white');
-
-                d3.select('.ADDNODEMODE').remove();
-                
-                d3.select('svg')
-                    .append('text')
-                    .attr('class', 'ADDNODEMODE')
-                    .text(`ADD NODE MODE: Select Node Type -`)
-                    .attr('transform', 'translate(10, 70)')
-                    .style('font-size', 20)
-                    .style('fill', 'white');
+                    .style('fill', 'black')
+                    .style('font-style', 'italic');
             })
             .on('click', () => {
                 this.closeContextMenu();
@@ -193,9 +180,10 @@ class WillowCore extends Component {
             .append('text')
             .attr('class', 'ADDNODEMODE')
             .text(`ADD NODE MODE: Select Node Type -`)
-            .attr('transform', 'translate(10, 70)')
+            .attr('transform', 'translate(10, 85)')
             .style('font-size', 20)
-            .style('fill', 'white');
+            .style('fill', 'black')
+            .style('font-style', 'italic');
 
         d3State.contextMenuOpen = true;
 
@@ -246,7 +234,7 @@ class WillowCore extends Component {
         });
     }
     
-    //--------------------------------------------------- TICKED
+//--------------------------------------------------- TICKED
     ticked() {
         d3.select('.nodes').selectAll('.node').attr('transform', d => `translate(${d.x}, ${d.y})`);
 
@@ -257,7 +245,7 @@ class WillowCore extends Component {
             .attr('y2', d => d.target.y);
     }
     
-    //--------------------------------------------------- ZOOM SETUP
+//--------------------------------------------------- ZOOM SETUP
     zoomSetup() {
         const svg = d3.select('svg')
         const zoomLayer = svg.append('g')
@@ -271,7 +259,7 @@ class WillowCore extends Component {
         zoomLayer.attr('transform', d3.event.transform);
     }
 
-    //--------------------------------------------------- D3 RESTART
+//--------------------------------------------------- D3 RESTART
     d3Restart() {
         if (!projectLoad) {
             d3.select('svg')
@@ -342,7 +330,7 @@ class WillowCore extends Component {
         drag_handler( d3.select('.nodes').selectAll('.node'));
     }
 
-    //--------------------------------------------------- CREATE MAIN MENU
+//--------------------------------------------------- CREATE MAIN MENU
     createMainMenu() {
         const svg = d3.select('svg')
 
@@ -444,9 +432,10 @@ class WillowCore extends Component {
                 .append('text')
                 .attr('class', 'ADDNODEMODE')
                 .text(`ADD NODE MODE: Click location of New Node`)
-                .attr('transform', 'translate(10, 70)')
+                .attr('transform', 'translate(10, 85)')
                 .style('font-size', 20)
-                .style('fill', 'white');
+                .style('fill', 'black')
+                .style('font-style', 'italic');
 
             setTimeout(() => d3.select('.background').on('click', () => {
                 this.openContextMenu();
@@ -468,9 +457,10 @@ class WillowCore extends Component {
                 .append('text')
                 .attr('class', 'LINKMODE2')
                 .text(`ADD LINK MODE: Select Source Node`)
-                .attr('transform', 'translate(10, 70)')
+                .attr('transform', 'translate(10, 85)')
                 .style('font-size', 20)
-                .style('fill', 'white');
+                .style('fill', 'black')
+                .style('font-style', 'italic');
 
             d3State.newLinkMode2 = true;
         }
@@ -486,9 +476,10 @@ class WillowCore extends Component {
                     .append('text')
                     .attr('class', 'DELETEMODE')
                     .text(`DELETE MODE: Select Node/Link To Delete`)
-                    .attr('transform', 'translate(10, 70)')
+                    .attr('transform', 'translate(10, 85)')
                     .style('font-size', 20)
-                    .style('fill', 'white');
+                    .style('fill', 'black')
+                    .style('font-style', 'italic');
 
             } else {
                 d3State.selectedNode.status = 'delete';
@@ -503,7 +494,7 @@ class WillowCore extends Component {
         }
     }
     
-    //--------------------------------------------------- SHOW PROJECT TITLE
+//--------------------------------------------------- SHOW PROJECT TITLE
     showProjectTitle() {
         const svg = d3.select('svg');
 
@@ -511,10 +502,11 @@ class WillowCore extends Component {
             .text(this.props.projectData.project.project_name)
             .attr('transform', 'translate(10, 50)')
             .style('font-size', 40)
-            .style('fill', 'black');
+            .style('fill', 'black')
+            .style('font-weight', 'bold');
     }
     
-    //--------------------------------------------------- CLEAR SCREEN
+//--------------------------------------------------- CLEAR SCREEN
     clearScreen() {
         this.reset();
 
@@ -524,7 +516,7 @@ class WillowCore extends Component {
         d3.selectAll('.node').remove();
     }
 
-    //--------------------------------------------------- CREATE LINKS
+//--------------------------------------------------- CREATE LINKS
     createLinks(linksData) {
         const link = d3.select('.links')
                         .selectAll('line')
@@ -553,7 +545,7 @@ class WillowCore extends Component {
             .style('visibility', 'hidden');
     }
 
-    //--------------------------------------------------- CREATE NODES
+//--------------------------------------------------- CREATE NODES
     createNodes(nodesData) {
         const node = d3.select('.nodes').selectAll('g')
                         .data(nodesData, (d) => d.hash_id)
@@ -603,7 +595,7 @@ class WillowCore extends Component {
             .style('visibility' , 'hidden');
     }
 
-    //--------------------------------------------------- CREATE NODE MENU
+//--------------------------------------------------- CREATE NODE MENU
     createNodeMenu(node) {
         const nodeMenuArray = ['DELETE','ADD_LINK','DISPLAY'];
 
@@ -656,9 +648,10 @@ class WillowCore extends Component {
                 .append('text')
                 .attr('class', 'LINKMODE1')
                 .text(`ADD LINK MODE: Select Target Node`)
-                .attr('transform', 'translate(10, 70)')
+                .attr('transform', 'translate(10, 85)')
                 .style('font-size', 20)
-                .style('fill', 'white');
+                .style('fill', 'black')
+                .style('font-style', 'italic');
 
             
             d3State.newLinkMode = true;
@@ -669,7 +662,7 @@ class WillowCore extends Component {
         };
     }
 
-    //--------------------------------------------------- PLACE NEW NODE
+//--------------------------------------------------- PLACE NEW NODE
     placeNewNode(dataObject) {
         let x = this.getX();
         let y = this.getY();
@@ -691,7 +684,7 @@ class WillowCore extends Component {
         this.d3Restart();
     }
 
-    //--------------------------------------------------- RESET
+//--------------------------------------------------- RESET
     reset() {
 
         this.closeContextMenu();
@@ -761,12 +754,11 @@ class WillowCore extends Component {
             const newLinkObject = createNewLink(this.props.projectData, this.props.userStatus, d3State.selectedNode, d);
 
             if (newLinkObject === 'fail') {
-                // console.log('node cannot link to itself')
                 d3.select('svg')
                     .append('text')
                     .attr('class', 'LINKFAIL')
                     .text(`NODE CANNOT LINK ITSELF`)
-                    .attr('transform', 'translate(10, 70)')
+                    .attr('transform', 'translate(10, 85)')
                     .style('font-size', 20)
                     .style('fill', 'white');
                 
@@ -798,9 +790,10 @@ class WillowCore extends Component {
                 .append('text')
                 .attr('class', 'LINKMODE1')
                 .text(`ADD LINK MODE: Select Target Node`)
-                .attr('transform', 'translate(10, 70)')
+                .attr('transform', 'translate(10, 85)')
                 .style('font-size', 20)
-                .style('fill', 'white');
+                .style('fill', 'black')
+                .style('font-style', 'italic');
 
 
             d3State.newLinkMode2 = false;
