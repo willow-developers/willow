@@ -31,11 +31,11 @@ class NewProjectBody extends Component {
 
   handleAddMilestones = (milestones) => {
     this.props.handleAddMilestones(milestones);
-  }
+  };
 
   deleteItem = (idx) => {
     this.props.deleteItem(idx, this.props.modal[0]);
-  }
+  };
 
   handleSaveProject = (projectDetails) => {
     this.props.handleSaveProject(projectDetails, this.props.modal[0]);
@@ -50,6 +50,7 @@ class NewProjectBody extends Component {
     if (this.props.createProjectDataIsLoading) return <Loading />;
 
     let modalToShow;
+    
     if (this.props.createProjectModalToShow === 'NewProjectTitle') {
       modalToShow = <NewProjectTitle handleProjectNaming={ this.handleProjectNaming } />;
     } else if (this.props.createProjectModalToShow === 'AddProjectDetails') {
