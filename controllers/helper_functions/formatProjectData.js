@@ -5,7 +5,7 @@ module.exports = formatProjectData = (data) => {
     link.source = link.source_id;
     link.target = link.target_id;
     link.label = data.labels[link.label_id - 1];
-    // use link.label_id - 1 here because labels array is zero-indexed
+    // using link.label_id - 1 here because labels array is zero-indexed
   }
 
   // format nodes:
@@ -13,7 +13,7 @@ module.exports = formatProjectData = (data) => {
     node.id = node.hash_id;
     node.label = data.labels[node.label_id - 1];
     node.data = node.node_description;
-    // use node.label_id - 1 here because labels array is zero-indexed
+    // using node.label_id - 1 here because labels array is zero-indexed
   }
 
   return data;

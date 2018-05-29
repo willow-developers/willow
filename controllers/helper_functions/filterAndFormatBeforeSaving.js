@@ -1,4 +1,3 @@
-
 module.exports = filterAndFormatBeforeSaving = (nodes, links) => {
   var linksToUpdate = [];
   var nodesToUpdate = [];

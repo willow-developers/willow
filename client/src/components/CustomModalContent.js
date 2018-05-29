@@ -9,7 +9,7 @@ class CustomModalContent extends Component {
       	<h4>Custom Modal Content</h4>
       	<button onClick={ () => this.props.bookmarkGetInfo('https://materializecss.com/color.html') }>testing</button>
       </div>
-    )
+    );
   }
 }
 

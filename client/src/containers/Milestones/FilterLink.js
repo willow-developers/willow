@@ -12,7 +12,7 @@ const FilterLink = ({ filter, currentFilter, children, filterMilestone }) => {
         filterMilestone(filter);
       }}
     >
-      { children }
+    { children }
     </a>
   );
 };

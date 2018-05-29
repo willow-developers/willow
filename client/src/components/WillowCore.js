@@ -33,7 +33,7 @@ let d3State = {
     addNodeButtonPressed: false,
     newNodeX: 0,
     newNodeY: 0,
-}
+};
 
 let zoomState = false;
 
@@ -56,13 +56,13 @@ class WillowCore extends Component {
 
     onOpen = (obj) => {
         this.props.modalOpen(obj);
-    }
+    };
 
     onClose = (obj) => {
         this.props.modalClose(obj);
-    }
+    };
 
-//--------------------------------------------------------------------------------- SETUP SETTINGS
+    //--------------------------------------------------------------------------------- SETUP SETTINGS
     addNewNode(newObject) {
         newObject.x = d3State.newNodeX
         newObject.y = d3State.newNodeY
@@ -73,15 +73,16 @@ class WillowCore extends Component {
     }
 
     getX() {
-        if (zoomState) return (d3.event.offsetX - this.props.projectData.project.zoomx)/this.props.projectData.project.zoomscale;
-        return (d3.event.clientX - this.props.projectData.project.zoomx)/this.props.projectData.project.zoomscale
-    }
-    getY() {
-        if (zoomState) return (d3.event.offsetY - this.props.projectData.project.zoomy)/this.props.projectData.project.zoomscale;
-        return (d3.event.clientY - this.props.projectData.project.zoomy)/this.props.projectData.project.zoomscale;
+        if (zoomState) return (d3.event.offsetX - this.props.projectData.project.zoomx) / this.props.projectData.project.zoomscale;
+        return (d3.event.clientX - this.props.projectData.project.zoomx) / this.props.projectData.project.zoomscale;
     }
 
-//--------------------------------------------------- D3 SETUP
+    getY() {
+        if (zoomState) return (d3.event.offsetY - this.props.projectData.project.zoomy) / this.props.projectData.project.zoomscale;
+        return (d3.event.clientY - this.props.projectData.project.zoomy) / this.props.projectData.project.zoomscale;
+    }
+
+    //--------------------------------------------------- D3 SETUP
     d3Setup() {
         const svg = d3.select('#willowCore');
         
@@ -106,38 +107,36 @@ class WillowCore extends Component {
 
         svg.on('contextmenu', () => {
             d3.event.preventDefault();
-            (d3State.contextMenuOpen) ?
-                this.closeContextMenu():
-                this.openContextMenu();
-        })
+            d3State.contextMenuOpen ? this.closeContextMenu() : this.openContextMenu();
+        });
 
         svg.on('mousemove', () => {
-            let x = (d3.event.offsetX - this.props.projectData.project.zoomx)/this.props.projectData.project.zoomscale;
-            let y = (d3.event.offsetY - this.props.projectData.project.zoomy)/this.props.projectData.project.zoomscale;
+            let x = (d3.event.offsetX - this.props.projectData.project.zoomx) / this.props.projectData.project.zoomscale;
+            let y = (d3.event.offsetY - this.props.projectData.project.zoomy) / this.props.projectData.project.zoomscale;
 
             if (!d3State.contextMenuOpen) d3.select('.newNodeRightClickMenu').attr('transform', ` translate(${x},${y})`);
-        })
+        });
 
         backgroundColor.on('click', () => {
             this.reset();
-        })
+        });
     }
+
     setupContextMenu(zoomLayer) {
-        const contextMenu = zoomLayer.append('g')
-            .attr('class', 'newNodeRightClickMenu')
-
+        const contextMenu = zoomLayer.append('g').attr('class', 'newNodeRightClickMenu');
         const contextMenuArray = ['EXPLORATIVE', 'START_ACTION', 'NEXT_ACTION', 'ONE_TIME_OBJECTIVE', 'RECURRING_OBJECTIVE'];
-        contextMenuArray.forEach( item => this.setupContextMenuButton(contextMenu, item))
+        contextMenuArray.forEach( item => this.setupContextMenuButton(contextMenu, item));
     }
-    setupContextMenuButton(contextMenu, type) {
 
+    setupContextMenuButton(contextMenu, type) {
         const newButton = contextMenu.append('g')
             .attr('class', `new${type}NodeButton`)
             .on('mouseover', () => {
-                d3.select(`.new${type}NodeButton`).select('circle')
-                    .attr('fill', 'red')
+                d3.select(`.new${type}NodeButton`)
+                    .select('circle')
+                    .attr('fill', 'red');
                 
-                d3.select('.ADDNODEMODE').remove()
+                d3.select('.ADDNODEMODE').remove();
                 
                 d3.select('svg')
                     .append('text')
@@ -146,14 +145,12 @@ class WillowCore extends Component {
                     .attr('transform', 'translate(10, 70)')
                     .style('font-size', 20)
                     .style('fill', 'white');
-
-
             })
             .on('mouseout', () => {
                 d3.select(`.new${type}NodeButton`).select('circle')
-                    .attr('fill', 'white')
+                    .attr('fill', 'white');
 
-                d3.select('.ADDNODEMODE').remove()
+                d3.select('.ADDNODEMODE').remove();
                 
                 d3.select('svg')
                     .append('text')
@@ -165,26 +162,27 @@ class WillowCore extends Component {
             })
             .on('click', () => {
                 this.closeContextMenu();
-                let newObject = createNewNode(type, this.props.projectData, this.props.userStatus)
+                let newObject = createNewNode(type, this.props.projectData, this.props.userStatus);
                 this.addNewNode(newObject);
-            })
+            });
         
         newButton
             .append('circle')
                 .attr('r', 0)
-                .attr('fill', 'white')
+                .attr('fill', 'white');
 
         newButton
             .append('path')
                 .attr('d', () => getNodeIcon(type))
-                .attr('transform', ' scale(0.0) translate(-150.66, -150)')
+                .attr('transform', ' scale(0.0) translate(-150.66, -150)');
 
         newButton
             .append('polygon')
             .attr('points', '166.7 153.3 210.94 153.3 210.94 166.7 166.7 166.7 166.7 210.94 153.3 210.94 153.3 166.7 109.06 166.7 109.06 153.3 153.3 153.3 153.3 109.06 166.7 109.06 166.7 153.3')
             .attr('fill', 'red')
-            .attr('transform', ' scale(0.0) translate(-150.66, -150)')         
+            .attr('transform', ' scale(0.0) translate(-150.66, -150)');
     }
+
     openContextMenu() {
         d3State.newNodeX = this.getX();
         d3State.newNodeY = this.getY();
@@ -209,19 +207,20 @@ class WillowCore extends Component {
             d3.select(`.new${item}NodeButton`)
                 .transition()
                 .duration(200)
-                .attr('transform', `translate(${Math.cos((2 * Math.PI) * ((i+1)/5) + (Math.PI / 10)) * radius}, ${-Math.sin((2 * Math.PI) * ((i+1)/5) + (Math.PI / 10)) * radius})`)
+                .attr('transform', `translate(${Math.cos((2 * Math.PI) * ((i+1)/5) + (Math.PI / 10)) * radius}, ${-Math.sin((2 * Math.PI) * ((i+1)/5) + (Math.PI / 10)) * radius})`);
             
             d3.select(`.new${item}NodeButton`).select('circle')
                 .transition()
                 .duration(200)
-                .attr('r', 20)
+                .attr('r', 20);
             
             d3.select(`.new${item}NodeButton`).selectAll('path')
                 .transition()
                 .duration(200)
-                .attr('transform', ' scale(0.08) translate(-150.66, -150)')
+                .attr('transform', ' scale(0.08) translate(-150.66, -150)');
         })
     }
+
     closeContextMenu() {
         d3State.contextMenuOpen = false;
         d3.select('.background').on('click', this.reset)
@@ -233,18 +232,21 @@ class WillowCore extends Component {
             d3.select(`.new${item}NodeButton`)
                 .transition()
                 .duration(200)
-                .attr('transform', 'translate(0, 0)')
+                .attr('transform', 'translate(0, 0)');
 
-            d3.select(`.new${item}NodeButton`).select('circle')
-                .attr('r', 0)
+            d3.select(`.new${item}NodeButton`)
+                .select('circle')
+                .attr('r', 0);
 
-            d3.select(`.new${item}NodeButton`).selectAll('path')
+            d3.select(`.new${item}NodeButton`)
+                .selectAll('path')
                 .transition()
                 .duration(200)
-                .attr('transform', 'scale(0) translate(0, 0)')
-        })
+                .attr('transform', 'scale(0) translate(0, 0)');
+        });
     }
-//--------------------------------------------------- TICKED
+    
+    //--------------------------------------------------- TICKED
     ticked() {
         d3.select('.nodes').selectAll('.node').attr('transform', d => `translate(${d.x}, ${d.y})`);
 
@@ -254,7 +256,8 @@ class WillowCore extends Component {
             .attr('x2', d => d.target.x)
             .attr('y2', d => d.target.y);
     }
-//--------------------------------------------------- ZOOM SETUP
+    
+    //--------------------------------------------------- ZOOM SETUP
     zoomSetup() {
         const svg = d3.select('svg')
         const zoomLayer = svg.append('g')
@@ -268,7 +271,7 @@ class WillowCore extends Component {
         zoomLayer.attr('transform', d3.event.transform);
     }
 
-//--------------------------------------------------- D3 RESTART
+    //--------------------------------------------------- D3 RESTART
     d3Restart() {
         if (!projectLoad) {
             d3.select('svg')
@@ -277,7 +280,7 @@ class WillowCore extends Component {
                 .append('rect')
                 .attr('fill', 'black')
                 .attr('width', '100%')
-                .attr('height', '100%')
+                .attr('height', '100%');
 
             d3.select('.saveScreen')
                 .append('text')
@@ -285,18 +288,18 @@ class WillowCore extends Component {
                 .attr('transform', `translate(${this.props.width / 2}, 250)`)
                 .attr('text-anchor', 'middle')
                 .style('fill','white')
-                .style('font-size', 50)
+                .style('font-size', 50);
             
             setTimeout(() => {
                 projectLoad = true;
                 this.d3Restart();
-            }, 1000)
+            }, 1000);
             return;
         }
         this.clearScreen();
 
-        const svg = d3.select('svg')
-        const zoomLayer = d3.select('.zoomLayer')
+        const svg = d3.select('svg');
+        const zoomLayer = d3.select('.zoomLayer');
         const zoom_handler = d3.zoom().scaleExtent([0.25, 2.25]).on('zoom', () => {
             this.props.projectData.project.zoomx = d3.event.transform.x;
             this.props.projectData.project.zoomy = d3.event.transform.y;
@@ -304,7 +307,7 @@ class WillowCore extends Component {
 
             zoomLayer.attr('transform', d3.event.transform);
 
-            this.zoom_actions(zoomLayer)
+            this.zoom_actions(zoomLayer);
         });
 
         const transform = d3.zoomIdentity.translate(this.props.projectData.project.zoomx, this.props.projectData.project.zoomy).scale(this.props.projectData.project.zoomscale);
@@ -339,7 +342,7 @@ class WillowCore extends Component {
         drag_handler( d3.select('.nodes').selectAll('.node'));
     }
 
-//--------------------------------------------------- CREATE MAIN MENU
+    //--------------------------------------------------- CREATE MAIN MENU
     createMainMenu() {
         const svg = d3.select('svg')
 
@@ -351,22 +354,26 @@ class WillowCore extends Component {
                 .attr('class', `${item}Button menuBar`)
                 .attr('transform', `translate( ${this.props.width - 50} , ${10 + i * 50})`)
                 .on('mouseover', () => {
-                    d3.select(`.${item}Button`).select('rect')
-                        .attr('fill', '#f8d861')
+                    d3.select(`.${item}Button`)
+                        .select('rect')
+                        .attr('fill', '#f8d861');
 
-                    d3.select(`.${item}Button`).select('text')
+                    d3.select(`.${item}Button`)
+                        .select('text')
                         .style('visibility', 'visible')
                         .attr('text-anchor', 'end')
-                        .attr('transform', 'translate(-5, 25)')
+                        .attr('transform', 'translate(-5, 25)');
                 })
                 .on('mouseout', () => {
-                    d3.select(`.${item}Button`).select('rect')
-                        .attr('fill', 'white')
+                    d3.select(`.${item}Button`)
+                        .select('rect')
+                        .attr('fill', 'white');
 
-                    d3.select(`.${item}Button`).select('text')
+                    d3.select(`.${item}Button`)
+                        .select('text')
                         .attr('transform', 'translate(0, 15)')
                         .style('fill','black')
-                        .style('visibility', 'hidden')
+                        .style('visibility', 'hidden');
                 })
                 .on('click', () => {
                     this.reset();
@@ -375,7 +382,7 @@ class WillowCore extends Component {
                     if (item === 'ADD_LINK') addLinkFunction();
                     if (item === 'DELETE') deleteFunction();
                     if (item === 'REVERT_TO_LAST_SAVE') revertFunction();
-                })
+                });
 
             button
                 .append('text')
@@ -393,14 +400,15 @@ class WillowCore extends Component {
                 .attr('width', 40);
 
             button
-            .append('path')
-            .attr('d' , getIcon(item))
-            .attr('transform', 'scale(0.10) translate(30, 30)');
+                .append('path')
+                .attr('d' , getIcon(item))
+                .attr('transform', 'scale(0.10) translate(30, 30)');
         }) 
 
         const revertFunction = () => {
-            d3.select(`.REVERT_TO_LAST_SAVEButton`).select('rect')
-            .attr('fill', '#317669')
+            d3.select(`.REVERT_TO_LAST_SAVEButton`)
+                .select('rect')
+                .attr('fill', '#317669');
             
             d3.select('.background')
                 .attr('fill', 'red')
@@ -409,29 +417,18 @@ class WillowCore extends Component {
                 d3.select('.background')
                     .transition()
                     .duration(1000)
-                    .attr('fill', '#dadada')
-            }, 0)
+                    .attr('fill', '#dadada');
+            }, 0);
+
             projectLoad = false;
             this.props.projectGetData(this.props.projectData.project.id);
         }
 
         const saveFunction = () => {
-            d3.select(`.SAVEButton`).select('rect')
-            .attr('fill', '#317669')
-            
-            // d3.select('.background')
-            //     .append('rect')
-            //     .attr('class', 'saveScreen')
-            //     .attr('fill', 'black')
-            //     .attr('height', '100%')
-            //     .attr('width', '100%')
+            d3.select(`.SAVEButton`)
+                .select('rect')
+                .attr('fill', '#317669');
 
-            // setTimeout(() => {
-            //     d3.select('.background')
-            //         .transition()
-            //         .duration(1000)
-            //         .attr('fill', '#dadada')
-            // }, 0)
             projectLoad = false;
             this.d3Restart();
             this.props.saveProject(this.props.projectData);
@@ -439,8 +436,9 @@ class WillowCore extends Component {
 
         const addNodeFunction = () => {
             d3State.addNodeButtonPressed = true;
-            d3.select('.ADD_NODEButton').select('rect')
-                .attr('fill', 'yellow')
+            d3.select('.ADD_NODEButton')
+                .select('rect')
+                .attr('fill', 'yellow');
 
             d3.select('svg')
                 .append('text')
@@ -453,16 +451,18 @@ class WillowCore extends Component {
             setTimeout(() => d3.select('.background').on('click', () => {
                 this.openContextMenu();
                 setTimeout(() => {
-                    d3.select('.background').on('click', this.closeContextMenu)
-                    d3.select('.addNodeButton').select('rect')
-                        .attr('fill', 'white')
+                    d3.select('.background').on('click', this.closeContextMenu);
+                    d3.select('.addNodeButton')
+                        .select('rect')
+                        .attr('fill', 'white');
                 }, 0);
             }), 0)
         }
 
         const addLinkFunction = () => {
-            d3.select('.ADD_LINKButton').select('rect')
-                .attr('fill', 'red')
+            d3.select('.ADD_LINKButton')
+                .select('rect')
+                .attr('fill', 'red');
 
             d3.select('svg')
                 .append('text')
@@ -471,12 +471,14 @@ class WillowCore extends Component {
                 .attr('transform', 'translate(10, 70)')
                 .style('font-size', 20)
                 .style('fill', 'white');
+
             d3State.newLinkMode2 = true;
         }
 
         const deleteFunction = () => {
-            d3.select('.DELETEButton').select('rect')
-                .attr('fill', 'red')
+            d3.select('.DELETEButton')
+                .select('rect')
+                .attr('fill', 'red');
 
             if (JSON.stringify(d3State.selectedNode) === JSON.stringify({})) {
                 d3State.deleteMode = true;
@@ -494,23 +496,25 @@ class WillowCore extends Component {
                     if (link.source_id === d3State.selectedNode.hash_id || link.target_id === d3State.selectedNode.hash_id) {
                         link.status = 'delete';
                     }
-                })
+                });
                 this.reset();
                 this.d3Restart();
             }   
         }
     }
-//--------------------------------------------------- SHOW PROJECT TITLE
+    
+    //--------------------------------------------------- SHOW PROJECT TITLE
     showProjectTitle() {
-        const svg = d3.select('svg')
+        const svg = d3.select('svg');
 
         svg.append('text')
             .text(this.props.projectData.project.project_name)
-                .attr('transform', 'translate(10, 50)')
-                .style('font-size', 40)
-                .style('fill', 'black');
+            .attr('transform', 'translate(10, 50)')
+            .style('font-size', 40)
+            .style('fill', 'black');
     }
-//--------------------------------------------------- CLEAR SCREEN
+    
+    //--------------------------------------------------- CLEAR SCREEN
     clearScreen() {
         this.reset();
 
@@ -519,12 +523,13 @@ class WillowCore extends Component {
         d3.selectAll('line').remove();
         d3.selectAll('.node').remove();
     }
-//--------------------------------------------------- CREATE LINKS
+
+    //--------------------------------------------------- CREATE LINKS
     createLinks(linksData) {
         const link = d3.select('.links')
-            .selectAll('line')
-            .data(linksData, (d) => d.hash_id)
-            .enter().append('line')
+                        .selectAll('line')
+                        .data(linksData, (d) => d.hash_id)
+                        .enter().append('line');
 
         link
             .attr('stroke-width', 4)
@@ -536,66 +541,69 @@ class WillowCore extends Component {
                     d.status = 'delete';
                     this.d3Restart();
                     return;
-            };
+                };
 
                 link.filter(data => data.hash_id === d.hash_id)
-                    .style('stroke', 'yellow')
+                    .style('stroke', 'yellow');
+                
                 d3State.selectedLink = d;
-            })
+            });
 
         link.filter(data => data.status === 'delete')
-            .style('visibility', 'hidden')
+            .style('visibility', 'hidden');
     }
-//--------------------------------------------------- CREATE NODES
+
+    //--------------------------------------------------- CREATE NODES
     createNodes(nodesData) {
         const node = d3.select('.nodes').selectAll('g')
-        .data(nodesData, (d) => d.hash_id)
-        .enter().append('g')
-        .attr('class', 'node')
+                        .data(nodesData, (d) => d.hash_id)
+                        .enter().append('g')
+                        .attr('class', 'node');
 
         this.createNodeMenu(node);
 
         const nodeList = ['EXPLORATIVE','START_ACTION','NEXT_ACTION','ONE_TIME_OBJECTIVE','RECURRING_OBJECTIVE'];
         nodeList.forEach((item, i) => {
             const newNode = node.filter((d) => (d.label_id - 1) === i)
-                .append('g')
-                .attr('class', `${item}Node`)
-                .on('click', (d) => {
-                    if (d3State.addNodeButtonPressed) return this.reset();
-                    if (d3State.contextMenuOpen) return this.reset();
-                    this.clickOpenNodeMenu(d)
-                })
+                                .append('g')
+                                .attr('class', `${item}Node`)
+                                .on('click', (d) => {
+                                    if (d3State.addNodeButtonPressed) return this.reset();
+                                    if (d3State.contextMenuOpen) return this.reset();
+                                    this.clickOpenNodeMenu(d)
+                                });
 
             newNode
                 .append('circle')
-                    .attr('r', 25)
-                    .attr('class', 'face')
-                    .attr('fill', (d) => getNodeColor(d))
+                .attr('r', 25)
+                .attr('class', 'face')
+                .attr('fill', (d) => getNodeColor(d));
             
             newNode
                 .append('path')
-                    .attr('d', getNodeIcon(item))
-                    .attr('transform', 'scale(0.10) translate(-160, -160)')
-                    .attr('fill', 'black')
-        })            
+                .attr('d', getNodeIcon(item))
+                .attr('transform', 'scale(0.10) translate(-160, -160)')
+                .attr('fill', 'black');
+        });
 
         node.append('text')
             .text((d) => {
                 if (d.node_description.length > 15) return d.node_description.slice(0, 15) + '...';
                 return d.node_description;
             })
-                .attr('x', '0')
-                .attr('y', '0')
-                .attr('transform', 'translate(0, -40)')
-                .style('font-size', 13)
-                .style('text-anchor', 'middle')
-                .style('fill', 'black');
+            .attr('x', '0')
+            .attr('y', '0')
+            .attr('transform', 'translate(0, -40)')
+            .style('font-size', 13)
+            .style('text-anchor', 'middle')
+            .style('fill', 'black');
 
-        d3.selectAll('.node').filter(data => data.status === 'delete')
-            .style('visibility' , 'hidden')
+        d3.selectAll('.node')
+            .filter(data => data.status === 'delete')
+            .style('visibility' , 'hidden');
     }
 
-//--------------------------------------------------- CREATE NODE MENU
+    //--------------------------------------------------- CREATE NODE MENU
     createNodeMenu(node) {
         const nodeMenuArray = ['DELETE','ADD_LINK','DISPLAY'];
 
@@ -607,54 +615,61 @@ class WillowCore extends Component {
                 if (item === 'DELETE') deleteFunction(d);
                 if (item === 'ADD_LINK') addLinkFunction(d);
                 if (item === 'DISPLAY') displayFunction();
-            })
+            });
         
             nodeButton
                 .append('circle')
-                    .attr('r', 15)
-                    .attr('fill', 'white')
+                .attr('r', 15)
+                .attr('fill', 'white');
 
             nodeButton
                 .append('path')
                 .attr('d', getIcon(item))
                 .attr('transform', 'scale(0.05) translate(-160, -150)');            
-        })
+        });
 
         const deleteFunction = (d) => {
-            d3.selectAll(`.DELETENodeButton`).filter(data => data.hash_id === d.hash_id).select('circle')
-            .attr('fill', 'red')
+            d3.selectAll(`.DELETENodeButton`)
+                .filter(data => data.hash_id === d.hash_id)
+                .select('circle')
+                .attr('fill', 'red');
 
             d3State.selectedNode.status = 'delete';
+
             this.props.projectData.links.forEach(link => {
                 if (link.source_id === d3State.selectedNode.hash_id || link.target_id === d3State.selectedNode.hash_id) {
                     link.status = 'delete';
                 }
-            })
+            });
+
             this.reset();
             this.d3Restart();
-        }
+        };
 
         const addLinkFunction = (d) => {
-                d3.selectAll('.ADD_LINKNodeButton').filter(data => data.hash_id === d.hash_id).select('circle')
-                    .attr('fill', 'red')
+            d3.selectAll('.ADD_LINKNodeButton')
+                .filter(data => data.hash_id === d.hash_id)
+                .select('circle')
+                .attr('fill', 'red');
 
-                d3.select('svg')
-                    .append('text')
-                    .attr('class', 'LINKMODE1')
-                    .text(`ADD LINK MODE: Select Target Node`)
-                    .attr('transform', 'translate(10, 70)')
-                    .style('font-size', 20)
-                    .style('fill', 'white');
+            d3.select('svg')
+                .append('text')
+                .attr('class', 'LINKMODE1')
+                .text(`ADD LINK MODE: Select Target Node`)
+                .attr('transform', 'translate(10, 70)')
+                .style('font-size', 20)
+                .style('fill', 'white');
 
-                
-                d3State.newLinkMode = true;
-        }
+            
+            d3State.newLinkMode = true;
+        };
 
         const displayFunction = d => {
             this.clickDisplayMenuMode(d);
-        }
+        };
     }
-//--------------------------------------------------- PLACE NEW NODE
+
+    //--------------------------------------------------- PLACE NEW NODE
     placeNewNode(dataObject) {
         let x = this.getX();
         let y = this.getY();
@@ -676,7 +691,7 @@ class WillowCore extends Component {
         this.d3Restart();
     }
 
-//--------------------------------------------------- RESET
+    //--------------------------------------------------- RESET
     reset() {
 
         this.closeContextMenu();
@@ -692,7 +707,7 @@ class WillowCore extends Component {
             addNodeButtonPressed: false,
             newNodeX: 0,
             newNodeY: 0,
-        }
+        };
 
         d3.select('.background').on('click', this.reset);
 
@@ -700,35 +715,33 @@ class WillowCore extends Component {
 
         d3.select('.ADDNODEMODE').remove();
 
-        d3.selectAll('.LINKMODE1')
-            .remove();
+        d3.selectAll('.LINKMODE1').remove();
 
-        d3.selectAll('.LINKMODE2')
-            .remove();
+        d3.selectAll('.LINKMODE2').remove();
 
         d3.select('.deleteLinkButton')
-        .transition()
-        .duration(500)
-        .attr('transform', 'translate(500, 640)')
+            .transition()
+            .duration(500)
+            .attr('transform', 'translate(500, 640)');
 
         d3.selectAll('.face')
-            .attr('fill', (d) => getNodeColor(d))
+            .attr('fill', (d) => getNodeColor(d));
 
         d3.selectAll('.mainMenuButton')
-            .attr('fill', 'white')
+            .attr('fill', 'white');
 
         d3.selectAll('.menu').selectAll('circle')
-            .attr('fill', 'white')
+            .attr('fill', 'white');
 
         d3.selectAll('.links').selectAll('line')
-            .style('stroke', d => getLinkColor(d))
+            .style('stroke', d => getLinkColor(d));
 
         d3.selectAll('.menu')
             .transition()
             .duration(250)
             .attr('width', 0)
             .attr('height', 0)
-            .attr('transform', `translate(0, 0)`)
+            .attr('transform', `translate(0, 0)`);
 
         d3.selectAll('.menuLabel')
             .transition()
@@ -736,16 +749,17 @@ class WillowCore extends Component {
             .attr('x', `0`)
             .attr('y', `0`)
             .style('font-size', '0')
-            .style('visibility', 'hidden')
+            .style('visibility', 'hidden');
     }
-//--------------------------------------------------------------------------------- MENU SETTINGS
-//--------------------------------------------------- CLICK OPEN NODE MENU*
+
+    //--------------------------------------------------------------------------------- MENU SETTINGS
+    //--------------------------------------------------- CLICK OPEN NODE MENU*
     clickOpenNodeMenu(d) {
         if (d3State.newLinkMode) {
-
-            d3.select('.LINKMODE1').remove()
+            d3.select('.LINKMODE1').remove();
 
             const newLinkObject = createNewLink(this.props.projectData, this.props.userStatus, d3State.selectedNode, d);
+
             if (newLinkObject === 'fail') {
                 // console.log('node cannot link to itself')
                 d3.select('svg')
@@ -759,8 +773,7 @@ class WillowCore extends Component {
                 setTimeout(() => {
                     d3.select('.LINKFAIL')
                         .remove();
-                }, 1000)
-
+                }, 1000);
 
                 this.reset();
                 return;
@@ -775,18 +788,19 @@ class WillowCore extends Component {
 
             d3State.selectedNode = d;
 
-            d3.selectAll('.face').filter(data => data.hash_id === d.hash_id)
-                .attr('fill', 'green')
+            d3.selectAll('.face')
+                .filter(data => data.hash_id === d.hash_id)
+                .attr('fill', 'green');
 
-            d3.select('.LINKMODE2').remove()
+            d3.select('.LINKMODE2').remove();
 
             d3.select('svg')
-            .append('text')
-            .attr('class', 'LINKMODE1')
-            .text(`ADD LINK MODE: Select Target Node`)
-            .attr('transform', 'translate(10, 70)')
-            .style('font-size', 20)
-            .style('fill', 'white');
+                .append('text')
+                .attr('class', 'LINKMODE1')
+                .text(`ADD LINK MODE: Select Target Node`)
+                .attr('transform', 'translate(10, 70)')
+                .style('font-size', 20)
+                .style('fill', 'white');
 
 
             d3State.newLinkMode2 = false;
@@ -807,22 +821,24 @@ class WillowCore extends Component {
             this.reset();
 
         } else {
-            const clickedNode = d3.selectAll('.node').filter((data) => data.hash_id === d.hash_id)
+            const clickedNode = d3.selectAll('.node').filter((data) => data.hash_id === d.hash_id);
 
             d3State.menuOpen = true;
             d3State.selectedNode = d;
         
             let radius = 45;
 
-            clickedNode.select('.DELETENodeButton')
-            .transition()
-            .duration(200)
-            .attr('transform', `translate(${Math.cos(Math.PI / 2) * radius}, ${Math.sin(Math.PI / 2) * radius})`)
+            clickedNode
+                .select('.DELETENodeButton')
+                .transition()
+                .duration(200)
+                .attr('transform', `translate(${Math.cos(Math.PI / 2) * radius}, ${Math.sin(Math.PI / 2) * radius})`);
 
-            clickedNode.select('.ADD_LINKNodeButton')
-            .transition()
-            .duration(200)
-            .attr('transform', `translate(${Math.cos(- Math.PI / 6) * radius}, ${Math.sin(- Math.PI / 6) * radius})`)
+            clickedNode
+                .select('.ADD_LINKNodeButton')
+                .transition()
+                .duration(200)
+                .attr('transform', `translate(${Math.cos(- Math.PI / 6) * radius}, ${Math.sin(- Math.PI / 6) * radius})`);
 
             clickedNode.select('.DISPLAYNodeButton')
             .transition()
@@ -830,104 +846,108 @@ class WillowCore extends Component {
             .attr('transform', `translate(${Math.cos(- Math.PI * (5 / 6)) * radius}, ${Math.sin(- Math.PI * (5 / 6)) * radius})`)
             
             //Node Circle
-            clickedNode.select('.face')
-                .attr('fill', '#f8d861')
+            clickedNode
+                .select('.face')
+                .attr('fill', '#f8d861');
         }
     }
-//--------------------------------------------------- DISPLAY MENU BUTTON
-  clickDisplayMenuMode(d) {
-    const selectedNode = d3State.selectedNode;
-    let content;
-    let modalType;
 
-    // console.log(selectedNode)
+    //--------------------------------------------------- DISPLAY MENU BUTTON
+    clickDisplayMenuMode(d) {
+        const selectedNode = d3State.selectedNode;
+        let content;
+        let modalType;
 
-    const closeNode = () => {
-        this.reset();
+        const closeNode = () => {
+            this.reset();
+            if (selectedNode.label_id === 1) {
+                selectedNode.node_data = {
+                    bookmarks: this.props.bookmarkListAdd,
+                    notes: this.props.notes
+                };
+                selectedNode.node_description = this.props.setNodeTitle;
+
+                this.props.closeBookmark();
+                this.props.closeNoteView();
+                projectLoad = false;
+                this.props.saveProject(this.props.projectData);
+                this.props.resetBookmarks();
+                this.props.resetNotes();
+                this.props.resetNodeTitle();
+
+            } else {
+                selectedNode.node_data = { milestones: this.props.milestones };
+                selectedNode.node_description = this.props.setNodeTitle;
+
+                projectLoad = false;
+                this.props.saveProject(this.props.projectData);
+                this.props.resetMilestones();
+                this.props.resetNodeTitle();
+            }
+        }
+
         if (selectedNode.label_id === 1) {
-            selectedNode.node_data = {
-                bookmarks: this.props.bookmarkListAdd,
-                notes: this.props.notes
-            };
-            selectedNode.node_description = this.props.setNodeTitle;
-
-            this.props.closeBookmark();
-            this.props.closeNoteView();
-            projectLoad = false;
-            this.props.saveProject(this.props.projectData);
-            this.props.resetBookmarks();
-            this.props.resetNotes();
-            this.props.resetNodeTitle();
-
+            content = <ExplorativeNode nodeTitle={ selectedNode.node_description } />;
+            modalType = '';
+            if (!!selectedNode.node_data) {
+                selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
+                selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
+            }
         } else {
-            selectedNode.node_data = { milestones: this.props.milestones };
-            selectedNode.node_description = this.props.setNodeTitle;
-
-            projectLoad = false;
-            this.props.saveProject(this.props.projectData);
-            this.props.resetMilestones();
-            this.props.resetNodeTitle();
+            content = <Milestones column="L" nodeTitle={ selectedNode.node_description } />;
+            modalType = 'CreateProject';
+            if (!!selectedNode.node_data) {
+                selectedNode.node_data.milestones.forEach((ms) => this.props.populateMilestone(ms));
+            }
         }
+
+        this.onOpen({
+            id: v4(),
+            onClose: () => closeNode(),
+            content,
+            modalType
+        });
     }
 
-    if (selectedNode.label_id === 1) {
-        content = <ExplorativeNode nodeTitle={ selectedNode.node_description } />;
-        modalType = '';
-        if (!!selectedNode.node_data) {
-            selectedNode.node_data.bookmarks.forEach((bm) => this.props.saveBookmark(bm));
-            selectedNode.node_data.notes.forEach((nt) => this.props.addNote(nt));
-        }
-    } else {
-        content = <Milestones column="L" nodeTitle={ selectedNode.node_description } />;
-        modalType = 'CreateProject';
-        if (!!selectedNode.node_data) {
-            selectedNode.node_data.milestones.forEach((ms) => this.props.populateMilestone(ms));
-        }
+    //--------------------------------------------------- DRAG NODE
+    drag_start(d, simulation) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        if (d.status !== 'new') d.status = 'updated';
+
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+    
+    //make sure you can't drag the circle outside the box
+    drag_drag(d, simulation) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
     }
 
-    this.onOpen({
-        id: v4(),
-        onClose: () => closeNode(),
-        content,
-        modalType
-    })
-  }
-//--------------------------------------------------- DRAG NODE
-  drag_start(d, simulation) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    if (d.status !== 'new') d.status = 'updated';
+    drag_end(d, simulation) {
+        if (!d3.event.active) simulation.alphaTarget(0);
 
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-  //make sure you can't drag the circle outside the box
-  drag_drag(d, simulation) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-  }
+        if (((d3.event.x | 0) % 30) < 15) d.x = (d3.event.x | 0) - ((d3.event.x | 0) % 30);
+        if (((d3.event.x | 0) % 30) >= 15) d.x = (d3.event.x | 0) + (30 - ((d3.event.x | 0) % 30));
 
-  drag_end(d, simulation) {
-    if (!d3.event.active) simulation.alphaTarget(0);
+        if (((d3.event.y | 0) % 30) < 15) d.y = (d3.event.y | 0) - ((d3.event.y | 0) % 30);
+        if (((d3.event.y | 0) % 30) >= 15) d.y = (d3.event.y | 0) + (30 - ((d3.event.y | 0) % 30));
 
-    if (((d3.event.x | 0) % 30) < 15) d.x = (d3.event.x | 0) - ((d3.event.x | 0) % 30);
-    if (((d3.event.x | 0) % 30) >= 15) d.x = (d3.event.x | 0) + (30 - ((d3.event.x | 0) % 30));
-
-    if (((d3.event.y | 0) % 30) < 15) d.y = (d3.event.y | 0) - ((d3.event.y | 0) % 30);
-    if (((d3.event.y | 0) % 30) >= 15) d.y = (d3.event.y | 0) + (30 - ((d3.event.y | 0) % 30));
-
-    d.fx = null;
-    d.fy = null;
-  }
-//--------------------------------------------------- RENDER
-  render() {
-    return (
-      <div id='chart'>
-        <svg  data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' id='willowCore' width={ this.props.width } height={ (this.props.height - 55) } />
-        <Modals />
-      </div>
-    );
-  }
+        d.fx = null;
+        d.fy = null;
     }
+
+    //--------------------------------------------------- RENDER
+    render() {
+        return (
+            <div id='chart'>
+                <svg  data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' id='willowCore' width={ this.props.width } height={ (this.props.height - 55) } />
+                <Modals />
+            </div>
+        );
+    }
+}
+
 const mapStateToProps = (state) => {
     return { 
         projectData: state.projectData,
@@ -955,7 +975,7 @@ const mapDispatchToProps = (dispatch) => {
         populateMilestone: (data) => dispatch(populateMilestone(data)),
         resetMilestones: () => dispatch(resetMilestones()),
         resetNodeTitle: () => dispatch(resetNodeTitle()),
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WillowCore);

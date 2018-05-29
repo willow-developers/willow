@@ -63,7 +63,6 @@ class NewProjectDetails extends Component {
 	}
 
 	render() {
-		console.log('t.p: ', this.props);
 		return (
 			<div className={ styles.padder }>
 				<h2>Steps required to complete "{this.props.createProjectTitle}": </h2>
@@ -101,7 +100,6 @@ class NewProjectDetails extends Component {
 						size="small"
 					/>
 				</div>
-
 			</div>
 		);
 	}

@@ -36,6 +36,7 @@ class Header extends Component {
 						/>
 					</a>)
 		);
+		
 		if (this.props.userStatus === null) {
 			return;
 		} else if (this.props.userStatus === false) {

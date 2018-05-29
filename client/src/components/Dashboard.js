@@ -10,7 +10,7 @@ import '../assets/sass/Dashboard.scss';
 
 class Dashboard extends Component {
 	componentDidMount() {
-		this.props.projectsGetList(this.props.userStatus.google_id)
+		this.props.projectsGetList(this.props.userStatus.google_id);
 	}
 
 	clickHandler(projectID) {
@@ -61,7 +61,7 @@ class Dashboard extends Component {
 			<div>
 				{ this.renderProjectList() }
 			</div>
-		)
+		);
 	}
 }
 

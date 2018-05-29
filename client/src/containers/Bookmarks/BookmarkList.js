@@ -9,6 +9,7 @@ import bookmark_icon from '../../assets/images/bookmarkIcon.svg';
 class BookmarkList extends Component {
 	renderList() {
 		let { bookmarkListAdd, deleteBookmark } = this.props;
+
 		return _.map(bookmarkListAdd, ({ title, url}, idx) => (
 			<div key={ idx } className={` ${styles.row} ${styles.displayRow} `}>
 				<a key={ idx } href={ url } target="_blank" className={`${ styles.displayLink } ${ styles.col_10_of_12 }`}>
@@ -34,6 +35,7 @@ class BookmarkList extends Component {
 			</div>
 		));
 	}
+	
 	render() {
 		return (
 			<div className={ styles.row }>

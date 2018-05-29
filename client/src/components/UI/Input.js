@@ -11,7 +11,7 @@ class BookmarkInput extends Component {
 		this.state = {
 			isActive: false,
 			height: DEFAULT_HEIGHT
-		}
+		};
 
 		this.setFilledTextareaHeight = this.setFilledTextareaHeight.bind(this);
 	}
@@ -142,8 +142,8 @@ class BookmarkInput extends Component {
 					onBlur={ () => input.onBlur(this.setState({ isActive: false })) }
 					placeholder={ placeholder }
 					style={{ height, resize: isOneLine ? "none" : null }}
-					onKeyUp={ this.setFilledTextareaHeight }
-				></textarea>
+					onKeyUp={ this.setFilledTextareaHeight }>
+				</textarea>
 			);
 		}
 
