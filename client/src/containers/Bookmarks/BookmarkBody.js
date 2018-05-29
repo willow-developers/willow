@@ -11,38 +11,36 @@ import BookmarkList from './BookmarkList';
 import styles from '../../assets/sass/BookmarkBody.module.scss';
 
 class BookmarkBody extends Component {
-  state = { paddingBottom: 0, headerHeight: 0 }
+  state = { paddingBottom: 0, headerHeight: 0 };
 
 	handleBookmarkSubmit = (url) => {
 		this.props.bookmarkGetInfo(url.bookmark);
-	}
+	};
 
   handleBackToPreview = () => {
     this.props.previewBookmarkView();
-  }
+  };
 
   handleBookmarkInfoUpdate = (info) => {
     this.props.previewBookmarkView();
     this.props.updateBookmarkInfo(info);
-  }
+  };
 
   handleBookmarkSave = (data) => {
     this.props.saveBookmark(data);
-  }
+  };
 
   getActionHeight = (num) => {
     const minHeight = num === 0 ? 103 : num;
     this.setState({ paddingBottom: `${minHeight}px` });
-  }
+  };
 
   componentDidMount() {
-    // console.log(this.refs.listContainer.clientHeight)
-    this.props.getListHeight(this.refs.listContainer.clientHeight)
+    this.props.getListHeight(this.refs.listContainer.clientHeight);
   }
 
   componentDidUpdate() {
-    // console.log(this.refs.listContainer.clientHeight)
-    this.props.getListHeight(this.refs.listContainer.clientHeight)
+    this.props.getListHeight(this.refs.listContainer.clientHeight);
   }
 
 	renderBookmarkView = () => {
@@ -50,6 +48,7 @@ class BookmarkBody extends Component {
 
     if (bookmarkHasErrored) return <p>Sorry! There was an error with your request :(</p>;
     if (bookmarkIsLoading) return <div className={ styles.loadHolder }><Loading /></div>;
+
     return (
       <Fragment>
       	{ bookmarkShowAdd
@@ -77,8 +76,8 @@ class BookmarkBody extends Component {
       </Fragment>
     );
   }
+
 	render() {
-    // console.log(this.state.headerHeight)
 		return (
       <Fragment>
         <div className={ styles.listHolder } style={{ paddingBottom: this.state.paddingBottom }} ref="listContainer">
@@ -92,7 +91,6 @@ class BookmarkBody extends Component {
 		);
 	}
 }
-// style={{ paddingBottom: this.state.paddingBottom }}
 
 const mapStateToProps = (state) => ({
   bookmarkHasErrored: state.bookmarkHasErrored,
