@@ -11,28 +11,28 @@ import NodeTitleDisplay from './NodeTitle/NodeTitleDisplay';
 import styles from '../assets/sass/ExplorativeNode.module.scss';
 
 class ExplorativeNode extends Component {
-  state = { listHeight: 0 }
+  state = { listHeight: 0 };
 
   componentDidMount() {
     this.props.titleNode(this.props.nodeTitle)
-  }
+  };
 
   getListHeight = (num) => {
     const listHeight = num;
     this.setState({ listHeight });
-  }
+  };
 
   updateNodeTitle = (str) => {
     this.props.titleNode(str)
-  }
+  };
 
   showDisplayTitle = () => {
     this.props.titleEdit()
-  }
+  };
 
   showTitleForm = () => {
     this.props.titleFormShow()
-  }
+  };
 
 	render() {
 		return (
