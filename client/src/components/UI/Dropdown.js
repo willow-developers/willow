@@ -12,7 +12,7 @@ class Dropdown extends Component {
       this.props.input.onChange(event.value);
     } else {
       // Clear the input field
-      this.props.input.onChange(null)
+      this.props.input.onChange(null);
     }
   }
 
