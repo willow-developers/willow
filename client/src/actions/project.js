@@ -40,7 +40,6 @@ export const projectSave = (projectData) => {
     return (dispatch) => {
         axios.post('/api/updateProject', { project: { nodes: copyObject.nodes, links: copyObject.links ,project: copyObject.project}})
             .then(response => {
-                console.log('API response after saving updated project: ', response);
                 dispatch(projectGetData(projectID));
             });
     };
@@ -53,16 +52,12 @@ export const resetRedirects = () => ({
 
 export const deleteProject = (projectID, idx) => {
     return (dispatch) => {
-        console.log({ projectID });
-
         axios
             .post('/api/deleteProject', { projectID })
             .then(response => {
                 dispatch(deleteProjectFromState(idx));
             })
-            .catch(err => {
-
-            });
+            .catch(() => dispatch(projectHasErrored(true)));
     };
 };
 

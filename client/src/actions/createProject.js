@@ -41,8 +41,6 @@ export const redirectTo = projectID => ({
 
 export const handleSaveProject = (projectDetails, modal) => dispatch => {
   dispatch(createProjectIsLoading(true));
-
-  console.log('projectDetails: ', projectDetails)
   
   axios
     .post('/api/newProject', { data: projectDetails, })
@@ -56,7 +54,6 @@ export const handleSaveProject = (projectDetails, modal) => dispatch => {
       dispatch(redirectTo(projectID));
     })
     .catch(err => {
-      console.log('err: ', err);
       dispatch(resetProjectBuilder());
       dispatch(createProjectIsLoading(false));
     });
