@@ -56,7 +56,7 @@ class NewProjectDetails extends Component {
 					{ item.label }
 				</div>
 				<div className={ styles.col_2_of_12 }>
-					<a onClick={ () => this.handleClick(idx) } href="#"><i className= { styles.materialIcons }>delete</i></a>
+					<a onClick={ () => this.handleClick(idx) }><i className= { styles.materialIcons }>delete</i></a>
 				</div>
 			</div>
     ));
