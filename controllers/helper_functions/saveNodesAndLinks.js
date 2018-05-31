@@ -2,6 +2,7 @@ const knex = require('../../database/index');
 
 exports.saveNodes = (nodes) => {
   return Promise.all(nodes.map(entry => {
+    console.log('nodes: ', { entry });
     if (entry.status === 'new') {
       delete entry.status;
       return knex('nodes').insert(entry);
@@ -15,7 +16,9 @@ exports.saveNodes = (nodes) => {
 };
 
 exports.saveLinks = (links) => {
+
   return Promise.all(links.map(entry => {
+    console.log('links: ', { entry })
     if (entry.status === 'new') {
       delete entry.status;
       return knex('links').insert(entry);
