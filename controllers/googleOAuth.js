@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const knex = require('../database/index.js');
 const init = require('../server/initializeSession.js');
 const { GOOGLE_CLIENT_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CALLBACK_URL } = require('../config/keys.js');
+const { createExampleProject } = require('./helper_functions/createExampleProject');
 
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
@@ -26,6 +27,8 @@ passport.use(new GoogleStrategy({
       };
 
       let knexResult = await knex('users').insert(newUser);
+
+      let newProjectResult = await createExampleProject(newUser.google_id);
 
       done(null, newUser);
     }
