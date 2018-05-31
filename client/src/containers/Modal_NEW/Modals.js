@@ -25,7 +25,7 @@ class Modals extends Component {
         } else {
           this.props.modalClose(item);
         }
-      }
+      };
 
       return (
         <ModalRender key={ i } >

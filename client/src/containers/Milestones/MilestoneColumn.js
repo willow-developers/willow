@@ -7,7 +7,6 @@ import MilestoneList from './MilestoneList';
 import AddMilestone from './AddMilestone';
 import FilterNav from './FilterNav';
 
-
 import NodeTitleEdit from '../NodeTitle/NodeTitleEdit';
 import NodeTitleDisplay from '../NodeTitle/NodeTitleDisplay';
 import styles from '../../assets/sass/ExplorativeNode.module.scss';
@@ -36,25 +35,27 @@ class MilestoneColumn extends Component {
   updateMilestone = (data) => {
     this.props.updateMilestone(data);
   };
+  
+  updateNodeTitle = (str) => {
+    this.props.titleNode(str);
+  };
+  
+  showDisplayTitle = () => {
+    this.props.titleEdit();
+  };
+  
+  showTitleForm = () => {
+    this.props.titleFormShow();
+  };
 
   componentDidMount() {
-    this.props.titleNode(this.props.nodeTitle)
+    this.props.titleNode(this.props.nodeTitle);
   }
-  updateNodeTitle = (str) => {
-    this.props.titleNode(str)
-  }
-
-  showDisplayTitle = () => {
-    this.props.titleEdit()
-  }
-
-  showTitleForm = () => {
-    this.props.titleFormShow()
-  }
-
+  
   render() {
     const { milestones, visibilityFilter, column, visibilityFilterColumn } = this.props;
     const filterOptions = ["SHOW_ALL", "SHOW_ACTIVE", "SHOW_COMPLETED"];
+
     return (
       <div>
         <div className={ styles.row }>
@@ -128,7 +129,6 @@ const mapDispatchToProps = (dispatch) => ({
   titleNode: (str) => dispatch(titleNode(str)),
   titleFormShow: () => dispatch(titleFormShow()),
   titleEdit: () => dispatch(titleEdit()),
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MilestoneColumn);

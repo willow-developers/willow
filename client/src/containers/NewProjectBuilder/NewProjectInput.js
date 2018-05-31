@@ -26,7 +26,6 @@ class NewProjectInput extends Component {
 
 	render() {
 		const { input, label, type, placeholder, meta: { error, touched }} = this.props;
-
 		const { isActive } = this.state;
 
 		const _setDisplayClass = () => (

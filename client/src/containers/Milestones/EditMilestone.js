@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { load } from '../../actions/milestone';
 import _ from 'lodash';
-// import styles from '../../assets/sass/AddMilestone.module.scss';
 
 import Input from '../../components/UI/Input';
 
@@ -15,6 +14,7 @@ class EditMilestone extends Component {
 
   render() {
     const { editMilestone, updateMilestone, editMilestoneInput } = this.props;
+    
     const renderInputs = () => {
       return _.map(editMilestoneInput, (field, i) => (
         <Field
@@ -25,7 +25,7 @@ class EditMilestone extends Component {
           editMilestone={ editMilestone }
         />
       ));
-    }
+    };
 
     return (
       <div>

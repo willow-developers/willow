@@ -23,6 +23,7 @@ class Main extends Component {
 				/>
 			);
 		};
+		
 		const MainRoute = ({ component: Component, ...rest }) => (
 			<Route { ...rest } render={(info) => <Component { ...info } />} />
 		);

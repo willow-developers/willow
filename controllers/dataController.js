@@ -10,6 +10,7 @@ const formatNewProjectData = require('./helper_functions/formatNewProjectData');
 const formatProjectData = require('./helper_functions/formatProjectData');
 const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatBeforeSaving');
 const { saveNodes, saveLinks, saveProject } = require('./helper_functions/saveNodesAndLinks');
+const createExampleProject = require('./helper_functions/createExampleProject');
 
 exports.createNewProject = (req, res) => {
     let { user, title, createProjectMilestones } = req.body.data;
@@ -32,8 +33,6 @@ exports.createNewProject = (req, res) => {
                             res.status(200).send(data);
                         });
                 });
-
-            // res.status(200).send(result);
         }).catch(err => {
             console.log('err: ', err);
             res.status(500).send(err);
@@ -42,11 +41,11 @@ exports.createNewProject = (req, res) => {
 
 exports.fetchProjects = (req, res) => {
     
-    // // update as needed!!
-    // let owner_id = req.query.userID;
+    // update as needed!!
+    let owner_id = req.query.userID;
 
     // to go to Jun's google account:
-    owner_id = '110227128753222443119';
+    // owner_id = '110227128753222443119';
 
     knex('projects')
         .where('owner_id', owner_id)
@@ -61,8 +60,6 @@ exports.fetchProjects = (req, res) => {
 
 exports.getProjectData = (req, res) => {
     let projectID = req.query.projectID;
-
-    console.log('req.query.projectID: ', req.query.projectID)
 
     Promise.all([
         knex('projects').where('id', projectID),
@@ -86,10 +83,6 @@ exports.getProjectData = (req, res) => {
 
 exports.saveProject = (req, res) => {
     var { nodes, links, project} = req.body.project;
-    console.log('project: ', project);
-
-    // /* The function below returns an object as follows:
-    // data = { nodes: [nodes that need updating], links: [links that need updating] }; */
     let { nodesToUpdate, linksToUpdate } = filterAndFormatBeforeSaving(nodes, links);
     
     saveNodes(nodesToUpdate)

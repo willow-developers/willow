@@ -7,8 +7,6 @@ const capFirst = (string) => {
   return label.charAt(0).toUpperCase() + label.slice(1);
 };
 
-// capFirst(option[1])
-
 const FilterNav = ({ filterOptions, filterMilestone, currentFilter }) => {
   return (
     <div className={ styles.row }>

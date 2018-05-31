@@ -19,7 +19,7 @@ const getVisibleMilestones = (milestones, filter, side) => {
 const splitList = (milestones, side) => {
   const split = milestones.filter((item) => item.column === side);
   return split;
-}
+};
 
 const MilestoneList = ({ milestones, visibilityFilter, toggleMilestone, editMilestone, updateMilestone, column, visibilityFilterColumn }) => {
   const visibleMilestones = getVisibleMilestones(splitList(milestones, column), visibilityFilter, visibilityFilterColumn);

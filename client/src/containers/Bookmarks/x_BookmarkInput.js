@@ -4,7 +4,7 @@ import styles from '../../assets/sass/Input.module.scss';
 import Button from '../../components/UI/Button';
 
 class BookmarkInput extends Component {
-	state = { isActive: false }
+	state = { isActive: false };
 
 	render() {
 		const { input, label, type, placeholder, meta: { error, touched } } = this.props;

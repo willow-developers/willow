@@ -2,6 +2,7 @@ const knex = require('../../database/index');
 
 exports.saveNodes = (nodes) => {
   return Promise.all(nodes.map(entry => {
+    console.log('nodes: ', { entry });
     if (entry.status === 'new') {
       delete entry.status;
       return knex('nodes').insert(entry);
@@ -11,11 +12,13 @@ exports.saveNodes = (nodes) => {
     } else if (entry.status === 'delete') {
       return knex('nodes').where('hash_id', '=', entry.hash_id).del();
     }
-  })).catch((err) => console.log('err: ', err))
+  }));
 };
 
 exports.saveLinks = (links) => {
+
   return Promise.all(links.map(entry => {
+    console.log('links: ', { entry })
     if (entry.status === 'new') {
       delete entry.status;
       return knex('links').insert(entry);
@@ -25,9 +28,9 @@ exports.saveLinks = (links) => {
     } else if (entry.status === 'delete') {
       return knex('links').where('hash_id', '=', entry.hash_id).del();
     }
-  })).catch(err => console.log('err: ', err))
+  }));
 };
 
 exports.saveProject = (project) => {
-  return knex('projects').where('id', '=', project.id).update(project).catch(err => console.log('err: ', err))
+  return knex('projects').where('id', '=', project.id).update(project);
 };

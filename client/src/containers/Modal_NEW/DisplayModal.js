@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import v4 from 'uuid/v4';
 import { modalOpen } from '../../actions/modal';
 import { resetProjectBuilder } from '../../actions/createProject';
 
@@ -12,7 +11,7 @@ class DisplayModal extends Component {
     const { content, id, value, size, modalType } = this.props;
     const onOpen = (obj) => {
       this.props.modalOpen(obj);
-    }
+    };
 
     if (modalType === 'CreateProject') {
       return (
@@ -33,7 +32,6 @@ class DisplayModal extends Component {
         </div>
       );
     }
-
   }
 }
 
