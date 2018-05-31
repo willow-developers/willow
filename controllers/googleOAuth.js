@@ -27,12 +27,7 @@ passport.use(new GoogleStrategy({
       };
 
       let knexResult = await knex('users').insert(newUser);
-
-      console.log({ knexResult });
-
       let newProjectResult = await createExampleProject(newUser.google_id);
-
-      console.log({ newProjectResult });
 
       done(null, newUser);
     }
