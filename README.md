@@ -14,7 +14,9 @@ React, Redux, D3, Node, Express, PostgreSQL (hosted via Amazon RDS)
 Team Members
 ----
 [Tom Wagner](https://github.com/tom-wagner)
+
 [Jun Yoo](https://github.com/jyoo13495)
+
 [Bill Domanick](https://github.com/mrMustachos/)
 
 
