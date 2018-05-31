@@ -1,11 +1,37 @@
 # Willow
 
-### Getting started
-- At the root level run `npm install`
-- `cd` into the client folder
-- run `npm install`
-- `cd` back to the root level
-- run `npm run dev`
+### A flexible, non-linear project management and organization application
 
-### Follow the guide below to install PostgreSQL
-- http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/
+Users login/sign-up via Google and an example project is populated for them to refer to and play around with. From there, users create their own project using a guided project building flow.
+
+The key point of differentiation as compared to a traditional project management application is that the project does not need to necessarily be goal oriented. The application enables the users to define objectives/goals and save milestones related to each objective, however they are also able to add 'Explorative Nodes' which store notes and links related to ideas or concepts they want to explore further. See the blue node in the example project for an example of an explorative node.
+
+Core Tech Stack
+----
+React, Redux, D3, Node, Express, PostgreSQL (hosted via Amazon RDS)
+
+
+Team Members
+----
+[Tom Wagner](https://github.com/tom-wagner)
+[Jun Yoo](https://github.com/jyoo13495)
+[Bill Domanick](https://github.com/mrMustachos/)
+
+
+Setup
+----
+```
+npm install
+```
+
+
+Compile and Start
+----
+```
+npm run dev
+```
+
+
+Demo
+----
+See the application in action at __http://ec2-18-191-102-155.us-east-2.compute.amazonaws.com/__
