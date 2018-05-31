@@ -10,6 +10,7 @@ const formatNewProjectData = require('./helper_functions/formatNewProjectData');
 const formatProjectData = require('./helper_functions/formatProjectData');
 const filterAndFormatBeforeSaving = require('./helper_functions/filterAndFormatBeforeSaving');
 const { saveNodes, saveLinks, saveProject } = require('./helper_functions/saveNodesAndLinks');
+const createExampleProject = require('./helper_functions/createExampleProject');
 
 exports.createNewProject = (req, res) => {
     let { user, title, createProjectMilestones } = req.body.data;
